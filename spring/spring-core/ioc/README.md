@@ -32,13 +32,13 @@ Spring IoC 容器的设计主要是基于以下两个接口：
 
 其中`ApplicationContext`是`BeanFactory`的子接口之一，换句话说：**`BeanFactory`是Spring IoC容器所定义的最底层接口，**而`ApplicationContext`是其最高级接口之一，并对`BeanFactory`功能做了许多的扩展，所以在**绝大部分的工作场景下**，都会使用`ApplicationContext`作为Spring IoC容器。
 
-![](../../../.gitbook/assets/image%20%2812%29.png)
+![](../../../.gitbook/assets/image%20%2815%29.png)
 
 #### **BeanFactory**
 
 从上图中我们可以几乎看到， `BeanFactory`位于设计的最底层，它提供了Spring IoC最底层的设计，为此，我们先来看看该类中提供了哪些方法。
 
-![](../../../.gitbook/assets/image%20%2831%29.png)
+![](../../../.gitbook/assets/image%20%2839%29.png)
 
 * `getBean`对应了多个方法来获取配置给Spring IoC容器的Bean。
   * 按照类型获取bean
