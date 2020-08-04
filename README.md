@@ -1,1 +1,2 @@
-# gitnote
+# Initial page
+
