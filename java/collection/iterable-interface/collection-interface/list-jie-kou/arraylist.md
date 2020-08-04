@@ -31,6 +31,8 @@ public class ArrayList<E> extends AbstractList<E>
     
     private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
     
+    protected transient int modCount = 0; // 继承自AbstractList抽象类
+    
     public ArrayList(int initialCapacity) {
         if (initialCapacity > 0) {
             this.elementData = new Object[initialCapacity];
@@ -66,6 +68,12 @@ public class ArrayList<E> extends AbstractList<E>
 ### 添加元素
 
 ```java
+public boolean add(E e) {
+    modCount++;
+    add(e, elementData, size);
+    return true;
+}
+
 private void add(E e, Object[] elementData, int s) {
     if (s == elementData.length)
         elementData = grow();
@@ -73,10 +81,36 @@ private void add(E e, Object[] elementData, int s) {
     size = s + 1;
 }
 
-public boolean add(E e) {
-    modCount++;
-    add(e, elementData, size);
-    return true;
+private Object[] grow() {
+    return grow(size + 1);
+}
+
+private Object[] grow(int minCapacity) {
+    return elementData = Arrays.copyOf(elementData, newCapacity(minCapacity));
+}
+
+private int newCapacity(int minCapacity) {
+    // overflow-conscious code
+    int oldCapacity = elementData.length;
+    int newCapacity = oldCapacity + (oldCapacity >> 1);
+    if (newCapacity - minCapacity <= 0) {
+        if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA)
+            return Math.max(DEFAULT_CAPACITY, minCapacity);
+        if (minCapacity < 0) // overflow
+            throw new OutOfMemoryError();
+        return minCapacity;
+    }
+    return (newCapacity - MAX_ARRAY_SIZE <= 0)
+        ? newCapacity
+        : hugeCapacity(minCapacity);
+}
+
+private static int hugeCapacity(int minCapacity) {
+    if (minCapacity < 0) // overflow
+        throw new OutOfMemoryError();
+    return (minCapacity > MAX_ARRAY_SIZE)
+        ? Integer.MAX_VALUE
+        : MAX_ARRAY_SIZE;
 }
 
 public void add(int index, E element) {
@@ -123,7 +157,134 @@ public boolean remove(Object o) {
     }
     fastRemove(es, i);
     return true;
-}die}」}dfgdfg
+}
+```
+
+### 迭代器
+
+```java
+private class Itr implements Iterator<E> {
+    int cursor;       // index of next element to return
+    int lastRet = -1; // index of last element returned; -1 if no such
+    int expectedModCount = modCount;
+
+    // prevent creating a synthetic constructor
+    Itr() {}
+
+    public boolean hasNext() {
+        return cursor != size;
+    }
+
+    @SuppressWarnings("unchecked")
+    public E next() {
+        checkForComodification();
+        int i = cursor;
+        if (i >= size)
+            throw new NoSuchElementException();
+        Object[] elementData = ArrayList.this.elementData;
+        if (i >= elementData.length)
+            throw new ConcurrentModificationException();
+        cursor = i + 1;
+        return (E) elementData[lastRet = i];
+    }
+
+    public void remove() {
+        if (lastRet < 0)
+            throw new IllegalStateException();
+        checkForComodification();
+
+        try {
+            ArrayList.this.remove(lastRet);
+            cursor = lastRet;
+            lastRet = -1;
+            expectedModCount = modCount;
+        } catch (IndexOutOfBoundsException ex) {
+            throw new ConcurrentModificationException();
+        }
+    }
+
+    @Override
+    public void forEachRemaining(Consumer<? super E> action) {
+        Objects.requireNonNull(action);
+        final int size = ArrayList.this.size;
+        int i = cursor;
+        if (i < size) {
+            final Object[] es = elementData;
+            if (i >= es.length)
+                throw new ConcurrentModificationException();
+            for (; i < size && modCount == expectedModCount; i++)
+                action.accept(elementAt(es, i));
+            cursor = i;
+            lastRet = i - 1;
+            checkForComodification();
+        }
+    }
+
+    final void checkForComodification() {
+        if (modCount != expectedModCount)
+            throw new ConcurrentModificationException();
+    }
+}
+```
+
+```java
+private class ListItr extends Itr implements ListIterator<E> {
+    ListItr(int index) {
+        super();
+        cursor = index;
+    }
+
+    public boolean hasPrevious() {
+        return cursor != 0;
+    }
+
+    public int nextIndex() {
+        return cursor;
+    }
+
+    public int previousIndex() {
+        return cursor - 1;
+    }
+
+    @SuppressWarnings("unchecked")
+    public E previous() {
+        checkForComodification();
+        int i = cursor - 1;
+        if (i < 0)
+            throw new NoSuchElementException();
+        Object[] elementData = ArrayList.this.elementData;
+        if (i >= elementData.length)
+            throw new ConcurrentModificationException();
+        cursor = i;
+        return (E) elementData[lastRet = i];
+    }
+
+    public void set(E e) {
+        if (lastRet < 0)
+            throw new IllegalStateException();
+        checkForComodification();
+
+        try {
+            ArrayList.this.set(lastRet, e);
+        } catch (IndexOutOfBoundsException ex) {
+            throw new ConcurrentModificationException();
+        }
+    }
+
+    public void add(E e) {
+        checkForComodification();
+
+        try {
+            int i = cursor;
+            ArrayList.this.add(i, e);
+            cursor = i + 1;
+            lastRet = -1;
+            expectedModCount = modCount;
+        } catch (IndexOutOfBoundsException ex) {
+            throw new ConcurrentModificationException();
+        }
+    }
+}
 ```
 
 
