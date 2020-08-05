@@ -38,7 +38,7 @@ Spring IoC 容器的设计主要是基于以下两个接口：
 
 从上图中我们可以几乎看到， `BeanFactory`位于设计的最底层，它提供了Spring IoC最底层的设计，为此，我们先来看看该类中提供了哪些方法。
 
-![](../../../.gitbook/assets/image%20%2843%29.png)
+![](../../../.gitbook/assets/image%20%2848%29.png)
 
 * `getBean`对应了多个方法来获取配置给Spring IoC容器的Bean。
   * 按照类型获取bean

@@ -69,7 +69,7 @@
 * [SQL](database/sql.md)
 * [MySQL](database/mysql/README.md)
   * [存储引擎](database/mysql/storage-engine.md)
-  * [B+Tree](database/mysql/b+tree.md)
+  * [索引与B+Tree](database/mysql/index-and-b+tree.md)
 * [MongoDB](database/mongodb/README.md)
   * [基本概念](database/mongodb/intro.md)
 * [Redis](database/redis.md)

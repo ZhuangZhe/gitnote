@@ -356,7 +356,7 @@ newThread.run();  //should be start();
 
 我们还是先来解决吃苹果的问题，考虑一下 synchronized 关键字应该加在哪里呢？
 
-![](../../.gitbook/assets/image%20%2840%29.png)
+![](../../.gitbook/assets/image%20%2844%29.png)
 
 发现如果还再把 synchronized 关键字加在 if 里面的话，0 和 -1 又会出来了。这其实是因为当 ABC 同是进入到 if 语句中，等待临界区释放的时，拿到 1 编号的线程已经又把 num 减一操作了，而此时最后一个等待临界区的进程拿到的就会是 -1 了。
 
@@ -417,7 +417,7 @@ class X {
 
 上一篇文章我们提到一个应用可以创建多个线程去执行不同的任务，如果这些任务之间有着某种关系，那么线程之间**必须能够通信**来协调完成工作。
 
-![](../../.gitbook/assets/image%20%2834%29.png)
+![](../../.gitbook/assets/image%20%2837%29.png)
 
 **生产者消费者问题**（英语：Producer-consumer problem）就是典型的多线程同步案例，它也被称为**有限缓冲问题**（英语：Bounded-buffer problem）。该问题描述了共享固定大小[缓冲区](https://zh.wikipedia.org/wiki/%E7%BC%93%E5%86%B2%E5%8C%BA)的两个线程——即所谓的“生产者”和“消费者”——在实际运行时会发生的问题。生产者的主要作用是生成一定量的数据放到缓冲区中，然后重复此过程。与此同时，消费者也在缓冲区消耗这些数据。**该问题的关键就是要保证生产者不会在缓冲区满时加入数据，消费者也不会在缓冲区中空时消耗数据。**\(摘自维基百科：[生产者消费者问题](https://zh.wikipedia.org/wiki/%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98)\)
 
@@ -1011,7 +1011,7 @@ public static void main(String[] args) throws InterruptedException {
 
 关于这一点，我们有几点需要说明，首先需要搞懂 Java 的内存模型：
 
-![](../../.gitbook/assets/image%20%2826%29.png)
+![](../../.gitbook/assets/image%20%2827%29.png)
 
 Java 虚拟机规范中试图定义一种 Java 内存模型（Java Memory Model, JMM）来屏蔽掉各层硬件和操作系统的内存访问差异，以实现让 Java 程序在各种平台下都能达到一致的内存访问效果。
 
@@ -1140,7 +1140,7 @@ public class VolatileNotAtomic {
 
 Java 中任何一个对象都有一个唯一与之关联的锁，这样的锁作为该对象的一系列标志位存储在对象信息的头部。Java 对象头里的 Mark Word 里默认的存放的对象的 Hashcode/ 分代年龄和锁标记位。32 为JVM Mark Word 默认存储结构如下：
 
-![](../../.gitbook/assets/image%20%2845%29.png)
+![](../../.gitbook/assets/image%20%2850%29.png)
 
 Java SE 1.6中，锁一共有 4 种状态，级别从低到高依次是：**无锁状态、偏向锁状态、轻量级锁状态和重量级锁状态**，这几个状态会随着竞争情况逐渐升级。**锁可以升级但不能降级**，意味着偏向锁升级成轻量级锁后不能降级成偏向锁。这种锁升级却不能降级的策略，目的是为了提高获得锁和释放锁的效率。
 
@@ -1153,7 +1153,7 @@ HotSpot 的作者经过研究发现，大多数情况下，锁不仅不存在多
 
 下图线程 1 展示了偏向锁获取的过程，线程 2 展示了偏向锁撤销的过程。
 
-![](../../.gitbook/assets/image%20%2838%29.png)
+![](../../.gitbook/assets/image%20%2841%29.png)
 
 #### 轻量级锁和自旋锁 <a id="toc-heading-20"></a>
 
@@ -1163,7 +1163,7 @@ HotSpot 的作者经过研究发现，大多数情况下，锁不仅不存在多
 
 轻量级解锁时，会使用原子的 CAS 操作将 Displaced Mark Word 替换回到对象头，如果成功，则表示没有竞争发生。**如果失败，表示当前锁存在竞争，锁就会膨胀成重量级锁**。下图是两个线程同时争夺锁，导致锁膨胀的流程图。
 
-![](../../.gitbook/assets/image%20%2842%29.png)
+![](../../.gitbook/assets/image%20%2847%29.png)
 
 #### 几种锁的比较 <a id="toc-heading-21"></a>
 

@@ -32,7 +32,7 @@ Kafka 是一种分布式的，基于发布 / 订阅的消息系统。主要设�
 
 #### 概念二：主题（Topic）与分区（Partition） <a id="toc-heading-6"></a>
 
-![](../../.gitbook/assets/image%20%2828%29.png)
+![](../../.gitbook/assets/image%20%2829%29.png)
 
 在 Kafka 中，消息以**主题（Topic）**来分类，每一个主题都对应一个「消息队列」，这有点儿类似于数据库中的表。但是如果我们把所有同类的消息都塞入到一个“中心”队列中，势必缺少可伸缩性，无论是生产者/消费者数目的增加，还是消息数量的增加，都可能耗尽系统的性能或存储。
 
@@ -108,7 +108,7 @@ Kafka 的一个关键性质是日志保留（retention），我们可以配置�
 
 以上面的一对 Segment File 为例，说明一下索引文件和数据文件对应关系：
 
-![](../../.gitbook/assets/image%20%2846%29.png)
+![](../../.gitbook/assets/image%20%2851%29.png)
 
 其中以索引文件中元数据 `<3, 497>` 为例，依次在数据文件中表示第 3 个 message（在全局 Partition 表示第 368769 + 3 = 368772 个 message）以及该消息的物理偏移地址为 497。
 
@@ -134,7 +134,7 @@ Kafka 的一个关键性质是日志保留（retention），我们可以配置�
 
 不同的业务需要使用不同的写入方式和配置。具体的方式我们在这里不做讨论，现在先看下生产者写消息的基本流程：
 
-![](../../.gitbook/assets/image%20%2839%29.png)
+![](../../.gitbook/assets/image%20%2842%29.png)
 
 * 图片来源：[http://www.dengshenyu.com/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/2017/11/12/kafka-producer.html](http://www.dengshenyu.com/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/2017/11/12/kafka-producer.html)
 
@@ -163,11 +163,11 @@ Kafka消费者是**消费组**的一部分，当多个消费者形成一个消�
 
 如果增加到4个消费者，那么每个消费者将会分别收到一个分区的消息，如下所示：
 
-![](../../.gitbook/assets/image%20%2830%29.png)
+![](../../.gitbook/assets/image%20%2833%29.png)
 
 但如果我们继续增加消费者到这个消费组，剩余的消费者将会空闲，不会收到任何消息：
 
-![](../../.gitbook/assets/image%20%2848%29.png)
+![](../../.gitbook/assets/image%20%2853%29.png)
 
 总而言之，我们可以通过增加消费组的消费者来进行水平扩展提升消费能力。这也是为什么建议创建主题时使用比较多的分区数，这样可以在消费负载高的情况下增加消费者来提升性能。另外，消费者的数量不应该比分区数多，因为多出来的消费者是空闲的，没有任何帮助。
 
@@ -200,7 +200,7 @@ Kafka消费者是**消费组**的一部分，当多个消费者形成一个消�
 无论消息是否被消费，除非消息到期 Partition 从不删除消息。例如设置保留时间为 2 天，则消息发布 2 天内任何 Group 都可以消费，2 天后，消息自动被删除。  
 Partition 会为每个 Consumer Group 保存一个偏移量，记录 Group 消费到的位置。 如下图：
 
-![](../../.gitbook/assets/image%20%2841%29.png)
+![](../../.gitbook/assets/image%20%2846%29.png)
 
 #### 为什么 Kafka 是 pull 模型 <a id="toc-heading-17"></a>
 
@@ -249,7 +249,7 @@ vi /usr/local/etc/kafka/server.properties
 
 然后修改成下图的样子：
 
-![](../../.gitbook/assets/image%20%2827%29.png)
+![](../../.gitbook/assets/image%20%2828%29.png)
 
 依次启动 Zookeeper 和 Kafka：
 
