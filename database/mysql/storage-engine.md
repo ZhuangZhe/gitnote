@@ -73,6 +73,13 @@ MyISAM类型的表支持三种不同的存储结构：静态型、动态型、�
 * **InnoDB：frm是表定义文件，ibd是数据文件**
 * **MyISAM：frm是表定义文件，myd是数据文件，myi是索引文件**
 
+### **MVCC**
+
+* 仅InnoDB支持。
+* 应对高并发事务, MVCC比单纯的加锁更高效。
+* MVCC只在`READ COMMITTED`和`REPEATABLE READ`两个隔离级别下工作。
+* MVCC可以使用乐观\(optimistic\)锁和悲观\(pessimistic\)锁来实现;各数据库中MVCC实现并不统一。
+
 \*\*\*\*
 
 **参考资料：**
