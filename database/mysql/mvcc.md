@@ -36,6 +36,69 @@ PostgreSQL中snapshot的概念, 对应MySQL中, 其实就是你在网上看到�
   * insert undo log : 事务对insert新记录时产生的undolog, 只在事务回滚时需要, 并且在事务提交后就可以立即丢弃。
   * update undo log : 事务对记录进行delete和update操作时产生的undo log, 不仅在事务回滚时需要, 一致性读也需要，所以不能随便删除，只有当数据库所使用的快照中不涉及该日志记录，对应的回滚日志才会被purge线程删除。
 
+### InnoDB存储引擎在数据库每行数据的后面添加了三个字段
+
+* 6字节的`事务ID`\(`DB_TRX_ID`\)字段: 用来标识最近一次对本行记录做修改\(insert\|update\)的事务的标识符, 即最后一次修改\(insert\|update\)本行记录的事务id。至于delete操作，在innodb看来也不过是一次update操作，更新行中的一个特殊位将行表示为deleted, **并非真正删除**。
+* 7字节的`回滚指针`\(`DB_ROLL_PTR`\)字段: 指写入回滚段\(rollback segment\)的 `undo log` record \(撤销日志记录记录\)。如果一行记录被更新, 则`undo log`record 包含 '重建该行记录被更新之前内容' 所必须的信息。
+* 6字节的`DB_ROW_ID`字段: 包含一个随着新行插入而单调递增的行ID, 当由innodb自动产生聚集索引时，聚集索引会包括这个行ID的值，否则这个行ID不会出现在任何索引中。结合聚簇索引的相关知识点, 我的理解是, 如果我们的表中没有主键或合适的唯一索引, 也就是无法生成聚簇索引的时候, InnoDB会帮我们自动生成聚集索引, 但聚簇索引会使用`DB_ROW_ID`的值来作为主键; 如果我们有自己的主键或者合适的唯一索引, 那么聚簇索引中也就不会包含`DB_ROW_ID`了 。
+
+### 可见性比较算法
+
+设要读取的行的最后提交事务id\(即当前数据行的稳定事务id\)为 `trx_id_current`  
+当前新开事务id为 `new_id`  
+当前新开事务创建的快照`read view`中最早的事务id为`up_limit_id`, 最迟的事务id为`low_limit_id`\(注意这个`low_limit_id`=未开启的事务id=当前最大事务id+1\)  
+比较:
+
+* `trx_id_current < up_limit_id`, 这种情况比较好理解, 表示, 新事务在读取该行记录时, 该行记录的稳定事务ID是小于, 系统当前所有活跃的事务, 所以当前行稳定数据对新事务可见, 跳到步骤5.
+* `trx_id_current >= trx_id_last`, 这种情况也比较好理解, 表示, 该行记录的稳定事务id是在本次新事务创建之后才开启的, 但是却在本次新事务执行第二个select前就commit了，所以该行记录的当前值不可见, 跳到步骤4。
+* `trx_id_current <= trx_id_current <= trx_id_last`, 表示: 该行记录所在事务在本次新事务创建的时候处于活动状态，从up\_limit\_id到low\_limit\_id进行遍历，如果trx\_id\_current等于他们之中的某个事务id的话，那么不可见, 调到步骤4,否则表示可见。
+* 从该行记录的 DB\_ROLL\_PTR 指针所指向的回滚段中取出最新的undo-log的版本号, 将它赋值该 `trx_id_current`，然后跳到步骤1重新开始判断。
+* 将该可见行的值返回。
+
+### 当前读和快照读
+
+MySQL的InnoDB存储引擎默认事务隔离级别是RR\(可重复读\), 是通过 "行排他锁+MVCC" 一起实现的, 不仅可以保证可重复读, 还可以**部分**防止幻读, 而非完全防止;
+
+为什么是部分防止幻读, 而不是完全防止?
+
+* 效果: 在如果事务B在事务A执行中, insert了一条数据并提交, 事务A再次查询, 虽然读取的是undo中的旧版本数据\(防止了部分幻读\), 但是事务A中执行update或者delete都是可以成功的!!
+* 因为在innodb中的操作可以分为`当前读(current read)`和`快照读(snapshot read)`:
+
+快照读\(snapshot read\)
+
+```text
+简单的select操作(当然不包括 select ... lock in share mode, select ... for update)
+```
+
+当前读\(current read\) [官网文档 Locking Reads](https://dev.mysql.com/doc/refman/5.7/en/innodb-locking-reads.html)
+
+* `select ... lock in share mode`
+* `select ... for update`
+* `insert`
+* `update`
+* `delete`
+
+在RR级别下，快照读是通过MVVC\(多版本控制\)和undo log来实现的，当前读是通过加record lock\(记录锁\)和gap lock\(间隙锁\)来实现的。
+
+innodb在快照读的情况下并没有真正的避免幻读, 但是在当前读的情况下避免了不可重复读和幻读。
+
+### 小结
+
+1. 一般我们认为MVCC有下面几个特点：
+   * 每行数据都存在一个版本，每次数据更新时都更新该版本
+   * 修改时Copy出当前版本, 然后随意修改，各个事务之间无干扰
+   * 保存时比较版本号，如果成功\(commit\)，则覆盖原记录, 失败则放弃copy\(rollback\)
+   * 就是每行都有版本号，保存时根据版本号决定是否成功，**听起来含有乐观锁的味道, 因为这看起来正是，在提交的时候才能知道到底能否提交成功**
+2. 而InnoDB实现MVCC的方式是:
+   * 事务以排他锁的形式修改原始数据
+   * 把修改前的数据存放于undo log，通过回滚指针与主数据关联
+   * 修改成功（commit）啥都不做，失败则恢复undo log中的数据（rollback）
+3. **二者最本质的区别是**: 当修改数据时是否要`排他锁定`，如果锁定了还算不算是MVCC？
+
+* Innodb的实现真算不上MVCC, 因为并没有实现核心的多版本共存, `undo log` 中的内容只是串行化的结果, 记录了多个事务的过程, 不属于多版本共存。但理想的MVCC是难以实现的, 当事务仅修改一行记录使用理想的MVCC模式是没有问题的, 可以通过比较版本号进行回滚, 但当事务影响到多行数据时, 理想的MVCC就无能为力了。
+* 比如, 如果事务A执行理想的MVCC, 修改Row1成功, 而修改Row2失败, 此时需要回滚Row1, 但因为Row1没有被锁定, 其数据可能又被事务B所修改, 如果此时回滚Row1的内容，则会破坏事务B的修改结果，导致事务B违反ACID。 这也正是所谓的 `第一类更新丢失` 的情况。
+* 也正是因为InnoDB使用的MVCC中结合了排他锁, 不是纯的MVCC, 所以第一类更新丢失是不会出现了, 一般说更新丢失都是指第二类丢失更新。
+
 **参考资料：**
 
 * [MySQL-InnoDB-MVCC多版本并发**控制**](https://segmentfault.com/a/1190000012650596)\*\*\*\*
