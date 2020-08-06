@@ -1,6 +1,6 @@
 # 集合
 
-![](../../.gitbook/assets/image%20%289%29.png)
+![](../../.gitbook/assets/image%20%2812%29.png)
 
 * `List`： 存储的元素是有序的、可重复的。
 * `Set`: 存储的元素是无序的、不可重复的。

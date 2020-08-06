@@ -2,7 +2,7 @@
 
 ![](https://pic1.zhimg.com/80/v2-baaf7d50702f6d0935820b9415ff364c_1440w.jpg?source=1940ef5c)
 
-![](../../../../.gitbook/assets/image%20%2826%29.png)
+![](../../../../.gitbook/assets/image%20%2830%29.png)
 
 ## 实例化Bean
 
