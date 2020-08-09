@@ -10,6 +10,7 @@
   * [垃圾回收](java/untitled/garbage-collection.md)
   * [类实例化和类加载](java/untitled/class-loading.md)
 * [反射](java/reflection/README.md)
+  * [泛型](java/reflection/generic.md)
   * [Class类](java/reflection/class-class.md)
   * [Constructor类](java/reflection/constructor-class.md)
   * [Method类](java/reflection/method-class.md)
