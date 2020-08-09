@@ -1,6 +1,15 @@
 # AccessibleObject类
 
+`AccessibleObject`是一个普通Java类，实现了`AnnotatedElement`接口，但是对应`AnnotatedElement`的非默认方法的实现都是直接抛异常，也就是`AnnotatedElement`的接口方法必须由`AccessibleObject`的子类去实现。`AccessibleObject`在JDK1.1的时候已经存在，在JDK9的时候被改进过，添加了一些新的方法，下面列举一下常用的方法：
 
+| 方法 | 功能 |
+| :--- | :--- |
+| void setAccessible\(boolean flag\) | 设置实例是否可以访问，如果设置为true，可以抑制修饰符，直接进行访问 |
+| boolean isAccessible\(\) | 返回实例是否可以访问，实际上这个值并不准确，它只有在setAccessible被调用的时候才会更新 |
+| boolean trySetAccessible\(\) | 功能类似于setAccessible\(boolean flag\)，返回值决定是否抑制修饰符成功 |
+| static void setAccessible\(AccessibleObject\[\] array, boolean flag\) | setAccessible\(boolean flag\)的批量操作方法 |
+
+一般而言，我们需要通过`getModifiers()`方法判断修饰符是否public，如果是非public，则需要调用`setAccessible(true)`进行修饰符抑制，否则会因为无权限访问会抛出异常。
 
 ## 源码
 
