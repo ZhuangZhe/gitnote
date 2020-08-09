@@ -15,6 +15,7 @@
     * [TypeVariable](java/reflection/generic/typevariable.md)
     * [WildcardType](java/reflection/generic/wildcardtype.md)
     * [GenericArrayType](java/reflection/generic/genericarraytype.md)
+  * [动态代理](java/reflection/dynamic-proxy.md)
   * [Class类](java/reflection/class-class.md)
   * [Constructor类](java/reflection/constructor-class.md)
   * [Method类](java/reflection/method-class.md)

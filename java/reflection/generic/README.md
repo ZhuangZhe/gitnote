@@ -119,7 +119,7 @@ Signature: #22
 
 在JDK1.5中引入了四种新的泛型类型`java.lang.reflect.ParameterizedType`、`java.lang.reflect.TypeVariable`、`java.lang.reflect.WildcardType`、`java.lang.reflect.GenericArrayType`，包括原来存在的`java.lang.Class`，一共存在五种类型。为了程序的扩展性，引入了`java.lang.reflect.Type`类作为这五种类型的公共父接口，这样子就可以使用`java.lang.reflect.Type`类型参数去接收以上五种子类型的实参或者返回值，由此从逻辑上统一了泛型相关的类型和原始存在的`java.lang.Class`描述的类型。
 
-![](../../../.gitbook/assets/image%20%2864%29.png)
+![](../../../.gitbook/assets/image%20%2865%29.png)
 
 
 
@@ -136,9 +136,60 @@ Type体系虽然看似很美好解决了泛型相关的类型和原始存在的`
 
 {% page-ref page="genericarraytype.md" %}
 
+## 泛型的约束
 
+使用Java泛型的时候需要考虑一些限制，这些限制大多数是由泛型类型擦除引起的。
 
+* 不能用基本类型实例化类型参数，也就是8种基本类型不能作为泛型参数，例如`Pair<int>`是非法的，会导致编译错误，而`Pair<Integer>`是合法的。
+* 运行时的类型查询只能适用于原始类型\(非参数化类型\)。
 
+```java
+//下面的两种做法是错误的
+if(a instanceof Pair<String>) //Error
+
+if(a instanceof Pair<T>)  //Error
+
+// 正确做法
+if(a instanceof Pair)  //Right
+```
+
+* 不能创建参数化类型的数组，例如`Pair<String>[] arr = new Pair<String>[10]`是非法的。
+* 不能实例化类型变量或者类型变量数组，例如`T t = new T()`或者`T[] arr = new T[10]`都是非法的。
+* Varargs警告，这是因为第4点原因导致的，一般会发生在泛型类型变量作为可变参数的情况，例如`public static <T> addAll(Collection<T> con,T ... ts)`，第二个参数实际上就是泛型类型变量数组，但是这种情况是合法的，不过会受到编译器的警告，可以通过`@SuppressWarnings("unchecked")`注解或者`@SafeVarargs`注解标注该方法以消除警告。
+* 不能在静态域或者方法中引用类型变量，例如`private static T singleInstance;`这样是非法的。
+* 不能抛出或者抛出或者捕获泛型类型变量，但是如果在异常规范中使用泛型类型变量则是允许的，举两个例子仔细品味一下：
+
+```java
+// 反例
+public static <T extends Throwable> void doWork(Class<T> t) {
+    try{
+
+    }catch(T t){  //Error
+
+    }
+}
+
+// 正例
+public static <T extends Throwable> void doWork(T t) throws T{
+    try{
+
+    }catch(Throwable e){  
+       throw e;
+    }
+}
+```
+
+* 通过使用`@SuppressWarnings("unchecked")`注解可以消除Java类型系统的部分基本限制，一般使用在强制转换原始类型为泛型类型\(只是在编译层面告知编译器\)的情况，如：
+
+```java
+// 不加此注解会收到编译器的警告
+@SuppressWarnings("unchecked")
+public static <T extends Throwable> void throwAs(Throwable e){
+    throw (T) e;
+}
+```
+
+其实还有泛型的继承规则和通配符规则\(可以看下前面介绍的Type的子类型\)等等，这里不详细展开。
 
 
 
