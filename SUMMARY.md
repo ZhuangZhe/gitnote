@@ -12,6 +12,7 @@
 * [反射](java/reflection/README.md)
   * [Class类](java/reflection/class-class.md)
   * [AccessibleObject类](java/reflection/accessibleobject-class.md)
+  * [Modifier类](java/reflection/modifier-class.md)
   * [AnnotatedElement接口](java/reflection/annotatedelement-interface.md)
   * [GenericDeclaration接口](java/reflection/genericdeclaration-interface.md)
   * [Type接口](java/reflection/type-interface.md)

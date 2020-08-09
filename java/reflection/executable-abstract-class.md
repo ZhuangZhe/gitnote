@@ -1,6 +1,6 @@
 # Executable抽象类
 
-
+`Executable`是一个抽象类，它继承自`AccessibleObject`，实现了`Member`和`GenericDeclaration`接口。`Executable`的实现类是`Method`和`Constructor`，它的主要功能是从`Method`和`Constructor`抽取出两者可以共用的一些方法例如注解的操作，参数的操作等等。
 
 ## 源码
 
