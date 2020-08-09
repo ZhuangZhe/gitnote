@@ -17,7 +17,7 @@
     * [GenericArrayType](java/reflection/generic/genericarraytype.md)
   * [动态代理](java/reflection/dynamic-proxy/README.md)
     * [Proxy类](java/reflection/dynamic-proxy/proxy-class.md)
-    * [InvocationHandler类](java/reflection/dynamic-proxy/invocationhandler-class.md)
+    * [InvocationHandler接口](java/reflection/dynamic-proxy/invocationhandler-interface.md)
   * [Class类](java/reflection/class-class.md)
   * [Constructor类](java/reflection/constructor-class.md)
   * [Method类](java/reflection/method-class.md)
