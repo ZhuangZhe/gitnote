@@ -18,7 +18,7 @@
 | T newInstance\(\) | 通过当前的Class实例进行实例化对象，返回的就是新建的对象 |
 | int getModifiers\(\) | native方法，返回当前Class的修饰符 |
 | String getName\(\) | 返回类名称，虚拟机中类名表示 |
-| String getCanonicalName\(\) | 返回类名称，便于理解的类名表示 |
+| String getCanonicalName\(\) | 返回类名称，全限定类名表示 |
 | String getSimpleName\(\) | 返回类名称，源代码中给出的底层类的简单名称 |
 | Package getPackage\(\) | 返回类的包属性 |
 | String getPackageName\(\) | 返回类的包路径名称 |
@@ -55,9 +55,176 @@
 | Method getEnclosingMethod\(\) | 返回方法，当前类是在这个方法中定义 |
 | Module getModule\(\) | 返回模块，JDK9新增方法 |
 
+这里需要注意一点，`Class.forName`方法只能使用在修饰符为public的类上，如果使用在其他修饰符类上会抛出异常\(`IllegalAccessException`\)。另外，这里的`Class.forName`方法不是获取Class实例的唯一方式，总结有以下三种方式：
 
+* 1、使用类的字面量"类名.class"。类字面常量使得创建Class对象的引用时不会自动地初始化该对象，而是按照之前提到的加载，链接，初始化三个步骤，这三个步骤是个懒加载的过程，不使用的时候就不加载。
+* 2、使用`Class.forName(全类名);`方法。
+* 3、使用实例的`getClass()`方法。`getClass()`是所有的对象都能够使用的方法，因为`getClass()`方法是Object类的方法，所有的类都继承了Object，因此所有类的对象也都具有`getClass()`方法。
 
+一般来说，使用"类名.class"，这样做即简单安全又比较高效。因为在编译时就会受到检查，因此不需要置于try语句块中，并且它根除了对`forName()`方法的调用\(`forName()`方法是一个耗时比较多的方法\)，所以相对比较高效。
 
+最后，分析一下这几个比较难懂的方法`getEnclosingClass()`、`getEnclosingConstructor()`、`getEnclosingMethod()`：
 
+* `getEnclosingClass()`：返回一个类，当前类\(一般是成员类\)在这个类\(**一般叫封闭类，相对于内部类的外部类或者说外面一层**\)中定义。
+* `getEnclosingConstructor()`：返回构造器，当前类是在这个构造函数中定义。
+* `getEnclosingClass()`：返回方法，当前类是在这个方法中定义。
 
+**我们在新建一个类的时候，这个类可以使另一个类中定义的成员类、构造方法中定义的内部类、方法中定义的内部类。可以通过当前的类反向获取定义当前的类的类、构造或者方法，这三种情况对应上面三个方法**。
+
+## 例子1
+
+```java
+public class Main {
+
+	public static void main(String[] args) {
+		Supper<String, List<Integer>> supper = new Supper<>();
+		Class<?> clazz = supper.getClass();
+		System.out.println("name->" + clazz.getName());
+		System.out.println("canonicalName->" + clazz.getCanonicalName());
+		System.out.println("simpleName->" + clazz.getSimpleName());
+		System.out.println("======================================");
+		String[][] strings = new String[1][1];
+		System.out.println("name->" + strings.getClass().getName());
+		System.out.println("canonicalName->" + strings.getClass().getCanonicalName());
+		System.out.println("simpleName->" + strings.getClass().getSimpleName());
+	}
+
+	private static class Supper<K, V> {
+		private K key;
+		private V value;
+        //省略setter和getter方法
+	}
+	
+}
+```
+
+### 输出结果
+
+```bash
+name->club.throwable.reflect.Main$Supper
+canonicalName->club.throwable.reflect.Main.Supper
+simpleName->Supper
+======================================
+name->[[Ljava.lang.String;
+canonicalName->java.lang.String[][]
+simpleName->String[][]
+```
+
+## 例子2
+
+```java
+public class Main3 {
+
+	public static void main(String[] args) throws Exception {
+		Class<?> clazz = Class.forName("club.throwable.reflect.Main3$Supper");
+		Supper supper = (Supper) clazz.newInstance();
+		System.out.println(supper.sayHello("throwable"));
+	}
+
+	public static class Supper {
+
+		public String sayHello(String name) {
+			return String.format("%s say hello!", name);
+		}
+		
+	}
+	
+}
+```
+
+## 例子3
+
+```java
+public class Main5 {
+
+    public static void main(String[] args) throws Exception{
+        Class<Outter.Inner> clazz = Outter.Inner.class;
+        Class<?> enclosingClass = clazz.getEnclosingClass();
+        System.out.println(enclosingClass.getName());
+    }
+    // Inner类是Outter类的成员类
+    public static class Outter {
+
+        public static class Inner {
+
+        }
+    }
+}
+```
+
+### 输出结果
+
+```bash
+org.throwable.inherited.Main5$Outter
+```
+
+## 例子4
+
+```java
+public class Main6 {
+
+    public static void main(String[] args) throws Exception {
+        Outter outter = new Outter();
+    }
+
+    public static class Outter {
+
+        //Outter的无参数构造器
+        public Outter() {
+            //构造中定义的内部类
+            class Inner {
+
+            }
+
+            Class<Inner> innerClass = Inner.class;
+            Class<?> enclosingClass = innerClass.getEnclosingClass();
+            System.out.println(enclosingClass.getName());
+            Constructor<?> enclosingConstructor = innerClass.getEnclosingConstructor();
+            System.out.println(enclosingConstructor.getName());
+        }
+    }
+}
+```
+
+### 输出结果
+
+```bash
+org.throwable.inherited.Main6$Outter
+org.throwable.inherited.Main6$Outter
+```
+
+## 例子5
+
+```java
+public class Main7 {
+
+    public static void main(String[] args) throws Exception {
+        Outter outter = new Outter();
+        outter.print();
+    }
+
+    public static class Outter {
+
+        public void print(){
+            //方法print中定义的内部类
+            class Inner {
+
+            }
+
+            Class<Inner> innerClass = Inner.class;
+            Class<?> enclosingClass = innerClass.getEnclosingClass();
+            System.out.println(enclosingClass.getName());
+            Method enclosingMethod = innerClass.getEnclosingMethod();
+            System.out.println(enclosingMethod.getName());
+        }
+    }
+}
+```
+
+### 输出结果
+
+```bash
+org.throwable.inherited.Main7$Outter
+print
+```
 
