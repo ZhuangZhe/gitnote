@@ -154,7 +154,7 @@ public static Object newProxyInstance(ClassLoader loader, Class<?>[] interfaces,
 * `InvocationHandler getInvocationHandler(Object proxy)`：通过制定的代理类实例查找它关联的调用处理器实例。
 * `Class<?> getProxyClass(ClassLoader loader, Class<?>[] interfaces)`：用于获取关联于指定类装载器和一组接口的动态代理类的类对象，也就是获取`$ProxyXXX`的类型，此方法在JDK9以后标记为过期，原因是：在命名模块中生成的代理类是封闭的，模块外的代码无法访问这些类\(违反模块规则调用了会抛异常\)。
 * `boolean isProxyClass(Class<?> cl)`：用于判断指定类是否是一个动态代理类。
-* `Object newProxyInstance(ClassLoader loader, Class[] interfaces, InvocationHandler h)`：这个是JDK动态代理最核心的方法，用于为指定类装载器、一组接口及调用处理器生成动态代理类实例，也就是生成`$ProxyXXX`的实例。此方法需要指定类加载器`java.lang.ClassLoader`，Proxy静态方法生成动态代理类同样需要通过类装载器来进行装载才能使用，它与普通类的唯一区别就是其字节码是在运行时动态生成的而非预存在于任何一个.class文件中。interfaces是Class数组，也就是需要使用InvocationHandler进行代理访问的接口类型数组，这里的h参数就是调用处理器的实例。
+* `Object newProxyInstance(ClassLoader loader, Class[] interfaces, InvocationHandler h)`：这个是JDK动态代理最核心的方法，用于为指定类装载器、一组接口及调用处理器生成动态代理类实例，也就是生成`$ProxyXXX`的实例。此方法需要指定类加载器`java.lang.ClassLoader`，`Proxy`静态方法生成动态代理类同样需要通过类装载器来进行装载才能使用，它与普通类的唯一区别就是其字节码是在运行时动态生成的而非预存在于任何一个`.class`文件中。`interfaces`是`Class`数组，也就是需要使用`InvocationHandler`进行代理访问的接口类型数组，这里的h参数就是调用处理器的实例。
 
 ### InvocationHandler
 
@@ -242,7 +242,7 @@ Interface proxy = (Interface) Proxy.newProxyInstance(classLoader, new Class[] { 
 
 因为JDK动态代理核心逻辑都在`java.lang.reflect.Proxy`类中，下面简单分析一下这个类的源码。先看`Proxy`类中的几个重要的静态变量：
 
-```text
+```java
 // 接口组中接口都为为public时候代理类创建的包路径：com.sun.proxy
 private static final String PROXY_PACKAGE_PREFIX = ReflectUtil.PROXY_PACKAGE;
 
@@ -255,7 +255,7 @@ private static final ClassLoaderValue<Constructor<?>> proxyCache = new ClassLoad
 
 这里注意到`ClassLoaderValue`，下文会调用到它的一个很复杂的调用链：
 
-```text
+```java
 //intf是Class<?>类型
 //loader是类加载器实例
 return proxyCache.sub(intf).computeIfAbsent(
@@ -272,7 +272,7 @@ public V computeIfAbsent(ClassLoader cl,
 
 接着看`Proxy`的构造函数：
 
-```text
+```java
 protected InvocationHandler h;
 
 private Proxy() {
@@ -284,9 +284,9 @@ protected Proxy(InvocationHandler h) {
 }
 ```
 
-到此可以明确一点，既然所有动态代理类都是`java.lang.reflect.Proxy`的子类，那么它们一定具备一个包含`InvocationHandler`参数的构造器。接着查看\`\`方法的源码：
+到此可以明确一点，既然所有动态代理类都是`java.lang.reflect.Proxy`的子类，那么它们一定具备一个包含`InvocationHandler`参数的构造器。接着查看方法的源码：
 
-```text
+```java
 public static Object newProxyInstance(ClassLoader loader,
                                       Class<?>[] interfaces,
                                       InvocationHandler h) {
@@ -305,39 +305,39 @@ public static Object newProxyInstance(ClassLoader loader,
 
 先看`getProxyConstructor`方法：
 
-```text
-    private static Constructor<?> getProxyConstructor(Class<?> caller,
-                                                      ClassLoader loader,
-                                                      Class<?>... interfaces){
-        // 这里需要区分代理接口数组中只有单个接口和多个接口的逻辑				  
-        // 而基本的逻辑都是先校验当前调用类的权限，后续获取Constructor实例委托到ProxyBuilder
-        if (interfaces.length == 1) {
-            Class<?> intf = interfaces[0];
-            if (caller != null) {
-                checkProxyAccess(caller, loader, intf);
-            }
-            return proxyCache.sub(intf).computeIfAbsent(
-                loader,
-                (ld, clv) -> new ProxyBuilder(ld, clv.key()).build()
-            );
-        } else {
-            // 接口克隆
-            final Class<?>[] intfsArray = interfaces.clone();
-            if (caller != null) {
-                checkProxyAccess(caller, loader, intfsArray);
-            }
-            final List<Class<?>> intfs = Arrays.asList(intfsArray);
-            return proxyCache.sub(intfs).computeIfAbsent(
-                loader,
-                (ld, clv) -> new ProxyBuilder(ld, clv.key()).build()
-            );
+```java
+private static Constructor<?> getProxyConstructor(Class<?> caller,
+                                                  ClassLoader loader,
+                                                  Class<?>... interfaces){
+    // 这里需要区分代理接口数组中只有单个接口和多个接口的逻辑				  
+    // 而基本的逻辑都是先校验当前调用类的权限，后续获取Constructor实例委托到ProxyBuilder
+    if (interfaces.length == 1) {
+        Class<?> intf = interfaces[0];
+        if (caller != null) {
+            checkProxyAccess(caller, loader, intf);
         }
+        return proxyCache.sub(intf).computeIfAbsent(
+            loader,
+            (ld, clv) -> new ProxyBuilder(ld, clv.key()).build()
+        );
+    } else {
+        // 接口克隆
+        final Class<?>[] intfsArray = interfaces.clone();
+        if (caller != null) {
+            checkProxyAccess(caller, loader, intfsArray);
+        }
+        final List<Class<?>> intfs = Arrays.asList(intfsArray);
+        return proxyCache.sub(intfs).computeIfAbsent(
+            loader,
+            (ld, clv) -> new ProxyBuilder(ld, clv.key()).build()
+        );
     }
+}
 ```
 
 可以明确，核心的逻辑都交给了`Proxy`的内部类`ProxyBuilder`完成，先看`ProxyBuilder`的静态成员变量：
 
-```text
+```java
 // Unsafe实例
 private static final Unsafe UNSAFE = Unsafe.getUnsafe();
 
@@ -351,153 +351,151 @@ private static final AtomicLong nextUniqueNumber = new AtomicLong();
 private static final ClassLoaderValue<Boolean> reverseProxyCache = new ClassLoaderValue<>();
 ```
 
-```text
-        // 单个代理接口的情况，其实也是把接口转换为List
-        ProxyBuilder(ClassLoader loader, Class<?> intf) {
-            this(loader, Collections.singletonList(intf));
-        }
-        // 多个代理接口的情况
-        ProxyBuilder(ClassLoader loader, List<Class<?>> interfaces) {
-            // 通过JVM参数强制关闭动态代理功能则抛出异常
-            if (!VM.isModuleSystemInited()) {
-                throw new InternalError("Proxy is not supported until "
-                        + "module system is fully initialized");
-            }
-            // 代理接口数量不能超过65535，也就是最多代理65535个接口
-            if (interfaces.size() > 65535) {
-                throw new IllegalArgumentException("interface limit exceeded: "
-                        + interfaces.size());
-            }
-            // 收集接口数组中所有接口的非静态方法的返回值类型、共享(shared)参数类型和共享(shared)异常类型，注释说是收集代理接口的方法签名
-            Set<Class<?>> refTypes = referencedTypes(loader, interfaces);
+```java
+// 单个代理接口的情况，其实也是把接口转换为List
+ProxyBuilder(ClassLoader loader, Class<?> intf) {
+    this(loader, Collections.singletonList(intf));
+}
+// 多个代理接口的情况
+ProxyBuilder(ClassLoader loader, List<Class<?>> interfaces) {
+    // 通过JVM参数强制关闭动态代理功能则抛出异常
+    if (!VM.isModuleSystemInited()) {
+        throw new InternalError("Proxy is not supported until "
+                + "module system is fully initialized");
+    }
+    // 代理接口数量不能超过65535，也就是最多代理65535个接口
+    if (interfaces.size() > 65535) {
+        throw new IllegalArgumentException("interface limit exceeded: "
+                + interfaces.size());
+    }
+    // 收集接口数组中所有接口的非静态方法的返回值类型、共享(shared)参数类型和共享(shared)异常类型，注释说是收集代理接口的方法签名
+    Set<Class<?>> refTypes = referencedTypes(loader, interfaces);
 
-            // 确保上一步得到的代理接口方法签名的类型都是"可见(其实就是类型都存在)"的，通过遍历调用Class.forName(type.getName(), false, ld)去判断
-            validateProxyInterfaces(loader, interfaces, refTypes);
+    // 确保上一步得到的代理接口方法签名的类型都是"可见(其实就是类型都存在)"的，通过遍历调用Class.forName(type.getName(), false, ld)去判断
+    validateProxyInterfaces(loader, interfaces, refTypes);
 
-            this.interfaces = interfaces;
-            // 获取代理类最终生成的模块，规则如下：
-            // 1、所有代理接口的修饰符都为public，接口所在模块都能公开访问，则返回unnamed模块
-            // 2、如果有任意的代理接口是包私有，则返回该包所在的模块		、
-            // 3、所有代理接口的修饰符都为public，有任意至少一个接口所在模块不能公开访问，则返回该不能公开访问的模块，
-            this.module = mapToModule(loader, interfaces, refTypes);
-            assert getLoader(module) == loader;
-        }
+    this.interfaces = interfaces;
+    // 获取代理类最终生成的模块，规则如下：
+    // 1、所有代理接口的修饰符都为public，接口所在模块都能公开访问，则返回unnamed模块
+    // 2、如果有任意的代理接口是包私有，则返回该包所在的模块		、
+    // 3、所有代理接口的修饰符都为public，有任意至少一个接口所在模块不能公开访问，则返回该不能公开访问的模块，
+    this.module = mapToModule(loader, interfaces, refTypes);
+    assert getLoader(module) == loader;
+}
 ```
 
 一个构造器处理的逻辑也是相对复杂，主要是因为引入模块管理的概念，接着看`ProxyBuilder#build()`的源码：
 
-```text
-        Constructor<?> build() {
-            // 定义代理类，实际上是动态生成代理类字节码和缓存它的类型的过程
-            Class<?> proxyClass = defineProxyClass(module, interfaces);
-            final Constructor<?> cons;
-            try {
-            // 返回代理类的构造
-                cons = proxyClass.getConstructor(constructorParams);
-            } catch (NoSuchMethodException e) {
-                throw new InternalError(e.toString(), e);
-            }
-            AccessController.doPrivileged(new PrivilegedAction<Void>() {
-                public Void run() {
-                    cons.setAccessible(true);
-                    return null;
-                }
-            });
-            return cons;
+```java
+Constructor<?> build() {
+    // 定义代理类，实际上是动态生成代理类字节码和缓存它的类型的过程
+    Class<?> proxyClass = defineProxyClass(module, interfaces);
+    final Constructor<?> cons;
+    
+    try {
+    // 返回代理类的构造
+        cons = proxyClass.getConstructor(constructorParams);
+    } catch (NoSuchMethodException e) {
+        throw new InternalError(e.toString(), e);
+    }
+    
+    AccessController.doPrivileged(new PrivilegedAction<Void>() {
+        public Void run() {
+            cons.setAccessible(true);
+            return null;
         }
+    });
+    return cons;
+}
 ```
 
 最后到逻辑最复杂的代理类的生成过程`ProxyBuilder#defineProxyClass()`：
 
-```text
-        private static Class<?> defineProxyClass(Module m, List<Class<?>> interfaces) {
-            String proxyPkg = null;     // package to define proxy class in
-            int accessFlags = Modifier.PUBLIC | Modifier.FINAL;
-            // 这里就是定义代理类包路径的逻辑，规则如下：
-            // 1、代理接口数组所有接口都是public修饰，则代理类包路径为com.sun.proxy
-            // 2、代理接口数组有任意接口是包私有的，则代理类包路径为该私有包的路径			
-            for (Class<?> intf : interfaces) {
-                int flags = intf.getModifiers();
-                if (!Modifier.isPublic(flags)) {
-                    accessFlags = Modifier.FINAL;  // non-public, final
-                    String pkg = intf.getPackageName();
-                    if (proxyPkg == null) {
-                        proxyPkg = pkg;
-                    } else if (!pkg.equals(proxyPkg)) {
-                        throw new IllegalArgumentException(
-                                "non-public interfaces from different packages");
-                    }
-                }
-            }
-            // 下面几个if都是包路径的合法性判断
+```java
+private static Class<?> defineProxyClass(Module m, List<Class<?>> interfaces) {
+    String proxyPkg = null;     // package to define proxy class in
+    int accessFlags = Modifier.PUBLIC | Modifier.FINAL;
+    // 这里就是定义代理类包路径的逻辑，规则如下：
+    // 1、代理接口数组所有接口都是public修饰，则代理类包路径为com.sun.proxy
+    // 2、代理接口数组有任意接口是包私有的，则代理类包路径为该私有包的路径			
+    for (Class<?> intf : interfaces) {
+        int flags = intf.getModifiers();
+        if (!Modifier.isPublic(flags)) {
+            accessFlags = Modifier.FINAL;  // non-public, final
+            String pkg = intf.getPackageName();
             if (proxyPkg == null) {
-                // all proxy interfaces are public
-                proxyPkg = m.isNamed() ? PROXY_PACKAGE_PREFIX + "." + m.getName()
-                                       : PROXY_PACKAGE_PREFIX;
-            } else if (proxyPkg.isEmpty() && m.isNamed()) {
+                proxyPkg = pkg;
+            } else if (!pkg.equals(proxyPkg)) {
                 throw new IllegalArgumentException(
-                        "Unnamed package cannot be added to " + m);
-            }
-            if (m.isNamed()) {
-                if (!m.getDescriptor().packages().contains(proxyPkg)) {
-                    throw new InternalError(proxyPkg + " not exist in " + m.getName());
-                }
-            }
-            // 计数器加1返回新的计数值			
-            long num = nextUniqueNumber.getAndIncrement();
-            // 生成代理类全类名，一个常见的格式是：com.sun.proxy.$Proxy1
-            String proxyName = proxyPkg.isEmpty()
-                                    ? proxyClassNamePrefix + num
-                                    : proxyPkg + "." + proxyClassNamePrefix + num;
-            ClassLoader loader = getLoader(m);
-            trace(proxyName, m, loader, interfaces);
-            // 动态生成代理类字节码字节数组			
-            byte[] proxyClassFile = ProxyGenerator.generateProxyClass(
-                    proxyName, interfaces.toArray(EMPTY_CLASS_ARRAY), accessFlags);
-            try {
-                // 通过Unsafe定义代理类-这里是通过字节码定义新的类				
-                Class<?> pc = UNSAFE.defineClass(proxyName, proxyClassFile,
-                                                 0, proxyClassFile.length,
-                                                 loader, null);
-                // 缓存代理类已经生成过的标记												 
-                reverseProxyCache.sub(pc).putIfAbsent(loader, Boolean.TRUE);
-                return pc;
-            } catch (ClassFormatError e) {
-                /*
-                 * A ClassFormatError here means that (barring bugs in the
-                 * proxy class generation code) there was some other
-                 * invalid aspect of the arguments supplied to the proxy
-                 * class creation (such as virtual machine limitations
-                 * exceeded).
-                 */
-                throw new IllegalArgumentException(e.toString());
+                        "non-public interfaces from different packages");
             }
         }
+    }
+    // 下面几个if都是包路径的合法性判断
+    if (proxyPkg == null) {
+        // all proxy interfaces are public
+        proxyPkg = m.isNamed() ? PROXY_PACKAGE_PREFIX + "." + m.getName()
+                               : PROXY_PACKAGE_PREFIX;
+    } else if (proxyPkg.isEmpty() && m.isNamed()) {
+        throw new IllegalArgumentException(
+                "Unnamed package cannot be added to " + m);
+    }
+    if (m.isNamed()) {
+        if (!m.getDescriptor().packages().contains(proxyPkg)) {
+            throw new InternalError(proxyPkg + " not exist in " + m.getName());
+        }
+    }
+    // 计数器加1返回新的计数值			
+    long num = nextUniqueNumber.getAndIncrement();
+    // 生成代理类全类名，一个常见的格式是：com.sun.proxy.$Proxy1
+    String proxyName = proxyPkg.isEmpty()
+                            ? proxyClassNamePrefix + num
+                            : proxyPkg + "." + proxyClassNamePrefix + num;
+    ClassLoader loader = getLoader(m);
+    trace(proxyName, m, loader, interfaces);
+    // 动态生成代理类字节码字节数组			
+    byte[] proxyClassFile = ProxyGenerator.generateProxyClass(
+            proxyName, interfaces.toArray(EMPTY_CLASS_ARRAY), accessFlags);
+    try {
+        // 通过Unsafe定义代理类-这里是通过字节码定义新的类				
+        Class<?> pc = UNSAFE.defineClass(proxyName, 
+                                         proxyClassFile,
+                                         0, 
+                                         proxyClassFile.length,
+                                         loader, 
+                                         null);
+        // 缓存代理类已经生成过的标记												 
+        reverseProxyCache.sub(pc).putIfAbsent(loader, Boolean.TRUE);
+        return pc;
+    } catch (ClassFormatError e) {
+        throw new IllegalArgumentException(e.toString());
+    }
+}
 ```
 
 到这一步为止，代理类的生成过程已经大致分析完毕，`ProxyGenerator`中涉及到大量字节码操作，这里就不深入分析了。那么回到最前面的方法，得到代理类和它的构造实例，接着就可以生成代理实例：
 
-```text
-    private static Object newProxyInstance(Class<?> caller, // null if no SecurityManager
-                                           Constructor<?> cons,
-                                           InvocationHandler h) {
-        try {
-            if (caller != null) {
-                checkNewProxyPermission(caller, cons.getDeclaringClass());
-            }
-            // 这里简单反射调用Constructor#newInstance(h)
-            return cons.newInstance(new Object[]{h});
-        } catch (IllegalAccessException | InstantiationException e) {
-            throw new InternalError(e.toString(), e);
-        } catch (InvocationTargetException e) {
-            Throwable t = e.getCause();
-            if (t instanceof RuntimeException) {
-                throw (RuntimeException) t;
-            } else {
-                throw new InternalError(t.toString(), t);
-            }
+```java
+private static Object newProxyInstance(Class<?> caller, // null if no SecurityManager
+                                       Constructor<?> cons,
+                                       InvocationHandler h) {
+    try {
+        if (caller != null) {
+            checkNewProxyPermission(caller, cons.getDeclaringClass());
+        }
+        // 这里简单反射调用Constructor#newInstance(h)
+        return cons.newInstance(new Object[]{h});
+    } catch (IllegalAccessException | InstantiationException e) {
+        throw new InternalError(e.toString(), e);
+    } catch (InvocationTargetException e) {
+        Throwable t = e.getCause();
+        if (t instanceof RuntimeException) {
+            throw (RuntimeException) t;
+        } else {
+            throw new InternalError(t.toString(), t);
         }
     }
+}
 ```
 
 小结一下：
@@ -512,9 +510,9 @@ private static final ClassLoaderValue<Boolean> reverseProxyCache = new ClassLoad
 
 前面已经分析完了代理类的生成过程，这里举个简单的使用例子，并且观察生成的动态代理类的源代码。
 
-**使用例子：**
+### **例子**
 
-```text
+```java
 // 接口
 public interface Simple {
 
@@ -558,14 +556,14 @@ After say hello...
 
 可以看到，我们在被代理类`DefaultSimple`实例的方法调用前后织入了自定义的逻辑，这就是通过JDK动态代理实现AOP的底层原理。在JDK8中可以直接使用`sun.misc.ProxyGenerator`去输出代理类的class文件，但是JDK11中这个代理类生成器已经变成`java.lang.reflect.ProxyGenerator`，并且这个类是包私有的，我们无法使用，但是它提供了`jdk.proxy.ProxyGenerator.saveGeneratedFiles`这个VM参数让我们可以保存代理类的class文件：
 
-```text
+```bash
 # JVM参数
 -Djdk.proxy.ProxyGenerator.saveGeneratedFiles=true
 ```
 
 配置好VM参数后，再次调用mian方法就能看到在项目的顶层包路径下看到对应的类`com.sun.proxy.$Proxy0`，目前从`java.lang.reflect.ProxyGenerator`源码看无法控制代理类文件的输出路径，生成的代理类内容如下：
 
-```text
+```java
 public final class $Proxy0 extends Proxy implements Simple {
     private static Method m1;
     private static Method m3;
