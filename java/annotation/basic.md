@@ -143,6 +143,95 @@ public @interface AnnotationElementDemo {
 }
 ```
 
+## 编译器对默认值的限制
+
+编译器对元素的默认值有些过分挑剔。首先，元素不能有不确定的值。也就是说，元素必须要么具有默认值，要么在使用注解时提供元素的值。其次，对于非基本类型的元素，无论是在源代码中声明，还是在注解接口中定义默认值，都不能以null作为值，这就是限制，没有什么利用可言，但造成一个元素的存在或缺失状态，因为每个注解的声明中，所有的元素都存在，并且都具有相应的值，为了绕开这个限制，只能定义一些特殊的值，例如空字符串或负数，表示某个元素不存在。
+
+## 注解不支持继承
+
+注解是不支持继承的，因此不能使用关键字extends来继承某个`@interface`，但注解在编译后，编译器会自动继承`java.lang.annotation.Annotation`接口，这里我们反编译前面定义的`DBTable`注解
+
+```java
+import java.lang.annotation.Annotation;
+//反编译后的代码
+public interface DBTable extends Annotation {
+
+    public abstract String name();
+    
+}
+```
+
+虽然反编译后发现DBTable注解继承了`Annotation`接口，请记住，即使Java的接口可以实现多继承，但定义注解时依然无法使用extends关键字继承`@interface`。
+
+## 快捷方式
+
+所谓的快捷方式就是注解中定义了名为value的元素，并且在使用该注解时，如果该元素是唯一需要赋值的一个元素，那么此时无需使用`key=value`的语法，而只需在括号内给出value元素所需的值即可。这可以应用于任何合法类型的元素，记住，这限制了元素名必须为value，简单案例如下
+
+```java
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+//定义注解
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
+@interface IntegerVaule{
+    int value() default 0;
+    String name() default "";
+}
+
+//使用注解
+public class QuicklyWay {
+
+    //当只想给value赋值时,可以使用以下快捷方式
+    @IntegerVaule(20)
+    public int age;
+
+    //当name也需要赋值时必须采用key=value的方式赋值
+    @IntegerVaule(value = 10000, name = "MONEY")
+    public int money;
+
+}
+```
+
+## Java内置注解与其它元注解
+
+接着看看Java提供的内置注解，主要有3个。
+
+* `@Override`：用于标明此方法覆盖了父类的方法，源码如下
+
+  ```text
+  @Target(ElementType.METHOD)
+  @Retention(RetentionPolicy.SOURCE)
+  public @interface Override {
+  }1234
+  ```
+
+* `@Deprecated`：用于标明已经过时的方法或类，源码如下，关于@Documented稍后分析：
+
+  ```text
+  @Documented
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target(value={CONSTRUCTOR, FIELD, LOCAL_VARIABLE, METHOD, PACKAGE, PARAMETER, TYPE})
+  public @interface Deprecated {
+  }12345
+  ```
+
+* `@SuppressWarnnings`：用于有选择的关闭编译器对类、方法、成员变量、变量初始化的警告，其实现源码如下：
+
+  ```text
+  @Target({TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE})
+  @Retention(RetentionPolicy.SOURCE)
+  public @interface SuppressWarnings {
+      String[] value();
+  }
+  ```
+
+
+
+
+
 
 
 **参考资料：**
