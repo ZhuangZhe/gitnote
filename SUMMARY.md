@@ -53,7 +53,10 @@
   * [Map接口](java/collection/map-interface/README.md)
     * [HashMap](java/collection/map-interface/hashmap.md)
     * [TreeMap](java/collection/map-interface/treemap.md)
-* [IO](java/io.md)
+* [IO](java/io/README.md)
+  * [BIO](java/io/bio.md)
+  * [NIO](java/io/nio.md)
+  * [AIO](java/io/aio.md)
 * [并发](java/concurrency/README.md)
   * [概述](java/concurrency/intro.md)
   * [进程与线程](java/concurrency/process-and-thread.md)
@@ -121,6 +124,10 @@
 
 * [互联网组成](network/internet-components.md)
 * [OSI模型](network/osi-model.md)
+
+## 部署 <a id="deploy"></a>
+
+* [Docker](deploy/docker.md)
 
 ## 系统设计 <a id="system-design"></a>
 
