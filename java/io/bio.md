@@ -399,7 +399,7 @@ public class FileReadWriteDemo {
 }
 ```
 
-**\#字节流转换字符流**
+### **字节流转换字符流**
 
 我们可以在程序中通过 `InputStream` 和 `Reader` 从数据源中读取数据，然后也可以在程序中将数据通过 `OutputStream` 和 `Writer` 输出到目标媒介中
 
@@ -407,7 +407,7 @@ public class FileReadWriteDemo {
 
 `OutputStreamWriter` 示例：
 
-```text
+```java
 public class OutputStreamWriterDemo {
 
     public static void main(String[] args) throws IOException {
@@ -422,7 +422,7 @@ public class OutputStreamWriterDemo {
 
 `InputStreamReader` 示例：
 
-```text
+```java
 public class InputStreamReaderDemo {
 
     public static void main(String[] args) throws IOException {
@@ -458,5 +458,33 @@ public class InputStreamReaderDemo {
 
 所以，除了纯文本数据文件使用字符流以外，其他文件类型都应该使用字节流方式。
 
+## 传统 BIO
 
+在 Linux 中，当应用进程调用 `recvfrom` 方法调用数据的时候，如果内核没有把数据准备好不会立刻返回，而是会经历等待数据准备就绪，数据从内核复制到用户空间之后再返回，这期间应用进程一直阻塞直到返回，所以被称为阻塞 IO 模型。
+
+![img](http://dunwu.test.upcdn.net/snap/20200219153310.png)
+
+**BIO 会阻塞进程，不适合高并发场景**。
+
+采用 BIO 的服务端，通常由一个独立的 Acceptor 线程负责监听客户端的连接。我们一般通过在`while(true)` 循环中服务端会调用 `accept()` 方法等待接收客户端的连接的方式监听请求，请求一旦接收到一个连接请求，就可以建立通信套接字在这个通信套接字上进行读写操作，此时不能再接收其他客户端连接请求，只能等待同当前连接的客户端的操作执行完成， 不过可以通过多线程来支持多个客户端的连接，如上图所示。
+
+如果要让 **BIO 通信模型** 能够同时处理多个客户端请求，就必须使用多线程（主要原因是`socket.accept()`、`socket.read()`、`socket.write()` 涉及的三个主要函数都是同步阻塞的），但会造成不必要的线程开销。不过可以通过 **线程池机制** 改善，线程池还可以让线程的创建和回收成本相对较低。使用`FixedThreadPool` 可以有效的控制了线程的最大数量，保证了系统有限的资源的控制，实现了 N\(客户端请求数量\):M\(处理客户端请求的线程数量\)的伪异步 I/O 模型（N 可以远远大于 M），下面一节"伪异步 BIO"中会详细介绍到。
+
+**即使可以用线程池略微优化，但是会消耗宝贵的线程资源，并且在百万级并发场景下也撑不住**。如果并发访问量增加会导致线程数急剧膨胀可能会导致线程堆栈溢出、创建新线程失败等问题，最终导致进程宕机或者僵死，不能对外提供服务。
+
+## 伪异步 BIO
+
+为了解决同步阻塞 I/O 面临的一个链路需要一个线程处理的问题，后来有人对它的线程模型进行了优化一一一后端通过一个线程池来处理多个客户端的请求接入，形成客户端个数 M：线程池最大线程数 N 的比例关系，其中 M 可以远远大于 N。通过线程池可以灵活地调配线程资源，设置线程的最大值，防止由于海量并发接入导致线程耗尽。
+
+![img](http://dunwu.test.upcdn.net/snap/20200219153340.png)
+
+采用线程池和任务队列可以实现一种叫做伪异步的 I/O 通信框架，它的模型图如上图所示。当有新的客户端接入时，将客户端的 Socket 封装成一个 Task（该任务实现 java.lang.Runnable 接口）投递到后端的线程池中进行处理，JDK 的线程池维护一个消息队列和 N 个活跃线程，对消息队列中的任务进行处理。由于线程池可以设置消息队列的大小和最大线程数，因此，它的资源占用是可控的，无论多少个客户端并发访问，都不会导致资源的耗尽和宕机。
+
+伪异步 I/O 通信框架采用了线程池实现，因此避免了为每个请求都创建一个独立线程造成的线程资源耗尽问题。不过因为它的底层仍然是同步阻塞的 BIO 模型，因此无法从根本上解决问题。
+
+
+
+**参考资料：**
+
+* \*\*\*\*[**Java BIO**](https://dunwu.github.io/javacore/io/java-bio.html)\*\*\*\*
 
