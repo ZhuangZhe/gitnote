@@ -132,10 +132,11 @@ public static Annotation annotationForMap(final Class<? extends Annotation> var0
 
 ```java
 class AnnotationInvocationHandler implements InvocationHandler, Serializable {
+
     private static final long serialVersionUID = 6182022883658399397L;
-	//保存了当前注解的类型
+	  //保存了当前注解的类型
     private final Class<? extends Annotation> type;
-	//保存了注解的成员属性的名称和值的映射，注解成员属性的名称实际上就对应着接口中抽象方法的名称
+	  //保存了注解的成员属性的名称和值的映射，注解成员属性的名称实际上就对应着接口中抽象方法的名称
     private final Map<String, Object> memberValues;
     private transient volatile Method[] memberMethods = null;
 
@@ -183,16 +184,16 @@ class AnnotationInvocationHandler implements InvocationHandler, Serializable {
             case 2:
                 return this.type;
             default:
-			    //利用方法名称从memberValues获取成员属性的赋值
+			      //利用方法名称从memberValues获取成员属性的赋值
                 Object var6 = this.memberValues.get(var4);
                 if (var6 == null) {
                     throw new IncompleteAnnotationException(this.type, var4);
                 } else if (var6 instanceof ExceptionProxy) {
                     throw ((ExceptionProxy)var6).generateException();
                 } else {
-					//这一步就是注解成员属性返回值获取的实际逻辑
-					//需要判断是否数据，如果是数据需要克隆一个数组
-					//不是数组直接返回
+    					  //这一步就是注解成员属性返回值获取的实际逻辑
+    					  //需要判断是否数据，如果是数据需要克隆一个数组
+    					  //不是数组直接返回
                     if (var6.getClass().isArray() && Array.getLength(var6) != 0) {
                         var6 = this.cloneArray(var6);
                     }
@@ -207,7 +208,177 @@ class AnnotationInvocationHandler implements InvocationHandler, Serializable {
 }
 ```
 
+这里需要重点注意一下的是：`AnnotationInvocationHandler`的成员变量`Map<String, Object> memberValues`存放着注解的成员属性的名称和值的映射，注解成员属性的名称实际上就对应着接口中抽象方法的名称，例如上面我们定义的`@Counter`注解生成代理类后，它的`AnnotationInvocationHandler`实例中的`memberValues`属性存放着键值对`count=1`。
 
+既然知道了注解底层使用了JDK原生的Proxy，那么我们可以直接输出代理类到指定目录去分析代理类的源码，有两种方式可以输出Proxy类的源码：
+
+* 1、通过Java系统属性设置`System.setProperty("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");`。
+* 2、通过-D参数指定，其实跟1差不多，参数是：`-Dsun.misc.ProxyGenerator.saveGeneratedFiles=true`。
+
+这里使用方式1，修改一下上面用到的main方法：
+
+```java
+public static void main(String[] args) throws Exception {
+		System.setProperty("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
+		Counter counter = Main.class.getAnnotation(Counter.class);
+		System.out.println(counter.count());
+}
+```
+
+执行完毕之后，项目中多了一个目录
+
+其中`$Proxy0`是`@Retention`注解对应的动态代理类，而`$Proxy1`才是我们的`@Counter`对应的动态代理类，当然如果有更多的注解，那么有可能生成`$ProxyN`。接着我们直接看`$Proxy1`的源码：
+
+```java
+public final class $Proxy1 extends Proxy implements Counter {
+    private static Method m1;
+    private static Method m2;
+    private static Method m3;
+    private static Method m4;
+    private static Method m0;
+
+    public $Proxy1(InvocationHandler var1) throws  {
+        super(var1);
+    }
+
+    public final boolean equals(Object var1) throws  {
+        try {
+            return (Boolean)super.h.invoke(this, m1, new Object[]{var1});
+        } catch (RuntimeException | Error var3) {
+            throw var3;
+        } catch (Throwable var4) {
+            throw new UndeclaredThrowableException(var4);
+        }
+    }
+
+    public final String toString() throws  {
+        try {
+            return (String)super.h.invoke(this, m2, (Object[])null);
+        } catch (RuntimeException | Error var2) {
+            throw var2;
+        } catch (Throwable var3) {
+            throw new UndeclaredThrowableException(var3);
+        }
+    }
+
+    public final int count() throws  {
+        try {
+            return (Integer)super.h.invoke(this, m3, (Object[])null);
+        } catch (RuntimeException | Error var2) {
+            throw var2;
+        } catch (Throwable var3) {
+            throw new UndeclaredThrowableException(var3);
+        }
+    }
+
+    public final Class annotationType() throws  {
+        try {
+            return (Class)super.h.invoke(this, m4, (Object[])null);
+        } catch (RuntimeException | Error var2) {
+            throw var2;
+        } catch (Throwable var3) {
+            throw new UndeclaredThrowableException(var3);
+        }
+    }
+
+    public final int hashCode() throws  {
+        try {
+            return (Integer)super.h.invoke(this, m0, (Object[])null);
+        } catch (RuntimeException | Error var2) {
+            throw var2;
+        } catch (Throwable var3) {
+            throw new UndeclaredThrowableException(var3);
+        }
+    }
+
+    static {
+        try {
+            m1 = Class.forName("java.lang.Object").getMethod("equals", Class.forName("java.lang.Object"));
+            m2 = Class.forName("java.lang.Object").getMethod("toString");
+            m3 = Class.forName("club.throwable.annotation.Counter").getMethod("count");
+            m4 = Class.forName("club.throwable.annotation.Counter").getMethod("annotationType");
+            m0 = Class.forName("java.lang.Object").getMethod("hashCode");
+        } catch (NoSuchMethodException var2) {
+            throw new NoSuchMethodError(var2.getMessage());
+        } catch (ClassNotFoundException var3) {
+            throw new NoClassDefFoundError(var3.getMessage());
+        }
+    }
+}
+```
+
+显然，`$Proxy1`实现了`Counter`接口，它在代码的最后部分使用了静态代码块实例化了成员方法的`Method`实例，在前面的代码对这些`Method`进行了缓存，在调用成员方法的时候都是直接委托到`InvocationHandler(AnnotationInvocationHandler)`实例完成调用。我们在分析`AnnotationInvocationHandler`的时候看到，它只用到了`Method`的名称从Map从匹配出成员方法的结果，因此调用过程**并不是反射调用**，反而是直接的调用，效率类似于通过Key从Map实例中获取Value一样，是十分高效的。
+
+## 小结 <a id="&#x5C0F;&#x7ED3;"></a>
+
+既然知道了注解的底层原理，我们可以编写一个"注解接口"和`InvocationHandler`实现来简单模拟整个过程。先定义一个接口：
+
+```java
+public interface CounterAnnotation extends Annotation {
+
+	  int count();
+	
+}
+```
+
+`InvocationHandler`的简单实现：
+
+```java
+public class CounterAnnotationInvocationHandler implements InvocationHandler {
+    
+    private final Map<String, Object> memberValues;
+    private final Class<? extends Annotation> clazz;
+    
+    public CounterAnnotationInvocationHandler(Map<String, Object> memberValues, Class<? extends Annotation> clazz) {
+        this.memberValues = memberValues;
+        this.clazz = clazz;
+    }
+    
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        String methodName = method.getName();
+        Object value;
+        switch (methodName) {
+            case "toString":
+                value = super.toString();
+                break;
+            case "hashCode":
+                value = super.hashCode();
+                break;
+            case "equals":
+                value = super.equals(args[0]);
+                break;
+            case "annotationType":
+                value = clazz;
+                break;
+            default:
+                value = memberValues.get(methodName);
+        }
+        return value;
+    }
+    
+}
+```
+
+编写一个main方法：
+
+```java
+public class CounterAnnotationMain {
+
+    public static void main(String[] args) throws Exception{
+        //这里模拟了注解成员属性从常量池解析的过程
+        Map<String,Object> values = new HashMap<>(8);
+        values.put("count", 1);
+        //生成代理类
+        CounterAnnotation proxy = (CounterAnnotation)Proxy.newProxyInstance(CounterAnnotationMain.class.getClassLoader(),
+        new Class[]{CounterAnnotation.class},
+        new CounterAnnotationInvocationHandler(values, CounterAnnotation.class));
+        System.out.println(proxy.count());
+    }
+    
+}
+//运行后控制台输出:1
+```
 
 **参考资料：**
 
