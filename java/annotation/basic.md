@@ -96,7 +96,7 @@ public class Member {
 }
 ```
 
-### 注解支持的元素数据类型
+### 支持的元素数据类型
 
 * 所有基本类型\(int、float、boolean、byte、double、char、long、short\)
 * String
@@ -201,34 +201,45 @@ public class QuicklyWay {
 
 * `@Override`：用于标明此方法覆盖了父类的方法，源码如下
 
-  ```text
-  @Target(ElementType.METHOD)
-  @Retention(RetentionPolicy.SOURCE)
-  public @interface Override {
-  }1234
-  ```
+```java
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.SOURCE)
+public @interface Override {
+}
+```
 
 * `@Deprecated`：用于标明已经过时的方法或类，源码如下，关于@Documented稍后分析：
 
-  ```text
-  @Documented
-  @Retention(RetentionPolicy.RUNTIME)
-  @Target(value={CONSTRUCTOR, FIELD, LOCAL_VARIABLE, METHOD, PACKAGE, PARAMETER, TYPE})
-  public @interface Deprecated {
-  }12345
-  ```
+```java
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(value={CONSTRUCTOR, FIELD, LOCAL_VARIABLE, METHOD, PACKAGE, PARAMETER, TYPE})
+public @interface Deprecated {
+}
+```
 
 * `@SuppressWarnnings`：用于有选择的关闭编译器对类、方法、成员变量、变量初始化的警告，其实现源码如下：
 
-  ```text
-  @Target({TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE})
-  @Retention(RetentionPolicy.SOURCE)
-  public @interface SuppressWarnings {
-      String[] value();
-  }
-  ```
+```java
+@Target({TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE})
+@Retention(RetentionPolicy.SOURCE)
+public @interface SuppressWarnings {
 
+    String[] value();
 
+}
+
+/*
+其内部有一个String数组，主要接收值如下：
+    deprecation：使用了不赞成使用的类或方法时的警告；
+    unchecked：执行了未检查的转换时的警告，例如当使用集合时没有用泛型 (Generics) 来指定集合保存的类型; 
+    fallthrough：当 Switch 程序块直接通往下一种情况而没有 Break 时的警告;
+    path：在类路径、源文件路径等中有不存在的路径时的警告; 
+    serial：当在可序列化的类上缺少 serialVersionUID 定义时的警告; 
+    finally：任何 finally 子句不能正常完成时的警告; 
+    all：关于以上所有情况的警告。
+*/
+```
 
 
 
