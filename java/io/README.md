@@ -28,6 +28,14 @@ Java 中的 BIO、NIO和 AIO 理解为是 Java 语言对操作系统的各种 IO
 
 很多时候，人们也把 java.net 下面提供的部分网络 API，比如 `Socket`、`ServerSocket`、`HttpURLConnection` 也归类到同步阻塞 IO 类库，因为网络通信同样是 IO 行为。
 
+### NIO
+
+`java.nio` 包提供了 `Channel`、`Selector`、`Buffer` 等新的抽象，可以构建多路复用的、同步非阻塞 IO 程序，同时提供了更接近操作系统底层的高性能数据操作方式。
+
+### AIO
+
+在 Java 7 中，NIO 有了进一步的改进，也就是 NIO 2，引入了异步非阻塞 IO 方式，也有很多人叫它 AIO（Asynchronous IO）。异步 IO 操作基于事件和回调机制，可以简单理解为，应用操作直接返回，而不会阻塞在那里，当后台处理完成，操作系统会通知相应线程进行后续工作。
+
 ## BIO \(Blocking I/O\)
 
 同步阻塞I/O模式，数据的读取写入必须阻塞在一个线程内等待其完成。
