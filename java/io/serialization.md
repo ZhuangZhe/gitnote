@@ -184,7 +184,259 @@ public class SerializeDemo02 {
 
 从输出结果可以看出，age 字段没有被序列化
 
+## Externalizable接口
 
+无论是使用 `transient` 关键字，还是使用 `writeObject()` 和 `readObject()` 方法，其实都是基于 `Serializable` 接口的序列化。
+
+JDK 中提供了另一个序列化接口--`Externalizable`。
+
+**可序列化类实现 `Externalizable` 接口之后，基于 `Serializable` 接口的默认序列化机制就会失效**。
+
+我们来基于 SerializeDemo02 再次做一些改动，代码如下：
+
+```java
+public class ExternalizeDemo01 {
+    static class Person implements Externalizable {
+        transient private Integer age = null;
+        // 其他内容略
+
+        private void writeObject(ObjectOutputStream out) throws IOException {
+            out.defaultWriteObject();
+            out.writeInt(age);
+        }
+
+        private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+            in.defaultReadObject();
+            age = in.readInt();
+        }
+
+        @Override
+        public void writeExternal(ObjectOutput out) throws IOException { }
+
+        @Override
+        public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException { }
+    }
+     // 其他内容略
+}
+// Output:
+// call Person()
+// name: null, age: null, sex: null
+```
+
+从该结果，一方面可以看出 Person 对象中任何一个字段都没有被序列化。另一方面，如果细心的话，还可以发现这此次序列化过程调用了 Person 类的无参构造方法。
+
+* **`Externalizable` 继承于 `Serializable`，它增添了两个方法：`writeExternal()` 与 `readExternal()`。这两个方法在序列化和反序列化过程中会被自动调用，以便执行一些特殊操作**。当使用该接口时，序列化的细节需要由程序员去完成。如上所示的代码，由于 `writeExternal()` 与 `readExternal()` 方法未作任何处理，那么该序列化行为将不会保存/读取任何一个字段。这也就是为什么输出结果中所有字段的值均为空。
+* 另外，**若使用 `Externalizable` 进行序列化，当读取对象时，会调用被序列化类的无参构造方法去创建一个新的对象；然后再将被保存对象的字段的值分别填充到新对象中**。这就是为什么在此次序列化过程中 Person 类的无参构造方法会被调用。由于这个原因，实现 `Externalizable` 接口的类必须要提供一个无参的构造方法，且它的访问权限为 `public`。
+
+对上述 Person 类作进一步的修改，使其能够对 name 与 age 字段进行序列化，但要忽略掉 gender 字段，如下代码所示：
+
+```java
+public class ExternalizeDemo02 {
+    static class Person implements Externalizable {
+        transient private Integer age = null;
+        // 其他内容略
+
+        private void writeObject(ObjectOutputStream out) throws IOException {
+            out.defaultWriteObject();
+            out.writeInt(age);
+        }
+
+        private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+            in.defaultReadObject();
+            age = in.readInt();
+        }
+
+        @Override
+        public void writeExternal(ObjectOutput out) throws IOException {
+            out.writeObject(name);
+            out.writeInt(age);
+        }
+
+        @Override
+        public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+            name = (String) in.readObject();
+            age = in.readInt();
+        }
+    }
+     // 其他内容略
+}
+// Output:
+// call Person()
+// name: Jack, age: 30, sex: null
+```
+
+### Externalizable 接口的替代方法
+
+实现 `Externalizable` 接口可以控制序列化和反序列化的细节。它有一个替代方法：实现 `Serializable` 接口，并添加 `writeObject(ObjectOutputStream out)` 与 `readObject(ObjectInputStream in)` 方法。序列化和反序列化过程中会自动回调这两个方法。
+
+示例如下所示：
+
+```java
+public class SerializeDemo03 {
+    static class Person implements Serializable {
+        transient private Integer age = null;
+        // 其他内容略
+
+        private void writeObject(ObjectOutputStream out) throws IOException {
+            out.defaultWriteObject();
+            out.writeInt(age);
+        }
+
+        private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+            in.defaultReadObject();
+            age = in.readInt();
+        }
+        // 其他内容略
+    }
+    // 其他内容略
+}
+// Output:
+// name: Jack, age: 30, sex: MALE
+```
+
+在 `writeObject()` 方法中会先调用 `ObjectOutputStream` 中的 `defaultWriteObject()` 方法，该方法会执行默认的序列化机制，如上节所述，此时会忽略掉 age 字段。然后再调用 writeInt\(\) 方法显示地将 age 字段写入到 `ObjectOutputStream` 中。readObject\(\) 的作用则是针对对象的读取，其原理与 writeObject\(\) 方法相同。
+
+> 🔔 注意：`writeObject()` 与 `readObject()` 都是 `private` 方法，那么它们是如何被调用的呢？毫无疑问，是使用反射。详情可见 `ObjectOutputStream` 中的 `writeSerialData` 方法，以及 `ObjectInputStream` 中的 `readSerialData` 方法。
+
+### readResolve\(\) 方法
+
+当我们使用 Singleton 模式时，应该是期望某个类的实例应该是唯一的，但如果该类是可序列化的，那么情况可能会略有不同。此时对第 2 节使用的 Person 类进行修改，使其实现 Singleton 模式，如下所示：
+
+```java
+public class SerializeDemo04 {
+
+    enum Sex {
+        MALE, FEMALE
+    }
+
+    static class Person implements Serializable {
+        private static final long serialVersionUID = 1L;
+        private String name = null;
+        transient private Integer age = null;
+        private Sex sex;
+        static final Person instatnce = new Person("Tom", 31, Sex.MALE);
+
+        private Person() {
+            System.out.println("call Person()");
+        }
+
+        private Person(String name, Integer age, Sex sex) {
+            this.name = name;
+            this.age = age;
+            this.sex = sex;
+        }
+
+        public static Person getInstance() {
+            return instatnce;
+        }
+
+        private void writeObject(ObjectOutputStream out) throws IOException {
+            out.defaultWriteObject();
+            out.writeInt(age);
+        }
+
+        private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+            in.defaultReadObject();
+            age = in.readInt();
+        }
+
+        public String toString() {
+            return "name: " + this.name + ", age: " + this.age + ", sex: " + this.sex;
+        }
+    }
+
+    /**
+     * 序列化
+     */
+    private static void serialize(String filename) throws IOException {
+        File f = new File(filename); // 定义保存路径
+        OutputStream out = new FileOutputStream(f); // 文件输出流
+        ObjectOutputStream oos = new ObjectOutputStream(out); // 对象输出流
+        oos.writeObject(new Person("Jack", 30, Sex.MALE)); // 保存对象
+        oos.close();
+        out.close();
+    }
+
+    /**
+     * 反序列化
+     */
+    private static void deserialize(String filename) throws IOException, ClassNotFoundException {
+        File f = new File(filename); // 定义保存路径
+        InputStream in = new FileInputStream(f); // 文件输入流
+        ObjectInputStream ois = new ObjectInputStream(in); // 对象输入流
+        Object obj = ois.readObject(); // 读取对象
+        ois.close();
+        in.close();
+        System.out.println(obj);
+        System.out.println(obj == Person.getInstance());
+    }
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        final String filename = "d:/text.dat";
+        serialize(filename);
+        deserialize(filename);
+    }
+}
+// Output:
+// name: Jack, age: null, sex: MALE
+// false
+```
+
+值得注意的是，从文件中获取的 Person 对象与 Person 类中的单例对象并不相等。**为了能在单例类中仍然保持序列的特性，可以使用 `readResolve()` 方法**。在该方法中直接返回 Person 的单例对象。我们在 SerializeDemo04 示例的基础上添加一个 `readObject` 方法， 如下所示：
+
+```java
+public class SerializeDemo05 {
+    // 其他内容略
+
+    static class Person implements Serializable {
+
+        // 添加此方法
+        private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+            in.defaultReadObject();
+            age = in.readInt();
+        }
+        // 其他内容略
+    }
+
+    // 其他内容略
+}
+// Output:
+// name: Tom, age: 31, sex: MALE
+// true
+```
+
+## 序列化问题
+
+Java 的序列化能保证对象状态的持久保存，但是遇到一些对象结构复杂的情况还是难以处理，这里归纳一下：
+
+* 父类是 `Serializable`，所有子类都可以被序列化。
+* 子类是 `Serializable` ，父类不是，则子类可以正确序列化，但父类的属性不会被序列化（不报错，数据丢失）。
+* 如果序列化的属性是对象，则这个对象也必须是 `Serializable` ，否则报错。
+* 反序列化时，如果对象的属性有修改或删减，则修改的部分属性会丢失，但不会报错。
+* 反序列化时，如果 `serialVersionUID` 被修改，则反序列化会失败。
+
+## 序列化技术选型
+
+Java 官方的序列化存在许多问题，因此，建议使用第三方序列化工具来替代。
+
+Java 官方的序列化主要体现在以下方面：
+
+* Java 官方的序列**无法跨语言**使用。
+* Java 官方的序列化**性能不高**，序列化后的数据相对于一些优秀的序列化的工具，还是要大不少，这大大影响存储和传输的效率。
+* Java 官方的序列化一定**需要实现 `Serializable` 接口**。
+* Java 官方的序列化**需要关注 `serialVersionUID`**。
+
+当然我们还有更加优秀的一些序列化和反序列化的工具，根据不同的使用场景可以自行选择！
+
+* [thrift](https://github.com/apache/thrift)、[protobuf](https://github.com/protocolbuffers/protobuf) - 适用于**对性能敏感，对开发体验要求不高**。
+* [hessian](http://hessian.caucho.com/doc/hessian-overview.xtp) - 适用于**对开发体验敏感，性能有要求**。
+* [jackson](https://github.com/FasterXML/jackson)、[gson](https://github.com/google/gson)、[fastjson](https://github.com/alibaba/fastjson) - 适用于对序列化后的数据要求有**良好的可读性**（转为 json 、xml 形式）。
+
+
+
+**参考资料：**
+
+* \*\*\*\*[**深入理解 Java 序列化**](https://dunwu.github.io/javacore/io/java-serialization.html)\*\*\*\*
 
 
 
