@@ -1,8 +1,8 @@
 # NIO
 
-NIO是一种同步非阻塞的I/O模型，在 Java 1.4 中引入了 NIO 框架，对应 `java.nio` 包，提供了 `Channel` 、`Selector`、`Buffer` 等抽象。
+NIO是一种同步非阻塞的I/O模型，在 Java 1.4 中引入了 NIO 框架，对应`java.nio`包，提供了 `Channel` 、`Selector`、`Buffer` 等抽象。
 
-NIO 中的 N 可以理解为 Non-blocking，不单纯是 New。它支持面向缓冲的，基于通道的 I/O 操作方法。 NIO 提供了与传统 BIO 模型中的 `Socket` 和 `ServerSocket` 相对应的 `SocketChannel` 和 `ServerSocketChannel` 两种不同的套接字通道实现,两种通道都支持阻塞和非阻塞两种模式。阻塞模式使用就像传统中的支持一样，比较简单，但是性能和可靠性都不好；非阻塞模式正好与之相反。对于低负载、低并发的应用程序，可以使用同步阻塞 I/O 来提升开发速率和更好的维护性；对于高负载、高并发的（网络）应用，应使用 NIO 的非阻塞模式来开发。
+NIO中的N可以理解为Non-blocking，不单纯是 New。它支持面向缓冲的，基于通道的 I/O 操作方法。 NIO 提供了与传统 BIO 模型中的 `Socket` 和 `ServerSocket` 相对应的 `SocketChannel` 和 `ServerSocketChannel` 两种不同的套接字通道实现,两种通道都支持阻塞和非阻塞两种模式。阻塞模式使用就像传统中的支持一样，比较简单，但是性能和可靠性都不好；非阻塞模式正好与之相反。对于低负载、低并发的应用程序，可以使用同步阻塞 I/O 来提升开发速率和更好的维护性；对于高负载、高并发的（网络）应用，应使用 NIO 的非阻塞模式来开发。
 
 ### NIO 的基本流程
 
@@ -21,7 +21,7 @@ NIO 包含下面几个核心的组件：
 
 ## Channel\(通道\)
 
-通道（`Channel`）是对 BIO 中的流的模拟，可以通过它读写数据。
+通道\(`Channel`\)是对BIO中的流的模拟，可以通过它读写数据。
 
 通道与流的不同之处在于：
 
@@ -31,15 +31,15 @@ NIO 包含下面几个核心的组件：
 通道包括以下类型：
 
 * `FileChannel`：从文件中读写数据；
-* `DatagramChannel`：通过 UDP 读写网络中数据；
-* `SocketChannel`：通过 TCP 读写网络中数据；
-* `ServerSocketChannel`：可以监听新进来的 TCP 连接，对每一个新进来的连接都会创建一个 SocketChannel。
+* `DatagramChannel`：通过UDP读写网络中数据；
+* `SocketChannel`：通过TCP读写网络中数据；
+* `ServerSocketChannel`：可以监听新进来的TCP连接，对每一个新进来的连接都会创建一个 `SocketChannel`。
 
 ## Buffer\(缓冲区\)
 
-**向 `Channel` 读写的数据都必须先置于缓冲区中**。也就是说，不会直接对通道进行读写数据，而是要先经过缓冲区。缓冲区实质上是一个数组，但它不仅仅是一个数组。缓冲区提供了对数据的结构化访问，而且还可以跟踪系统的读/写进程。
+**向`Channel`读写的数据都必须先置于缓冲区中**。也就是说，不会直接对通道进行读写数据，而是要先经过缓冲区。缓冲区实质上是一个数组，但它不仅仅是一个数组。缓冲区提供了对数据的结构化访问，而且还可以跟踪系统的读/写进程。
 
-BIO 和 NIO 已经很好地集成了，`java.io.*` 已经以 NIO 为基础重新实现了，所以现在它可以利用 NIO 的一些特性。例如，`java.io.*` 包中的一些类包含以块的形式读写数据的方法，这使得即使在面向流的系统中，处理速度也会更快。
+BIO和NIO已经很好地集成了，`java.io.*`已经以NIO为基础重新实现了，所以现在它可以利用NIO的一些特性。例如，`java.io.*`包中的一些类包含以块的形式读写数据的方法，这使得即使在面向流的系统中，处理速度也会更快。
 
 缓冲区包括以下类型：
 
@@ -60,13 +60,13 @@ BIO 和 NIO 已经很好地集成了，`java.io.*` 已经以 NIO 为基础重新
 
 缓冲区状态变量的改变过程举例：
 
-1. 新建一个大小为 8 个字节的缓冲区，此时 position 为 0，而 limit = capacity = 8。capacity 变量不会改变，下面的讨论会忽略它。
-2. 从输入通道中读取 5 个字节数据写入缓冲区中，此时 position 移动设置为 5，limit 保持不变。
-3. 在将缓冲区的数据写到输出通道之前，需要先调用 flip\(\) 方法，这个方法将 limit 设置为当前 position，并将 position 设置为 0。
-4. 从缓冲区中取 4 个字节到输出缓冲中，此时 position 设为 4。
-5. 最后需要调用 clear\(\) 方法来清空缓冲区，此时 position 和 limit 都被设置为最初位置。
+1. 新建一个大小为8个字节的缓冲区，此时`position`为0，而`limit = capacity = 8`。`capacity`变量不会改变，下面的讨论会忽略它。
+2. 从输入通道中读取5个字节数据写入缓冲区中，此时`position`移动设置为5，limit保持不变。
+3. 在将缓冲区的数据写到输出通道之前，需要先调用`flip()`方法，这个方法将limit设置为当前`position`，并将`position`设置为 0。
+4. 从缓冲区中取4个字节到输出管道中，此时`position`设为 4。
+5. 最后需要调用`clear()`方法来清空缓冲区，此时`position`和`limit`都被设置为最初位置。
 
-### 文件 NIO 示例
+### 文件NIO示例
 
 以下展示了使用 NIO 快速复制文件的实例：
 
@@ -112,15 +112,15 @@ public static void fastCopy(String src, String dist) throws IOException {
 
 ## Selector\(选择器\)
 
-NIO 常常被叫做非阻塞 IO，主要是因为 NIO 在网络通信中的非阻塞特性被广泛使用。
+NIO常常被叫做非阻塞IO，主要是因为NIO在网络通信中的非阻塞特性被广泛使用。
 
-**NIO 实现了 IO 多路复用中的 Reactor 模型**：
+**NIO实现了IO多路复用中的Reactor模型**：
 
-* 一个线程（`Thread`）使用一个**选择器 `Selector` 通过轮询的方式去监听多个通道 `Channel` 上的事件**，从而让一个线程就可以处理多个事件。
-* 通过**配置监听的通道 `Channel` 为非阻塞**，那么当 `Channel` 上的 IO 事件还未到达时，就不会进入阻塞状态一直等待，而是继续轮询其它 `Channel`，找到 IO 事件已经到达的 `Channel` 执行。
+* 一个线程\(`Thread`\)使用一个**选择器`Selector`通过轮询的方式去监听多个通道`Channel`上的事件**，从而让一个线程就可以处理多个事件。
+* 通过**配置监听的通道`Channel`为非阻塞**，那么当`Channel`上的IO事件还未到达时，就不会进入阻塞状态一直等待，而是继续轮询其它`Channel`，找到IO事件已经到达的`Channel`执行。
 * 因为创建和切换线程的开销很大，因此使用**一个线程来处理多个事件**而不是一个线程处理一个事件具有更好的性能。
 
-需要注意的是，只有 `SocketChannel` 才能配置为非阻塞，而 `FileChannel` 不能，因为 `FileChannel` 配置非阻塞也没有意义。
+需要注意的是，只有`SocketChannel`才能配置为非阻塞，而`FileChannel`不能，因为`FileChannel`配置非阻塞也没有意义。
 
 ### 创建选择器
 
