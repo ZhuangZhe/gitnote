@@ -6,7 +6,7 @@
 
 流从概念上来说是一个连续的数据流。当程序需要读数据的时候就需要使用输入流读取数据，当需要往外写数据的时候就需要输出流。
 
-BIO 中操作的流主要有两大类，字节流和字符流，两类根据流的方向都可以分为输入流和输出流。
+BIO中操作的流主要有两大类，字节流和字符流，两类根据流的方向都可以分为输入流和输出流。
 
 * **字节流**
   * 输入字节流：`InputStream`
@@ -21,18 +21,18 @@ BIO 中操作的流主要有两大类，字节流和字符流，两类根据流�
 
 字节流主要操作字节数据或二进制对象。
 
-字节流有两个核心抽象类：`InputStream` 和 `OutputStream`。所有的字节流类都继承自这两个抽象类。
+字节流有两个核心抽象类：`InputStream`和`OutputStream`。所有的字节流类都继承自这两个抽象类。
 
 ![img](http://dunwu.test.upcdn.net/snap/20200219133627.png)
 
 ### **文件字节流**
 
-`FileOutputStream` 和 `FileInputStream` 提供了读写字节到文件的能力。
+`FileOutputStream`和`FileInputStream`提供了读写字节到文件的能力。
 
 #### 文件流操作一般步骤：
 
-1. 使用 `File` 类绑定一个文件。
-2. 把 `File` 对象绑定到流对象上。
+1. 使用`File`类绑定一个文件。
+2. 把`File`对象绑定到流对象上。
 3. 进行读或写操作。
 4. 关闭流
 
@@ -89,11 +89,11 @@ public class FileStreamDemo {
 
 ### **内存字节流**
 
-`ByteArrayInputStream` 和 `ByteArrayOutputStream` 是用来完成内存的输入和输出功能。
+`ByteArrayInputStream`和`ByteArrayOutputStream`是用来完成内存的输入和输出功能。
 
 内存操作流一般在生成一些临时信息时才使用。 如果临时信息保存在文件中，还需要在有效期过后删除文件，这样比较麻烦。
 
-`ByteArrayInputStream` 和 `ByteArrayOutputStream` 示例：
+`ByteArrayInputStream`和`ByteArrayOutputStream`示例：
 
 ```java
 public class ByteArrayStreamDemo {
@@ -126,7 +126,7 @@ public class ByteArrayStreamDemo {
 
 管道流的主要作用是可以进行两个线程间的通信。
 
-如果要进行管道通信，则必须把 `PipedOutputStream` 连接在 `PipedInputStream` 上。为此，`PipedOutputStream` 中提供了 `connect()` 方法。
+如果要进行管道通信，则必须把`PipedOutputStream`连接在`PipedInputStream`上。为此，`PipedOutputStream`中提供了`connect()`方法。
 
 ```java
 public class PipedStreamDemo {
@@ -214,15 +214,15 @@ public class PipedStreamDemo {
 
 ### **对象字节流**
 
-**ObjectInputStream 和 ObjectOutputStream 是对象输入输出流，一般用于对象序列化。**
+**`ObjectInputStream`和`ObjectOutputStream`是对象输入输出流，一般用于对象序列化。**
 
 这里不展开叙述，想了解详细内容和示例可以参考：[Java 序列化](https://dunwu.github.io/javacore/io/java-serialization.html)
 
-#### **数据操作流**
+### **数据操作流**
 
-数据操作流提供了格式化读入和输出数据的方法，分别为 `DataInputStream` 和 `DataOutputStream`。
+数据操作流提供了格式化读入和输出数据的方法，分别为`DataInputStream`和`DataOutputStream`。
 
-`DataInputStream` 和 `DataOutputStream` 格式化读写数据示例：
+`DataInputStream`和`DataOutputStream`格式化读写数据示例：
 
 ```java
 public class DataStreamDemo {
@@ -302,7 +302,7 @@ public class DataStreamDemo {
 
 ### **合并流**
 
-合并流的主要功能是将多个 `InputStream` 合并为一个 `InputStream` 流。合并流的功能由 `SequenceInputStream` 完成。
+合并流的主要功能是将多个`InputStream`合并为一个`InputStream`流。合并流的功能由`SequenceInputStream`完成。
 
 ```java
 public class SequenceInputStreamDemo {
@@ -332,7 +332,7 @@ public class SequenceInputStreamDemo {
 
 字符流主要操作字符，一个字符等于两个字节。
 
-字符流有两个核心类：`Reader` 类和 `Writer` 。所有的字符流类都继承自这两个抽象类。
+字符流有两个核心类：`Reader`类和 `Writer`。所有的字符流类都继承自这两个抽象类。
 
 ![img](http://dunwu.test.upcdn.net/snap/20200219133648.png)
 
@@ -401,9 +401,9 @@ public class FileReadWriteDemo {
 
 ### **字节流转换字符流**
 
-我们可以在程序中通过 `InputStream` 和 `Reader` 从数据源中读取数据，然后也可以在程序中将数据通过 `OutputStream` 和 `Writer` 输出到目标媒介中
+我们可以在程序中通过`InputStream`和`Reader`从数据源中读取数据，然后也可以在程序中将数据通过`OutputStream`和`Writer`输出到目标媒介中
 
-使用 `InputStreamReader` 可以将输入字节流转化为输入字符流；使用`OutputStreamWriter`可以将输出字节流转化为输出字符流。
+使用`InputStreamReader`可以将输入字节流转化为输入字符流；使用`OutputStreamWriter`可以将输出字节流转化为输出字符流。
 
 `OutputStreamWriter` 示例：
 
@@ -446,8 +446,8 @@ public class InputStreamReaderDemo {
 不同点：
 
 * **数据类型**
-  * 字节流的数据是字节（二进制对象）。主要核心类是 `InputStream` 类和 `OutputStream` 类。
-  * 字符流的数据是字符，一个字符等于两个字节。主要核心类是 `Reader` 类和 `Writer` 类。
+  * 字节流的数据是字节**\(**二进制对象\)。主要核心类是`InputStream`类和`OutputStream`类。
+  * 字符流的数据是字符，一个字符等于两个字节。主要核心类是`Reader`类和`Writer`类。
 * **缓冲区**
   * 字节流在操作时本身不会用到缓冲区（内存），是文件直接操作的。
   * 字符流在操作时是使用了缓冲区，通过缓冲区再操作文件。
@@ -460,11 +460,11 @@ public class InputStreamReaderDemo {
 
 ## 传统 BIO
 
-在 Linux 中，当应用进程调用 `recvfrom` 方法调用数据的时候，如果内核没有把数据准备好不会立刻返回，而是会经历等待数据准备就绪，数据从内核复制到用户空间之后再返回，这期间应用进程一直阻塞直到返回，所以被称为阻塞 IO 模型。
+在Linux中，当应用进程调用`recvfrom`方法调用数据的时候，如果内核没有把数据准备好不会立刻返回，而是会经历等待数据准备就绪，数据从内核复制到用户空间之后再返回，这期间应用进程一直阻塞直到返回，所以被称为阻塞IO模型。
 
 ![img](http://dunwu.test.upcdn.net/snap/20200219153310.png)
 
-**BIO 会阻塞进程，不适合高并发场景**。
+**BIO会阻塞进程，不适合高并发场景**。
 
 采用 BIO 的服务端，通常由一个独立的 Acceptor 线程负责监听客户端的连接。我们一般通过在`while(true)` 循环中服务端会调用 `accept()` 方法等待接收客户端的连接的方式监听请求，请求一旦接收到一个连接请求，就可以建立通信套接字在这个通信套接字上进行读写操作，此时不能再接收其他客户端连接请求，只能等待同当前连接的客户端的操作执行完成， 不过可以通过多线程来支持多个客户端的连接，如上图所示。
 
