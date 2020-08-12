@@ -106,7 +106,10 @@
   * [MVCC](database/mysql/mvcc.md)
 * [MongoDB](database/mongodb/README.md)
   * [基本概念](database/mongodb/intro.md)
-* [Redis](database/redis.md)
+* [Redis](database/redis/README.md)
+  * [基本数据类型](database/redis/basic-data-types.md)
+  * [跳跃表](database/redis/skiplist.md)
+  * [Commands](database/redis/commands.md)
 * [Cassandra](database/cassandra.md)
 
 ## 搜索引擎 <a id="search-engine"></a>
