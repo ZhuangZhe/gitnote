@@ -1,8 +1,8 @@
 # 跳跃表
 
-跳跃表（skiplist）是一种随机化的数据结构，由 **William Pugh** 在论文[《Skip lists: a probabilistic alternative to balanced trees》](https://www.cl.cam.ac.uk/teaching/0506/Algorithms/skiplists.pdf)中提出，是一种可以于平衡树媲美的层次化链表结构——查找、删除、添加等操作都可以在对数期望时间下完成，以下是一个典型的跳跃表例子：
+跳跃表（skiplist）是一种随机化的数据结构，由 **William Pugh** 在论文[《Skip lists: a probabilistic alternative to balanced trees》](https://www.cl.cam.ac.uk/teaching/0506/Algorithms/skiplists.pdf)中提出，是一种可以于平衡树媲美的层次化链表结构——查找、删除、添加等操作都可以在对数期望时间下完成，以下是一个典型的跳跃表例子
 
-[![](https://upload-images.jianshu.io/upload_images/7896890-65a5b1a2849fb91c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)](https://upload-images.jianshu.io/upload_images/7896890-65a5b1a2849fb91c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](../../.gitbook/assets/image%20%2867%29.png)
 
 我们在上一篇中提到了 Redis 的五种基本结构中，有一个叫做 **有序列表 zset** 的数据结构，它类似于 Java 中的 **SortedSet** 和 **HashMap** 的结合体，一方面它是一个 set 保证了内部 value 的唯一性，另一方面又可以给每个 value 赋予一个排序的权重值 score，来达到 **排序** 的目的。它的内部实现就依赖了一种叫做 **「跳跃列表」** 的数据结构。
 
@@ -19,25 +19,25 @@
 
 我们先来看一个普通的链表结构：
 
-[![](https://upload-images.jianshu.io/upload_images/7896890-11b7eebde1779904.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)](https://upload-images.jianshu.io/upload_images/7896890-11b7eebde1779904.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](../../.gitbook/assets/image%20%2872%29.png)
 
 我们需要这个链表按照 score 值进行排序，这也就意味着，当我们需要添加新的元素时，我们需要定位到插入点，这样才可以继续保证链表是有序的，通常我们会使用 **二分查找法**，但二分查找是有序数组的，链表没办法进行位置定位，我们除了遍历整个找到第一个比给定数据大的节点为止 _（时间复杂度 O\(n\)\)_ 似乎没有更好的办法。
 
-但假如我们每相邻两个节点之间就增加一个指针，让指针指向下一个节点，如下图：
+但假如我们每相邻两个节点之间就增加一个指针，让指针指向下一个节点，如下图
 
-[![](https://upload-images.jianshu.io/upload_images/7896890-8cae2c261c950b32.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)](https://upload-images.jianshu.io/upload_images/7896890-8cae2c261c950b32.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](../../.gitbook/assets/image%20%2865%29.png)
 
 这样所有新增的指针连成了一个新的链表，但它包含的数据却只有原来的一半 _（图中的为 3，11）_。
 
-现在假设我们想要查找数据时，可以根据这条新的链表查找，如果碰到比待查找数据大的节点时，再回到原来的链表中进行查找，比如，我们想要查找 7，查找的路径则是沿着下图中标注出的红色指针所指向的方向进行的：
+现在假设我们想要查找数据时，可以根据这条新的链表查找，如果碰到比待查找数据大的节点时，再回到原来的链表中进行查找，比如，我们想要查找 7，查找的路径则是沿着下图中标注出的红色指针所指向的方向进行的
 
-[![](https://upload-images.jianshu.io/upload_images/7896890-9c0262c7a85c120e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)](https://upload-images.jianshu.io/upload_images/7896890-9c0262c7a85c120e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](../../.gitbook/assets/image%20%2874%29.png)
 
 这是一个略微极端的例子，但我们仍然可以看到，通过新增加的指针查找，我们不再需要与链表上的每一个节点逐一进行比较，这样改进之后需要比较的节点数大概只有原来的一半。
 
-利用同样的方式，我们可以在新产生的链表上，继续为每两个相邻的节点增加一个指针，从而产生第三层链表：
+利用同样的方式，我们可以在新产生的链表上，继续为每两个相邻的节点增加一个指针，从而产生第三层链表
 
-[![](https://upload-images.jianshu.io/upload_images/7896890-22036e274bedaa5a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)](https://upload-images.jianshu.io/upload_images/7896890-22036e274bedaa5a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](../../.gitbook/assets/image%20%2873%29.png)
 
 在这个新的三层链表结构中，我们试着 **查找 13**，那么沿着最上层链表首先比较的是 11，发现 11 比 13 小，于是我们就知道只需要到 11 后面继续查找，**从而一下子跳过了 11 前面的所有节点。**
 
@@ -45,13 +45,13 @@
 
 ### 更进一步的跳跃表
 
-**跳跃表 skiplist** 就是受到这种多层链表结构的启发而设计出来的。按照上面生成链表的方式，上面每一层链表的节点个数，是下面一层的节点个数的一半，这样查找过程就非常类似于一个二分查找，使得查找的时间复杂度可以降低到 _O\(logn\)_。
+**跳跃表 skiplist** 就是受到这种多层链表结构的启发而设计出来的。按照上面生成链表的方式，上面每一层链表的节点个数，是下面一层的节点个数的一半，这样查找过程就非常类似于一个二分查找，使得查找的时间复杂度可以降低到_O\(logn\)_。
 
 但是，这种方法在插入数据的时候有很大的问题。新插入一个节点之后，就会打乱上下相邻两层链表上节点个数严格的 2:1 的对应关系。如果要维持这种对应关系，就必须把新插入的节点后面的所有节点 _（也包括新插入的节点）_ 重新进行调整，这会让时间复杂度重新蜕化成 _O\(n\)_。删除数据也有同样的问题。
 
-**skiplist** 为了避免这一问题，它不要求上下相邻两层链表之间的节点个数有严格的对应关系，而是 **为每个节点随机出一个层数\(level\)**。比如，一个节点随机出的层数是 3，那么就把它链入到第 1 层到第 3 层这三层链表中。为了表达清楚，下图展示了如何通过一步步的插入操作从而形成一个 skiplist 的过程：
+**skiplist** 为了避免这一问题，它不要求上下相邻两层链表之间的节点个数有严格的对应关系，而是 **为每个节点随机出一个层数\(level\)**。比如，一个节点随机出的层数是 3，那么就把它链入到第 1 层到第 3 层这三层链表中。为了表达清楚，下图展示了如何通过一步步的插入操作从而形成一个 skiplist 的过程
 
-[![](https://upload-images.jianshu.io/upload_images/7896890-1e0626c013de095e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)](https://upload-images.jianshu.io/upload_images/7896890-1e0626c013de095e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](../../.gitbook/assets/image%20%2868%29.png)
 
 从上面的创建和插入的过程中可以看出，每一个节点的层数（level）是随机出来的，而且新插入一个节点并不会影响到其他节点的层数，因此，**插入操作只需要修改节点前后的指针，而不需要对多个节点都进行调整**，这就降低了插入操作的复杂度。
 
