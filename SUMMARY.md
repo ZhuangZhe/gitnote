@@ -162,5 +162,6 @@
 
 * [创建型](she-ji-mo-shi/creational/README.md)
   * [工厂模式](she-ji-mo-shi/creational/factory-pattern.md)
-  * [Untitled](she-ji-mo-shi/creational/untitled.md)
+  * [抽象工厂模式](she-ji-mo-shi/creational/abstract-factory-pattern.md)
+  * [建造者模式](she-ji-mo-shi/creational/builder-pattern.md)
 
