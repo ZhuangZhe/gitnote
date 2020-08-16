@@ -158,3 +158,9 @@
 
 * [树](algorithm-and-data-structure/tree.md)
 
+## 设计模式
+
+* [创建型](she-ji-mo-shi/creational/README.md)
+  * [工厂模式](she-ji-mo-shi/creational/factory-pattern.md)
+  * [Untitled](she-ji-mo-shi/creational/untitled.md)
+
