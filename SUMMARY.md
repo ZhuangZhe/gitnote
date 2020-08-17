@@ -165,6 +165,7 @@
   * [桥接模式](she-ji-mo-shi/structural/bridge-pattern.md)
   * [装饰模式](she-ji-mo-shi/structural/decorator-pattern.md)
   * [外观模式](she-ji-mo-shi/structural/facade-pattern.md)
+  * [享元模式](she-ji-mo-shi/structural/flyweight-pattern.md)
 * [创建型](she-ji-mo-shi/creational/README.md)
   * [工厂模式](she-ji-mo-shi/creational/factory-pattern.md)
   * [抽象工厂模式](she-ji-mo-shi/creational/abstract-factory-pattern.md)

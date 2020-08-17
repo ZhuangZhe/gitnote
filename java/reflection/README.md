@@ -34,11 +34,11 @@ JDK中对和反射相关的类库集中在`java.lang.reflect`包和`java.lang`�
 
 * `java.lang.reflect.Field`类继承体系:
 
-![](../../.gitbook/assets/image%20%2864%29.png)
+![](../../.gitbook/assets/image%20%2865%29.png)
 
 * `ava.lang.reflect.Parameter`类继承体系:
 
-![](../../.gitbook/assets/image%20%2870%29.png)
+![](../../.gitbook/assets/image%20%2871%29.png)
 
 
 
