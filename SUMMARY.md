@@ -160,8 +160,14 @@
 
 ## 设计模式
 
+* [结构型](she-ji-mo-shi/structural/README.md)
+  * [适配器模式](she-ji-mo-shi/structural/adapter.md)
+  * [桥接模式](she-ji-mo-shi/structural/bridge-pattern.md)
+  * [装饰模式](she-ji-mo-shi/structural/decorator-pattern.md)
+  * [外观模式](she-ji-mo-shi/structural/facade-pattern.md)
 * [创建型](she-ji-mo-shi/creational/README.md)
   * [工厂模式](she-ji-mo-shi/creational/factory-pattern.md)
   * [抽象工厂模式](she-ji-mo-shi/creational/abstract-factory-pattern.md)
   * [建造者模式](she-ji-mo-shi/creational/builder-pattern.md)
+  * [单例模式](she-ji-mo-shi/creational/singleton.md)
 
