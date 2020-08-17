@@ -96,6 +96,7 @@
 * [Spring Data](spring/spring-data.md)
 * [Spring Cloud](spring/spring-cloud.md)
 * [Spring Security](spring/spring-security.md)
+* [常用注解](spring/annotation.md)
 
 ## 数据库 <a id="database"></a>
 
@@ -136,6 +137,7 @@
 ## 部署 <a id="deploy"></a>
 
 * [Docker](deploy/docker.md)
+* [kubernetes](deploy/kubernetes.md)
 
 ## 系统设计 <a id="system-design"></a>
 
@@ -160,12 +162,17 @@
 
 ## 设计模式
 
+* [行为型](she-ji-mo-shi/behavioral/README.md)
+  * [命令模式](she-ji-mo-shi/behavioral/command-pattern.md)
+  * [中介者模式](she-ji-mo-shi/behavioral/mediator-pattern.md)
+  * [观察者模式](she-ji-mo-shi/behavioral/observer-pattern.md)
 * [结构型](she-ji-mo-shi/structural/README.md)
   * [适配器模式](she-ji-mo-shi/structural/adapter.md)
   * [桥接模式](she-ji-mo-shi/structural/bridge-pattern.md)
   * [装饰模式](she-ji-mo-shi/structural/decorator-pattern.md)
   * [外观模式](she-ji-mo-shi/structural/facade-pattern.md)
   * [享元模式](she-ji-mo-shi/structural/flyweight-pattern.md)
+  * [代理模式](she-ji-mo-shi/structural/proxy-pattern.md)
 * [创建型](she-ji-mo-shi/creational/README.md)
   * [工厂模式](she-ji-mo-shi/creational/factory-pattern.md)
   * [抽象工厂模式](she-ji-mo-shi/creational/abstract-factory-pattern.md)
