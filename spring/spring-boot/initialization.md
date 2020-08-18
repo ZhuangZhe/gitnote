@@ -274,6 +274,78 @@ protected void postProcessApplicationContext(ConfigurableApplicationContext cont
 }
 ```
 
+初始化器做的工作，比如`ContextIdApplicationContextInitializer`会设置应用程序的id；`AutoConfigurationReportLoggingInitializer`会给应用程序添加一个条件注解解析器报告等：
+
+```java
+protected void applyInitializers(ConfigurableApplicationContext context) {
+    // 遍历每个初始化器，对调用对应的initialize方法
+    for (ApplicationContextInitializer initializer : getInitializers()) {
+        Class<?> requiredType = GenericTypeResolver.resolveTypeArgument(
+            initializer.getClass(), ApplicationContextInitializer.class);
+        Assert.isInstanceOf(requiredType, context, "Unable to call initializer.");
+        initializer.initialize(context);
+    }
+}
+```
+
+Spring容器的刷新`refresh`方法内部会做很多很多的事情：比如`BeanFactory`的设置，`BeanFactoryPostProcessor`接口的执行、`BeanPostProcessor`接口的执行、自动化配置类的解析、条件注解的解析、国际化的初始化等等。
+
+`run`方法中的Spring容器创建完成之后会调用`afterRefresh`方法，代码如下：
+
+```java
+protected void afterRefresh(ConfigurableApplicationContext context, ApplicationArguments args) {
+    afterRefresh(context, args.getSourceArgs()); // 目前是个空实现
+    
+    // 调用Spring容器中的ApplicationRunner和CommandLineRunner接口的实现类
+    callRunners(context, args); 
+}
+
+private void callRunners(ApplicationContext context, ApplicationArguments args) {
+    List<Object> runners = new ArrayList<Object>();
+    
+    // 找出Spring容器中ApplicationRunner接口的实现类
+    runners.addAll(context.getBeansOfType(ApplicationRunner.class).values());
+    
+    // 找出Spring容器中CommandLineRunner接口的实现类
+    runners.addAll(context.getBeansOfType(CommandLineRunner.class).values());
+    
+    // 对runners进行排序
+    AnnotationAwareOrderComparator.sort(runners);
+    
+    // 遍历runners依次执行
+    for (Object runner : new LinkedHashSet<Object>(runners)) {
+        if (runner instanceof ApplicationRunner) { // 如果是ApplicationRunner，进行ApplicationRunner的run方法调用
+            callRunner((ApplicationRunner) runner, args);
+        }
+        
+        if (runner instanceof CommandLineRunner) { // 如果是CommandLineRunner，进行CommandLineRunner的run方法调用
+            callRunner((CommandLineRunner) runner, args);
+        }
+    }
+}
+```
+
+这样`run`方法执行完成之后。Spring容器也已经初始化完成，各种监听器和初始化器也做了相应的工作。
+
+## 总结
+
+SpringBoot启动的时候，不论调用什么方法，都会构造一个`SpringApplication`的实例，然后调用这个实例的`run`方法，这样就表示启动SpringBoot。
+
+在`run`方法调用之前，也就是构造`SpringApplication`的时候会进行初始化的工作，初始化的时候会做以下几件事：
+
+1. 把参数`sources`设置到`SpringApplication`属性中，这个`sources`可以是任何类型的参数。本文的例子中这个sources就是MyApplication的class对象。
+2. 判断是否是web程序，并设置到`webEnvironment`这个boolean属性中。
+3. 找出所有的初始化器，默认有5个，设置到`initializers`属性中。
+4. 找出所有的应用程序监听器，默认有9个，设置到listeners属性中。
+5. 找出运行的主类\(main class\)。
+
+SpringApplication构造完成之后调用run方法，启动SpringApplication，run方法执行的时候会做以下几件事：
+
+1. 构造一个StopWatch，观察SpringApplication的执行
+2. 找出所有的SpringApplicationRunListener并封装到SpringApplicationRunListeners中，用于监听run方法的执行。监听的过程中会封装成事件并广播出去让初始化过程中产生的应用程序监听器进行监听
+3. 构造Spring容器\(ApplicationContext\)，并返回 3.1 创建Spring容器的判断是否是web环境，是的话构造AnnotationConfigEmbeddedWebApplicationContext，否则构造AnnotationConfigApplicationContext 3.2 初始化过程中产生的初始化器在这个时候开始工作 3.3 Spring容器的刷新\(完成bean的解析、各种processor接口的执行、条件注解的解析等等\)
+4. 从Spring容器中找出ApplicationRunner和CommandLineRunner接口的实现类并排序后依次执行
+
 
 
 **参考资料：**
