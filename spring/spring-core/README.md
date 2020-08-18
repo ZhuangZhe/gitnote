@@ -1,5 +1,13 @@
 # Spring Core
 
+* spring-core：核心类库，其他模块大量使用此jar包；
+* spring-beans：Spring定义Bean的支持；
+* spring-context：运行时Spring容器；
+* spring-context-support：Spring容器对第三方包的集成支持，比如邮件服务、视图解析
+* spring-expression：Spring表达式语言
+
+\*\*\*\*
+
 **参考资料：**
 
 * [Spring面试题](https://github.com/Homiss/Java-interview-questions/blob/master/%E6%A1%86%E6%9E%B6/Spring%20%E9%9D%A2%E8%AF%95%E9%A2%98.md)
