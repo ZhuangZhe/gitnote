@@ -48,7 +48,7 @@
 | **`@ModelAttribute`** | 将方法参数或方法返回值绑定到命名模型属性的注释，公开给Web视图。支持带`@RequestMapping`方法的控制器类。 可以使用特定的属性名称，通过注释`@RequestMapping`方法的相应参数，将命令对象公开给Web视图。 也可以通过使用`@RequestMapping`方法在控制器类中注释访问器方法，将引用数据公开给Web视图。允许这样的访问器方法具有`@RequestMapping`方法支持的任何参数， 将模型属性值返回并公开。 但请注意，当请求处理导致异常时，Web视图无法使用引用数据和所有其他模型内容，因为可能在任何时候引发异常，从而使模型的内容不可靠。因此，`@ExceptionHandler`方法不提供对Model参数的访问。 |
 | **`@InitBinder`** | 用于标识初始化WebDataBinder的方法，该方法将用于填充带注释的方法的命令和表单对象参数。 这样的`init-binder`方法支持`RequestMapping`支持的所有参数，命令/表单对象和相应的验证结果对象除外。 `Init-binder`方法不能有返回值;它们通常被宣布为无效。 典型的参数是`WebDataBinder`与`WebRequest`或`Locale`的组合，允许注册特定于上下文的编辑器。 |
 | `@WebAppConfiguration` | `@WebAppConfiguration`是一个类级别注释，用于声明为集成测试加载的`ApplicationContext`应该是`WebApplicationContext`。 测试类上存在`@WebAppConfiguration`指示应使用Web应用程序根路径的默认值为测试加载`WebApplicationContext`。要覆盖默认值，请通过`value()`属性指定显式资源路径。 请注意，`@WebAppConfiguration`必须与`@ContextConfiguration`结合使用，可以在单个测试类中，也可以在测试类层次结构中使用。 |
-|  |  |
+| `@Constraint` | 将注释标记为Bean Validation约束。 给定的约束注释必须被`@Constraint`注释，该注释引用其约束验证实现的列表。 |
 
 ## Spring Boot
 
