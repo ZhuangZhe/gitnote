@@ -24,7 +24,7 @@
 
 ## 时序图
 
-![](../../.gitbook/assets/image%20%2864%29.png)
+![](../../.gitbook/assets/image%20%2865%29.png)
 
 ## 模式分析
 

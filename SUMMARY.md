@@ -93,6 +93,7 @@
   * [配置](spring/spring-core/config/README.md)
     * [Java Config](spring/spring-core/config/java-config.md)
 * [Spring Boot](spring/spring-boot/README.md)
+  * [启动过程](spring/spring-boot/initialization.md)
   * [自动装配](spring/spring-boot/auto-config.md)
 * [Spring Web](spring/spring-web.md)
 * [Spring Data](spring/spring-data.md)

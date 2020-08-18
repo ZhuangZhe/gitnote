@@ -119,7 +119,7 @@ Signature: #22
 
 在JDK1.5中引入了四种新的泛型类型`java.lang.reflect.ParameterizedType`、`java.lang.reflect.TypeVariable`、`java.lang.reflect.WildcardType`、`java.lang.reflect.GenericArrayType`，包括原来存在的`java.lang.Class`，一共存在五种类型。为了程序的扩展性，引入了`java.lang.reflect.Type`类作为这五种类型的公共父接口，这样子就可以使用`java.lang.reflect.Type`类型参数去接收以上五种子类型的实参或者返回值，由此从逻辑上统一了泛型相关的类型和原始存在的`java.lang.Class`描述的类型。
 
-![](../../../.gitbook/assets/image%20%2870%29.png)
+![](../../../.gitbook/assets/image%20%2871%29.png)
 
 
 
