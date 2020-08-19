@@ -333,18 +333,18 @@ SpringBoot启动的时候，不论调用什么方法，都会构造一个`Spring
 
 在`run`方法调用之前，也就是构造`SpringApplication`的时候会进行初始化的工作，初始化的时候会做以下几件事：
 
-1. 把参数`sources`设置到`SpringApplication`属性中，这个`sources`可以是任何类型的参数。本文的例子中这个sources就是MyApplication的class对象。
+1. 把参数`sources`设置到`SpringApplication`属性中，这个`sources`可以是任何类型的参数。本文的例子中这个`sources`就是`MyApplication`的`class`对象。
 2. 判断是否是web程序，并设置到`webEnvironment`这个boolean属性中。
 3. 找出所有的初始化器，默认有5个，设置到`initializers`属性中。
-4. 找出所有的应用程序监听器，默认有9个，设置到listeners属性中。
-5. 找出运行的主类\(main class\)。
+4. 找出所有的应用程序监听器，默认有9个，设置到`listeners`属性中。
+5. 找出运行的主类。
 
-SpringApplication构造完成之后调用run方法，启动SpringApplication，run方法执行的时候会做以下几件事：
+`SpringApplication`构造完成之后调用`run`方法，启动`SpringApplication`，`run`方法执行的时候会做以下几件事：
 
-1. 构造一个StopWatch，观察SpringApplication的执行
-2. 找出所有的SpringApplicationRunListener并封装到SpringApplicationRunListeners中，用于监听run方法的执行。监听的过程中会封装成事件并广播出去让初始化过程中产生的应用程序监听器进行监听
-3. 构造Spring容器\(ApplicationContext\)，并返回 3.1 创建Spring容器的判断是否是web环境，是的话构造AnnotationConfigEmbeddedWebApplicationContext，否则构造AnnotationConfigApplicationContext 3.2 初始化过程中产生的初始化器在这个时候开始工作 3.3 Spring容器的刷新\(完成bean的解析、各种processor接口的执行、条件注解的解析等等\)
-4. 从Spring容器中找出ApplicationRunner和CommandLineRunner接口的实现类并排序后依次执行
+1. 构造一个`StopWatch`，观察`SpringApplication`的执行。
+2. 找出所有的`SpringApplicationRunListener`并封装到`SpringApplicationRunListeners`中，用于监听`run`方法的执行。监听的过程中会封装成事件并广播出去让初始化过程中产生的应用程序监听器进行监听。
+3. 构造Spring容器\(`ApplicationContext`\)，并返回。 3.1 创建Spring容器的判断是否是web环境，是的话构造`AnnotationConfigEmbeddedWebApplicationContext`，否则构造`AnnotationConfigApplicationContext`。 3.2 初始化过程中产生的初始化器在这个时候开始工作。 3.3 Spring容器的刷新\(完成bean的解析、各种processor接口的执行、条件注解的解析等等\)。
+4. 从Spring容器中找出`ApplicationRunner`和`CommandLineRunner`接口的实现类并排序后依次执行。
 
 
 
