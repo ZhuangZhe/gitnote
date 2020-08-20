@@ -305,7 +305,7 @@ private void loadForFileExtension(PropertySourceLoader loader, String prefix, St
 }
 ```
 
-
+`ConfigFileApplicationListener`类中还实现了其他更多的功能，大家感兴趣的话可以debug进行阅读。
 
 
 
