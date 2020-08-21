@@ -24,8 +24,21 @@
 | `key <pattern>` | 按pettern查询key |
 | `exists <key1 ...>` | 判断key时候存在 |
 | `type <key>` | 查询key是否存在 |
-| `del <key>` |  |
-|  |  |
+| `del <key>` | 删除key所对应的数据 |
+| `expire <key> <seconds>` | 为key设置过期时间，单位为秒 |
+| `ttl <key>` | 查看还有多少秒过期，-1表示为永不过期，-2表示为已过期 |
+| `dbsize` | 查看当前数据库的key的数量 |
+| `flushdb` | 清空当前库 |
+| `flushall` | 清空全部库 |
+| `get <key>` | 查询对应键值 |
+| `set <key> <value>` | 添加键值对 |
+| `append <key> <value>` | 将给定的value追加到原值的末尾，完成后返回总长度 |
+| `strlen <key>` | 获得指的键对应的值长度 |
+| `setnx <key> <value>` | 只有在可以不存在时设置key的值 |
+| `incr <key>` | 将键对应的值增加一，只能对数值进行此操作 |
+| `decr <key>` | 将键对应的值增减一，只能对数值进行此操作 |
+| `incrby <key> <步长>` | 将键对应的值增加特定步长，只能对数值进行此操作 |
+| `decrby <key> <步长>` | 将键对应的值减少特定步长，只能对数值进行此操作 |
 
 
 
