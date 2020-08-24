@@ -120,6 +120,7 @@
     * [基本数据类型](database/nosql/redis/basic-data-types.md)
     * [跳跃表](database/nosql/redis/skiplist.md)
     * [命令](database/nosql/redis/commands.md)
+    * [配置文件](database/nosql/redis/config-file.md)
   * [Cassandra](database/nosql/cassandra.md)
   * [MongoDB](database/nosql/mongodb/README.md)
     * [基本概念](database/nosql/mongodb/intro.md)

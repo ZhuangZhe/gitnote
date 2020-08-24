@@ -2,12 +2,14 @@
 
 **Redis** 有5种基础数据结构，它们分别是：**string\(字符串\)**、**list\(列表\)**、**hash\(字典\)**、**set\(集合\)** 和 **zset\(有序集合\)**。
 
+Redis单命令的原子性得益于Redis单线程。
+
 ## 字符串string
 
 Redis中的字符串是一种**动态字符串**，这意味着使用者可以修改，它的底层实现有点类似于Java中的**ArrayList**，有一个字符数组，从源码的**sds.h/sdshdr文件** 中可以看到Redis底层对于字符串的定义**SDS**，即_Simple Dynamic String_ 结构：
 
 ```c
-COPY/* Note: sdshdr5 is never used, we just access the flags byte directly.
+/* Note: sdshdr5 is never used, we just access the flags byte directly.
  * However is here to document the layout of type 5 SDS strings. */
 struct __attribute__ ((__packed__)) sdshdr5 {
     unsigned char flags; /* 3 lsb of type, and 5 msb of string length */
@@ -58,7 +60,7 @@ struct __attribute__ ((__packed__)) sdshdr64 {
 我们以追加字符串的操作举例，Redis源码如下：
 
 ```c
-COPY/* Append the specified binary-safe string pointed by 't' of 'len' bytes to the
+/* Append the specified binary-safe string pointed by 't' of 'len' bytes to the
  * end of the specified sds string 's'.
  *
  * After the call, the passed sds string is no longer valid and all the
@@ -234,7 +236,7 @@ typedef struct list {
 示范：
 
 ```bash
-COPY> rpush mylist A
+> rpush mylist A
 (integer) 1
 > rpush mylist B
 (integer) 2
@@ -251,7 +253,7 @@ COPY> rpush mylist A
 队列是先进先出的数据结构，常用于消息排队和异步逻辑处理，它会确保元素的访问顺序：
 
 ```c
-COPY> RPUSH books python java golang
+> RPUSH books python java golang
 (integer) 3
 > LPOP books
 "python"
@@ -268,7 +270,7 @@ COPY> RPUSH books python java golang
 栈是先进后出的数据结构，跟队列正好相反：
 
 ```c
-COPY> RPUSH books python java golang
+> RPUSH books python java golang
 > RPOP books
 "golang"
 > RPOP books
@@ -284,7 +286,7 @@ COPY> RPUSH books python java golang
 Redis中的字典相当于Java中的**HashMap**，内部实现也差不多类似，都是通过 **“数组 + 链表”** 的链地址法来解决部分**哈希冲突**，同时这样的结构也吸收了两种不同数据结构的优点。源码定义如`dict.h/dictht`定义：
 
 ```c
-COPYtypedef struct dictht {
+typedef struct dictht {
     // 哈希表数组
     dictEntry **table;
     // 哈希表大小
@@ -308,7 +310,7 @@ typedef struct dict {
 `table`属性是一个数组，数组中的每个元素都是一个指向`dict.h/dictEntry`结构的指针，而每个`dictEntry`结构保存着一个键值对：
 
 ```c
-COPYtypedef struct dictEntry {
+typedef struct dictEntry {
     // 键
     void *key;
     // 值
@@ -344,7 +346,7 @@ COPYtypedef struct dictEntry {
 hash也有缺点，hash结构的存储消耗要高于单个字符串，所以到底该使用hash还是字符串，需要根据实际情况再三权衡：
 
 ```bash
-COPY> HSET books java "think in java"    # 命令行的字符串如果包含空格则需要使用引号包裹
+> HSET books java "think in java"    # 命令行的字符串如果包含空格则需要使用引号包裹
 (integer) 1
 > HSET books python "python cookbook"
 (integer) 1
@@ -370,7 +372,7 @@ Redis的集合相当于Java语言中的**HashSet**，它内部的键值对是无
 由于该结构比较简单，我们直接来看看是如何使用的：
 
 ```c
-COPY> SADD books java
+> SADD books java
 (integer) 1
 > SADD books java    # 重复
 (integer) 0
@@ -407,7 +409,7 @@ COPY> SADD books java
 ### 有序列表zset基础操作
 
 ```c
-COPY> ZADD books 9.0 "think in java"
+> ZADD books 9.0 "think in java"
 > ZADD books 8.9 "java concurrency"
 > ZADD books 8.6 "java cookbook"
 
