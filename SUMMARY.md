@@ -138,11 +138,18 @@
 ## RPC
 
 * [dubbo](rpc/dubbo.md)
+* [Zookeeper](rpc/zookeeper.md)
 
 ## 网络 <a id="network"></a>
 
 * [互联网组成](network/internet-components.md)
 * [OSI模型](network/osi-model.md)
+
+## 操作系统 <a id="operation-system"></a>
+
+* [基础](operation-system/basic.md)
+* [Linux](operation-system/linux.md)
+* [命令](operation-system/commands.md)
 
 ## 部署 <a id="deploy"></a>
 
@@ -169,6 +176,16 @@
 ## 算法和数据结构 <a id="algorithm-and-data-structure"></a>
 
 * [树](algorithm-and-data-structure/tree.md)
+* [图](algorithm-and-data-structure/graph/README.md)
+  * [相关算法](algorithm-and-data-structure/graph/algorithm/README.md)
+    * [Prim算法](algorithm-and-data-structure/graph/algorithm/prim.md)
+    * [Kruskal算法](algorithm-and-data-structure/graph/algorithm/kruskal.md)
+    * [Dijkstra算法](algorithm-and-data-structure/graph/algorithm/dijkstra.md)
+    * [Tarjan算法](algorithm-and-data-structure/graph/algorithm/tarjan.md)
+    * [Union-Find算法](algorithm-and-data-structure/graph/algorithm/unionfind.md)
+    * [Topological Sort算法](algorithm-and-data-structure/graph/algorithm/topological-sort.md)
+  * [算法题](algorithm-and-data-structure/graph/algorithm-problem/README.md)
+    * [LeetCode 1387 Sort Integers by The Power Value](algorithm-and-data-structure/graph/algorithm-problem/leetcode-1387-sort-integers-by-the-power-value.md)
 
 ## 设计模式
 
