@@ -99,7 +99,8 @@
   * [监视器](spring/spring-boot/listener.md)
   * [Starter](spring/spring-boot/starter.md)
 * [Spring Web](spring/spring-web.md)
-* [Spring Data](spring/spring-data.md)
+* [Spring Data](spring/spring-data/README.md)
+  * [DAO DTO VO](spring/spring-data/dao-dto-vo.md)
 * [Spring AOP](spring/spring-aop.md)
 * [Spring Test](spring/spring-test.md)
 * [Spring Cloud](spring/spring-cloud.md)
@@ -158,6 +159,8 @@
 
 ## 系统设计 <a id="system-design"></a>
 
+* [权衡与取舍](system-design/trade-off.md)
+* [域名系统](system-design/dns.md)
 * [CDN](system-design/cdn/README.md)
   * [CDN的基本工作过程](system-design/cdn/cdn-basic.md)
   * [CDN的功能架构](system-design/cdn/cdn-function-framework.md)
@@ -186,6 +189,9 @@
     * [Topological Sort算法](algorithm-and-data-structure/graph/algorithm/topological-sort.md)
   * [算法题](algorithm-and-data-structure/graph/algorithm-problem/README.md)
     * [LeetCode 1387 Sort Integers by The Power Value](algorithm-and-data-structure/graph/algorithm-problem/leetcode-1387-sort-integers-by-the-power-value.md)
+    * [LeetCode1557 Minimum Number of Vertices to Reach All Nodes](algorithm-and-data-structure/graph/algorithm-problem/leetcode1557-minimum-number-of-vertices-to-reach-all-nodes.md)
+    * [LeetCode 959 Regions Cut By Slashes](algorithm-and-data-structure/graph/algorithm-problem/leetcode-959-regions-cut-by-slashes.md)
+    * [LeetCode 1043 Partition Array for Maximum Sum](algorithm-and-data-structure/graph/algorithm-problem/leetcode-1043-partition-array-for-maximum-sum.md)
 
 ## 设计模式
 

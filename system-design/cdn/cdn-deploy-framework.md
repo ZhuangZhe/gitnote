@@ -14,7 +14,7 @@ CDN系统设计的首要目标是尽量减少用户的访问响应时间，为�
 * 一种是旁路方式
 * 一种是穿越方式
 
-在穿越方式下，SLB\(Server Load Balancer\)，负载均衡一般由L4-7交换机实现，SLB向外提供可访问的公网IP地址，每台Cache仅分配私网IP地址，该台SLB下挂的所有Cache构成一个服务组。所有用户请求和媒体流都经过该SLB设备，再由SLB设备进行向上向下转发。SLB实际上承担了 NAT\(Network Address Translation，网络地址转换\)功能，向用户屏蔽了Cache设备的IP地址。这种方式是CDN系统中应用较多的方式，优点是具有较高的安全性和可靠性，缺点是L4-7交换机通常较为昂贵。另外，当节点容量大时，L4-7交换机容易形成性能瓶颈。不过近年来，随着 LVS \(Linux Virtual Server，即Linux虚拟服务器\) 等技术的兴起，SLB设备价格有了大幅下降。
+在穿越方式下，SLB\(Server Load Balancer\)，负载均衡一般由L4-7交换机实现，SLB向外提供可访问的公网IP地址，每台Cache仅分配私网IP地址，该台SLB下挂的所有Cache构成一个服务组。所有用户请求和媒体流都经过该SLB设备，再由SLB设备进行向上向下转发。SLB实际上承担了NAT\(Network Address Translation，网络地址转换\)功能，向用户屏蔽了Cache设备的IP地址。这种方式是CDN系统中应用较多的方式，优点是具有较高的安全性和可靠性，缺点是L4-7交换机通常较为昂贵。另外，当节点容量大时，L4-7交换机容易形成性能瓶颈。不过近年来，随着 LVS \(Linux Virtual Server，即Linux虚拟服务器\) 等技术的兴起，SLB设备价格有了大幅下降。
 
 **在旁路方式下，有两种SLB实现方式：**
 
