@@ -2,6 +2,8 @@
 
 用于寻找最小生成树‌
 
+## 步骤
+
 从单一顶点开始，普里姆算法按照以下步骤逐步扩大树中所含顶点的数目，直到遍及连通图的所有顶点。
 
 1. 输入：一个加权连通图，其中顶点集合为`V`，边集合为`E`；
@@ -11,7 +13,7 @@
    2. 将`v`加入集合`V_new`中，将`(u,v)`加入集合`E_new`中；
 4. 输出：使用集合`V_new`和`E_new`来描述所得到的最小生成树。
 
-伪代码：
+## 伪代码
 
 ```java
 n	# 图中顶点的数量
@@ -48,5 +50,59 @@ function addEdges(nodeIndex):
 	for(edge : edges):
 		if !isited[edge.to]:
 			pq.enqueue(edge)
+```
+
+### Java代码
+
+```java
+public class Prim {
+
+    public int mstCost(int numOfNode, int[][] edges) {
+        if(numOfNode == 0)
+            return 0;
+
+        if(edges == null || edges.length == 0)
+            return -1;
+
+        // declare data
+        int cost = 0;
+        int selectedEdgeCount = 0;
+        boolean[] visited = new boolean[numOfNode + 1];
+        Map<Integer, Set<int[]>> graph = new HashMap<>();
+        Queue<int[]> edgeMinHeap = new PriorityQueue<int[]>(new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[2] - o2[2];
+            }
+        });
+
+        // init data
+        for(int[] edge : edges) {
+            graph.computeIfAbsent(edge[0], addedEdge -> new HashSet<>()).add(edge);
+            graph.computeIfAbsent(edge[1], addededge -> new HashSet<>()).add(new int[]{edge[1], edge[0], edge[2]});
+        }
+        visited[1] = true;
+        for(int[] edge : graph.get(1)) {
+            edgeMinHeap.offer(edge);
+        }
+
+        // process
+        while(!edgeMinHeap.isEmpty()) {
+            int[] edge = edgeMinHeap.poll();
+
+            if(!visited[edge[1]]) {
+                visited[edge[1]] = true;
+                cost += edge[2];
+                selectedEdgeCount++;
+                for(int[] neighbor : graph.get(edge[1])) {
+                    edgeMinHeap.offer(neighbor);
+                }
+            }
+        }
+
+        return selectedEdgeCount == numOfNode - 1 ? cost : -1;
+    }
+
+}
 ```
 

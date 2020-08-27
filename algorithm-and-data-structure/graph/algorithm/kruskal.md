@@ -12,19 +12,19 @@
 ## 伪代码：
 
 ```java
-procedure kruskal(G,w)
-Input: A connected undirected graph G=(V,E) with edge weights w_e.
-Output: A minimum spanning trr defind by the edges X.
-
-for add u ∈ V：
-	makeset(u)
-
-X = {}
-Sort the edges E by weight
-for all edges {u,v} ∈ E, in increasing order of weight:
-	if find(u) ≠ find(v):
-		add edge {u,v} to X
-		union(u,v)
+procedure kruskal(G,w):
+	Input: A connected undirected graph G=(V,E) with edge weights w_e.
+	Output: A minimum spanning trr defind by the edges X.
+	
+	for add u ∈ V：
+		makeset(u)
+	
+	X = {}
+	Sort the edges E by weight
+	for all edges {u,v} ∈ E, in increasing order of weight:
+		if find(u) ≠ find(v):
+			add edge {u,v} to X
+			union(u,v)
 
 procedure makeset(x):
 	π(x) = x
