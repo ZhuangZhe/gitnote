@@ -146,6 +146,10 @@
 * [互联网组成](network/internet-components.md)
 * [OSI模型](network/osi-model.md)
 
+## 反向代理 <a id="reverse-proxy"></a>
+
+* [NGINX](reverse-proxy/nginx.md)
+
 ## 操作系统 <a id="operation-system"></a>
 
 * [基础](operation-system/basic.md)
@@ -171,6 +175,7 @@
 * [反向代理](system-design/reverse-proxy.md)
 * [应用层](system-design/application-layer/README.md)
   * [微服务](system-design/application-layer/microservice.md)
+  * [服务发现](system-design/application-layer/fu-wu-fa-xian.md)
 * [数据库](system-design/database.md)
 * [缓存](system-design/cache.md)
 * [异步](system-design/asynchronous.md)

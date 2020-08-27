@@ -28,7 +28,7 @@
 * ​[可缩放系统构架介绍](http://lethain.com/introduction-to-architecting-systems-for-scale)​
 * ​[破解系统设计面试](http://www.puncsky.com/blog/2016-02-13-crack-the-system-design-interview)​
 * ​[面向服务架构](https://en.wikipedia.org/wiki/Service-oriented_architecture)​
-* ​[Zookeeper 介绍](http://www.slideshare.net/sauravhaloi/introduction-to-apache-zookeeper)​
+* ​[Zookeeper介绍](http://www.slideshare.net/sauravhaloi/introduction-to-apache-zookeeper)​
 * ​[构建微服务，你所需要知道的一切](https://cloudncode.wordpress.com/2016/07/22/msa-getting-started/)​
 
 
