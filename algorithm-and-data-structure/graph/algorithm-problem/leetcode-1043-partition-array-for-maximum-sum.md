@@ -1,4 +1,4 @@
-# LeetCode 1043 Partition Array for Maximum Sum
+# Partition Array for Maximum Sum
 
 \*\*\*\*[**LeetCode链接**](https://leetcode.com/problems/partition-array-for-maximum-sum/)\*\*\*\*
 

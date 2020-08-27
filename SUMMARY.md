@@ -166,7 +166,8 @@
   * [CDN的功能架构](system-design/cdn/cdn-function-framework.md)
   * [CDN的部署架构](system-design/cdn/cdn-deploy-framework.md)
   * [使用CDN的原因](system-design/cdn/why-use-cdn.md)
-* [负载均衡器](system-design/loadbalancer.md)
+* [负载均衡器](system-design/loadbalancer/README.md)
+  * [四和七层负载均衡](system-design/loadbalancer/layer-four-and-seven-load-balancer.md)
 * [反向代理](system-design/reverse-proxy.md)
 * [应用层](system-design/application-layer/README.md)
   * [微服务](system-design/application-layer/microservice.md)
@@ -188,10 +189,12 @@
     * [Union-Find算法](algorithm-and-data-structure/graph/algorithm/unionfind.md)
     * [Topological Sort算法](algorithm-and-data-structure/graph/algorithm/topological-sort.md)
   * [算法题](algorithm-and-data-structure/graph/algorithm-problem/README.md)
-    * [LeetCode 1387 Sort Integers by The Power Value](algorithm-and-data-structure/graph/algorithm-problem/leetcode-1387-sort-integers-by-the-power-value.md)
-    * [LeetCode1557 Minimum Number of Vertices to Reach All Nodes](algorithm-and-data-structure/graph/algorithm-problem/leetcode1557-minimum-number-of-vertices-to-reach-all-nodes.md)
-    * [LeetCode 959 Regions Cut By Slashes](algorithm-and-data-structure/graph/algorithm-problem/leetcode-959-regions-cut-by-slashes.md)
-    * [LeetCode 1043 Partition Array for Maximum Sum](algorithm-and-data-structure/graph/algorithm-problem/leetcode-1043-partition-array-for-maximum-sum.md)
+    * [Sort Integers by The Power Value](algorithm-and-data-structure/graph/algorithm-problem/leetcode-1387-sort-integers-by-the-power-value.md)
+    * [Minimum Number of Vertices to Reach All Nodes](algorithm-and-data-structure/graph/algorithm-problem/leetcode1557-minimum-number-of-vertices-to-reach-all-nodes.md)
+    * [Regions Cut By Slashes](algorithm-and-data-structure/graph/algorithm-problem/leetcode-959-regions-cut-by-slashes.md)
+    * [Partition Array for Maximum Sum](algorithm-and-data-structure/graph/algorithm-problem/leetcode-1043-partition-array-for-maximum-sum.md)
+    * [Keys and Rooms](algorithm-and-data-structure/graph/algorithm-problem/keys-and-rooms.md)
+    * [Jump Game III](algorithm-and-data-structure/graph/algorithm-problem/jump-game-iii.md)
 
 ## 设计模式
 

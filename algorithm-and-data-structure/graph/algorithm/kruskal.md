@@ -26,21 +26,21 @@ for all edges {u,v} ∈ E, in increasing order of weight:
 		add edge {u,v} to X
 		union(u,v)
 
-procedure makeset(x)
-π(x) = x
-rank(x) = 0
+procedure makeset(x):
+	π(x) = x
+	rank(x) = 0
 
-procedure union(x,y)
-r_x = find(x)
-r_y = find(y)
-if r_x = r_y:
-	return
-if rank(r_x) > rank(r_y):
-	π(r_y) = r_x
-else:
-	π(r_x) = r_y
-	if rank(r_x) == rank(r_y):
-		rank(r_y) = rank(r_y) + 1
+procedure union(x,y):
+	r_x = find(x)
+	r_y = find(y)
+	if r_x = r_y:
+		return
+	if rank(r_x) > rank(r_y):
+		π(r_y) = r_x
+	else:
+		π(r_x) = r_y
+		if rank(r_x) == rank(r_y):
+			rank(r_y) = rank(r_y) + 1
 
 procedure find(x):
 	while x ≠ π(x):

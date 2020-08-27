@@ -1,4 +1,4 @@
-# LeetCode 1387 Sort Integers by The Power Value
+# Sort Integers by The Power Value
 
 \*\*\*\*[**LeetCode链接**](https://leetcode.com/problems/sort-integers-by-the-power-value/)\*\*\*\*
 

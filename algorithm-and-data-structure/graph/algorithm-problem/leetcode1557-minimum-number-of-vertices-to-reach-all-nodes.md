@@ -1,4 +1,4 @@
-# LeetCode1557 Minimum Number of Vertices to Reach All Nodes
+# Minimum Number of Vertices to Reach All Nodes
 
 \*\*\*\*[**LeetCode链接**](https://leetcode.com/problems/minimum-number-of-vertices-to-reach-all-nodes/)\*\*\*\*
 
