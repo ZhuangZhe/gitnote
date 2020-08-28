@@ -47,8 +47,8 @@
 | **`@ExceptionHandler`** | 用于处理特定的类和/或方法中的异常的注释。 使用此注释的方法允许具有灵活的签名。 |
 | **`@ModelAttribute`** | 将方法参数或方法返回值绑定到命名模型属性的注释，公开给Web视图。支持带`@RequestMapping`方法的控制器类。 可以使用特定的属性名称，通过注释`@RequestMapping`方法的相应参数，将命令对象公开给Web视图。 也可以通过使用`@RequestMapping`方法在控制器类中注释访问器方法，将引用数据公开给Web视图。允许这样的访问器方法具有`@RequestMapping`方法支持的任何参数， 将模型属性值返回并公开。 但请注意，当请求处理导致异常时，Web视图无法使用引用数据和所有其他模型内容，因为可能在任何时候引发异常，从而使模型的内容不可靠。因此，`@ExceptionHandler`方法不提供对Model参数的访问。 |
 | **`@InitBinder`** | 用于标识初始化WebDataBinder的方法，该方法将用于填充带注释的方法的命令和表单对象参数。 这样的`init-binder`方法支持`RequestMapping`支持的所有参数，命令/表单对象和相应的验证结果对象除外。 `Init-binder`方法不能有返回值;它们通常被宣布为无效。 典型的参数是`WebDataBinder`与`WebRequest`或`Locale`的组合，允许注册特定于上下文的编辑器。 |
-| `@WebAppConfiguration` | `@WebAppConfiguration`是一个类级别注释，用于声明为集成测试加载的`ApplicationContext`应该是`WebApplicationContext`。 测试类上存在`@WebAppConfiguration`指示应使用Web应用程序根路径的默认值为测试加载`WebApplicationContext`。要覆盖默认值，请通过`value()`属性指定显式资源路径。 请注意，`@WebAppConfiguration`必须与`@ContextConfiguration`结合使用，可以在单个测试类中，也可以在测试类层次结构中使用。 |
-| `@Constraint` | 将注释标记为Bean Validation约束。 给定的约束注释必须被`@Constraint`注释，该注释引用其约束验证实现的列表。 |
+| **`@WebAppConfiguration`** | `@WebAppConfiguration`是一个类级别注释，用于声明为集成测试加载的`ApplicationContext`应该是`WebApplicationContext`。 测试类上存在`@WebAppConfiguration`指示应使用Web应用程序根路径的默认值为测试加载`WebApplicationContext`。要覆盖默认值，请通过`value()`属性指定显式资源路径。 请注意，`@WebAppConfiguration`必须与`@ContextConfiguration`结合使用，可以在单个测试类中，也可以在测试类层次结构中使用。 |
+| **`@Constraint`** | 将注释标记为Bean Validation约束。 给定的约束注释必须被`@Constraint`注释，该注释引用其约束验证实现的列表。 |
 
 ## Spring Boot
 
@@ -80,9 +80,98 @@
 | **`@Import`** | 用来导入一个或者多个`@Configuration`注解修饰的类，这在Spring Boot里面应用很多。 |
 | **`@ImportResource`** | 用来导入一个或者多个Spring配置文件，这对Spring Boot兼容老项目非常有用，因为有些配置无法通过Java Config的形式来配置就只能用这个注解来导入。 |
 
+## Lombok
 
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left">&#x6CE8;&#x89E3;</th>
+      <th style="text-align:left">&#x7B80;&#x4ECB;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:left"><b><code>@Getter</code></b>
+      </td>
+      <td style="text-align:left">&#x53EF;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x6216;&#x5C5E;&#x6027;&#x4E0A;&#xFF0C;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#x8868;&#x793A;&#x6B64;&#x7C7B;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x5C5E;&#x6027;&#x751F;&#x6210;getter&#x65B9;&#x6CD5;&#xFF0C;&#x6807;&#x6CE8;&#x5230;&#x67D0;&#x4E2A;&#x5C5E;&#x6027;&#x4E0A;&#xFF0C;&#x8868;&#x793A;&#x6B64;&#x5C5E;&#x6027;&#x751F;&#x6210;getter&#x65B9;&#x6CD5;&#x3002;</td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@Setter</code></b>
+      </td>
+      <td style="text-align:left">&#x53EF;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x6216;&#x5C5E;&#x6027;&#x4E0A;&#xFF0C;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#x8868;&#x793A;&#x6B64;&#x7C7B;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x5C5E;&#x6027;&#x751F;&#x6210;setter&#x65B9;&#x6CD5;&#xFF0C;&#x6807;&#x6CE8;&#x5230;&#x67D0;&#x4E2A;&#x5C5E;&#x6027;&#x4E0A;&#xFF0C;&#x8868;&#x793A;&#x6B64;&#x5C5E;&#x6027;&#x751F;&#x6210;setter&#x65B9;&#x6CD5;&#x3002;</td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@ToString</code></b>
+      </td>
+      <td style="text-align:left">&#x53EA;&#x80FD;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x662F;&#x91CD;&#x5199;&#x6B64;&#x7C7B;&#x7684;toString&#x65B9;&#x6CD5;&#x3002;</td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@EqualsAndHashCode</code></b>
+      </td>
+      <td style="text-align:left">&#x53EA;&#x80FD;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x662F;&#x91CD;&#x5199;&#x6B64;&#x7C7B;&#x7684;hashCode&#x548C;equals&#x65B9;&#x6CD5;&#x3002;</td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@NoArgsConstructor</code></b>
+      </td>
+      <td style="text-align:left">&#x53EA;&#x80FD;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#xFF0C;&#x751F;&#x6210;&#x65E0;&#x53C2;&#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x3002;</td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@Data</code></b>
+      </td>
+      <td style="text-align:left">&#x53EA;&#x80FD;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#xFF0C;&#x7EFC;&#x5408;<code>@Getter</code>&#xFF0C;<code>@Setter</code>&#xFF0C;<code>@ToString</code>&#xFF0C;<code>@EqualsAndHashCode</code>&#xFF0C;<code>@NoArgsConstructor</code>&#x4E94;&#x4E2A;&#x6CE8;&#x89E3;&#x7684;&#x529F;&#x80FD;&#x3002;</td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@Value</code></b>
+      </td>
+      <td style="text-align:left">&#x53EA;&#x80FD;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#xFF0C;&#x7EFC;&#x5408;<code>@Getter</code>&#xFF0C;<code>@Setter</code>&#xFF0C;<code>@ToString</code>&#xFF0C;<code>@EqualsAndHashCode</code>&#xFF0C;<code>@NoArgsConstructor</code>&#x4E94;&#x4E2A;&#x6CE8;&#x89E3;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x548C;<code>@Data</code>&#x4E0D;&#x540C;&#x7684;&#x662F;&#xFF0C;&#x9ED8;&#x8BA4;&#x5C06;&#x6240;&#x6709;&#x5C5E;&#x6027;&#x5B9A;&#x4E49;&#x6210;final&#x7684;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x53EA;&#x4F1A;&#x751F;&#x6210;getter&#x65B9;&#x6CD5;&#xFF0C;&#x4E0D;&#x4F1A;&#x751F;&#x6210;setter&#x65B9;&#x6CD5;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x9700;&#x8981;final&#xFF0C;&#x5219;&#x7ED9;&#x5C5E;&#x6027;&#x52A0;&#x4E0A;<code>@NonFinal</code>&#x6CE8;&#x89E3;&#x5373;&#x53EF;&#x3002;</td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@AllArgsConstructor</code></b>
+      </td>
+      <td style="text-align:left">&#x53EA;&#x80FD;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#xFF0C;&#x751F;&#x6210;&#x5305;&#x542B;&#x6240;&#x6709;&#x5C5E;&#x6027;&#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#xFF0C;&#x4F7F;&#x7528;&#x6B64;&#x6CE8;&#x89E3;&#x65F6;&#x5EFA;&#x8BAE;&#x548C;<code>@NoArgsConstructor</code>&#x7ED3;&#x5408;&#x4F7F;&#x7528;&#xFF0C;&#x5426;&#x5219;&#x6B64;&#x7C7B;&#x5C06;&#x6CA1;&#x6709;&#x65E0;&#x53C2;&#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x3002;</td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@RequiredArgsConstructor</code></b>
+      </td>
+      <td style="text-align:left">&#x53EA;&#x80FD;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#xFF0C;&#x4F1A;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x5305;&#x542B;&#x5E38;&#x91CF;&#xFF0C;&#x548C;&#x6807;&#x8BC6;&#x4E86;<code>@NotNull</code>&#x7684;&#x53D8;&#x91CF;
+        &#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x3002;&#x751F;&#x6210;&#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x662F;private&#xFF0C;&#x5982;&#x4F55;&#x60F3;&#x8981;&#x5BF9;&#x5916;&#x63D0;&#x4F9B;&#x4F7F;&#x7528;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;staticName&#x9009;&#x9879;&#x751F;&#x6210;&#x4E00;&#x4E2A;static&#x65B9;&#x6CD5;&#x3002;</td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@Builder</code></b>
+      </td>
+      <td style="text-align:left">&#x53EA;&#x80FD;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#xFF0C;&#x5C06;&#x751F;&#x6210;&#x7C7B;&#x7684;&#x4E00;&#x4E2A;&#x5F53;&#x524D;&#x6D41;&#x7A0B;&#x7684;&#x4E00;&#x79CD;&#x94FE;&#x5F0F;&#x6784;&#x9020;&#x5DE5;&#x5382;&#x3002;</td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@Accessors</code></b>
+      </td>
+      <td style="text-align:left">
+        <p>&#x53EF;&#x6807;&#x6CE8;&#x5728;&#x7C7B;&#x6216;&#x5C5E;&#x6027;&#x4E0A;&#xFF0C;&#x5F53;&#x7136;&#x6700;&#x5B9E;&#x7528;&#x7684;&#x529F;&#x80FD;&#x8FD8;&#x662F;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#x3002;</p>
+        <p><b>&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;</b>&#xFF0C;chain&#x5C5E;&#x6027;&#x8BBE;&#x7F6E;&#x4E3A;true&#x65F6;&#xFF0C;&#x7C7B;&#x7684;&#x6240;&#x6709;&#x5C5E;&#x6027;&#x7684;setter&#x65B9;&#x6CD5;&#x8FD4;&#x56DE;&#x503C;&#x5C06;&#x4E3A;this&#xFF0C;&#x7528;&#x6765;&#x652F;&#x6301;setter&#x65B9;&#x6CD5;&#x7684;&#x94FE;&#x5F0F;&#x5199;&#x6CD5;&#x3002;<b>&#x6807;&#x6CE8;&#x5230;&#x5C5E;&#x6027;&#x4E0A;</b>&#xFF0C;&#x4F7F;&#x7528;prefix&#x8BBE;&#x7F6E;&#x9700;&#x8981;&#x7701;&#x7565;&#x7684;&#x5C5E;&#x6027;&#x751F;&#x6210;getter&#xFF0C;setter&#x65B9;&#x6CD5;&#x65F6;&#x7684;&#x524D;&#x7F00;&#xFF0C;&#x4E14;&#x5C5E;&#x6027;&#x5FC5;&#x987B;&#x4E3A;&#x9A7C;&#x5CF0;&#x5F0F;&#x547D;&#x540D;&#x3002;</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
+## JPA
 
+| 注解 | 简介 |
+| :--- | :--- |
+| **`MappedSuperClass`** | 使用在父类上面，是用来标识父类的。标识的类表示其不能映射到数据库表，因为其不是一个完整的实体类，但是它所拥有的属性能够隐射在其子类对用的数据库表中。标识得类不能再有`@Entity`或`@Table`注解。 |
+| **`@Entity`** | 标识实体类是JPA实体，告诉JPA在程序运行时生成实体类对应表。 |
+| **`@Id`** | 标识类里所在变量为主键。 |
+| **`@GeneratedValue`** | 设置主键生成策略，此方式依赖于具体的数据库。 |
+| **`@Column`** | 表示属性所对应字段名进行个性化设置。 |
+| **`@Transient`** | 表示属性并非数据库表字段的映射，ORM框架将忽略该属性。 |
+| **`@Temporal`** | 当我们使用到`java.util`包中的时间日期类型，则需要此注释来说明转化成`java.util`包中的类型。`TemporalType.DATE、TemporalType.TIME`**、**`TemporalType.TIMESTAMP。` |
+| **`@Enumerated`** | 使用此注解映射枚举字段，以String类型存入数据库。注入数据库的类型有两种：`EnumType.ORDINAL`、`EnumType.STRING`。 |
+| **`@Embeddable`** | 当一个实体类要在多个不同的实体类中进行使用，而其不需要生成数据库表。注解在类上，表示此类是可以被其他类嵌套。 |
+| **`@Embedded`** | 当一个实体类要在多个不同的实体类中进行使用，而其不需要生成数据库表。注解在属性上，表示嵌套被`@Embeddable`注解的同类型类。 |
+| **`@ElementCollection`** | 集合映射。 |
+| **`@CreatedDate`** | 表示字段为创建时间字段。 |
+| **`@CreatedBy`** | 表示字段为创建用户字段。 |
+| **`@LastModifiedDate`** | 表示字段为最后修改时间字段。 |
+| **`@LastModifiedBy`** | 表示字段为最后修改用户字段。 |
+| **`@JsonIgnore`** | 此注解是类注解，最好是属性上，作用是json序列化时将java bean中的被注解的属性忽略掉，序列化和反序列化都受影响。 |
 
 
 
@@ -90,4 +179,5 @@
 
 * \*\*\*\*[**Spring Boot 最核心的 25 个注解，都是干货！**](https://zhuanlan.zhihu.com/p/57689422)\*\*\*\*
 * \*\*\*\*[**Spring 注解大全与详解**](https://juejin.im/post/6844903907173335047)\*\*\*\*
+* \*\*\*\*[**Lombok常用注解**](https://www.jianshu.com/p/f165ae6d2e42)\*\*\*\*
 

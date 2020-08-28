@@ -106,6 +106,7 @@
 * [Spring Cloud](spring/spring-cloud.md)
 * [Spring Security](spring/spring-security.md)
 * [常用注解](spring/annotation.md)
+* [常见异常](spring/common-exception.md)
 
 ## 数据库 <a id="database"></a>
 
@@ -202,6 +203,7 @@
     * [Jump Game III](algorithm-and-data-structure/graph/algorithm-problem/jump-game-iii.md)
     * [Connecting Cities With Minimum CostMedium](algorithm-and-data-structure/graph/algorithm-problem/connecting-cities-with-minimum-costmedium.md)
     * [Count Servers that Communicate](algorithm-and-data-structure/graph/algorithm-problem/count-servers-that-communicate.md)
+    * [Redundant Connection](algorithm-and-data-structure/graph/algorithm-problem/redundant-connection.md)
 
 ## 设计模式
 
