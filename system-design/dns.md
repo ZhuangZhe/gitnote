@@ -2,7 +2,7 @@
 
 解析大致过程如图
 
-![](../.gitbook/assets/image%20%2886%29.png)
+![](../.gitbook/assets/image%20%2887%29.png)
 
 当一个用户在地址栏输入www.taobao.com时，DNS解析有大致十个过程：
 

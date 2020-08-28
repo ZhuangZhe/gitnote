@@ -200,6 +200,8 @@
     * [Partition Array for Maximum Sum](algorithm-and-data-structure/graph/algorithm-problem/leetcode-1043-partition-array-for-maximum-sum.md)
     * [Keys and Rooms](algorithm-and-data-structure/graph/algorithm-problem/keys-and-rooms.md)
     * [Jump Game III](algorithm-and-data-structure/graph/algorithm-problem/jump-game-iii.md)
+    * [Connecting Cities With Minimum CostMedium](algorithm-and-data-structure/graph/algorithm-problem/connecting-cities-with-minimum-costmedium.md)
+    * [Count Servers that Communicate](algorithm-and-data-structure/graph/algorithm-problem/count-servers-that-communicate.md)
 
 ## 设计模式
 

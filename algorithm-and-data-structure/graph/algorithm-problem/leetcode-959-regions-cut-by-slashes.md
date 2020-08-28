@@ -23,7 +23,7 @@ Output: 2
 Explanation: The 2x2 grid is as follows:
 ```
 
-![](../../../.gitbook/assets/image%20%2891%29.png)
+![](../../../.gitbook/assets/image%20%2892%29.png)
 
 **Example 2:**
 
@@ -37,7 +37,7 @@ Output: 1
 Explanation: The 2x2 grid is as follows:
 ```
 
-![](../../../.gitbook/assets/image%20%2898%29.png)
+![](../../../.gitbook/assets/image%20%28100%29.png)
 
 **Example 3:**
 
@@ -52,7 +52,7 @@ Explanation: (Recall that because \ characters are escaped, "\\/" refers to \/, 
 The 2x2 grid is as follows:
 ```
 
-![](../../../.gitbook/assets/image%20%2889%29.png)
+![](../../../.gitbook/assets/image%20%2890%29.png)
 
 **Example 4:**
 
@@ -67,7 +67,7 @@ Explanation: (Recall that because \ characters are escaped, "/\\" refers to /\, 
 The 2x2 grid is as follows:
 ```
 
-![](../../../.gitbook/assets/image%20%2895%29.png)
+![](../../../.gitbook/assets/image%20%2897%29.png)
 
 **Example 5:**
 
@@ -81,7 +81,7 @@ Output: 3
 Explanation: The 2x2 grid is as follows:
 ```
 
-![](../../../.gitbook/assets/image%20%2896%29.png)
+![](../../../.gitbook/assets/image%20%2898%29.png)
 
 **Note:**
 

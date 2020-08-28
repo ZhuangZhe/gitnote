@@ -21,7 +21,7 @@
 
 ### CAP理论
 
-![](../.gitbook/assets/image%20%2888%29.png)
+![](../.gitbook/assets/image%20%2889%29.png)
 
 在一个分布式计算系统中，只能同时满足下列的两点：
 

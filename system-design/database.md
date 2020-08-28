@@ -15,9 +15,9 @@
 
 关系型数据库扩展包括许多技术：**主从复制**、**主主复制**、**联合**、**分片**、**非规范化**和**SQL调优**。
 
-![](https://camo.githubusercontent.com/6a097809b9690236258747d969b1d3e0d93bb8ca/687474703a2f2f692e696d6775722e636f6d2f4339696f47746e2e706e67)
-
 ### **主从复制**
+
+![](https://camo.githubusercontent.com/6a097809b9690236258747d969b1d3e0d93bb8ca/687474703a2f2f692e696d6775722e636f6d2f4339696f47746e2e706e67)
 
 主库同时负责读取和写入操作，并复制写入到一个或多个从库中，从库只负责读操作。树状形式的从库再将写入复制到更多的从库中去。如果主库离线，系统可以以只读模式运行，直到某个从库被提升为主库或有新的主库出现。
 
@@ -26,11 +26,9 @@
 * 将从库提升为主库需要额外的逻辑。
 * 参考[不利之处：复制](https://github.com/ZhuangZhe/system-design-primer/blob/master/README-zh-Hans.md#%E4%B8%8D%E5%88%A9%E4%B9%8B%E5%A4%84%E5%A4%8D%E5%88%B6)中，主从复制和主主复制**共同**的问题。
 
-
-
-![](https://camo.githubusercontent.com/5862604b102ee97d85f86f89edda44bde85a5b7f/687474703a2f2f692e696d6775722e636f6d2f6b7241484c47672e706e67)
-
 ### **主主复制**
+
+![](../.gitbook/assets/image%20%28101%29.png)
 
 两个主库都负责读操作和写操作，写入操作时互相协调。如果其中一个主库挂机，系统可以继续读取和写入。
 
@@ -83,7 +81,7 @@
 
 **不利之处：分片**
 
-* 你需要修改应用程序的逻辑来实现分片，这会带来复杂的 SQL 查询。
+* 你需要修改应用程序的逻辑来实现分片，这会带来复杂的SQL查询。
 * 分片不合理可能导致数据负载不均衡。例如，被频繁访问的用户数据会导致其所在分片的负载相对其他分片高。
   * 再平衡会引入额外的复杂度。基于[一致性哈希](http://www.paperplanes.de/2011/12/9/the-magic-of-consistent-hashing.html)的分片算法可以减少这种情况。
 * 联结多个分片的数据操作更复杂。
@@ -97,7 +95,7 @@
 
 ### **非规范化**
 
-非规范化试图以写入性能为代价来换取读取性能。在多个表中冗余数据副本，以避免高成本的联结操作。一些关系型数据库，比如 [PostgreSQL](https://en.wikipedia.org/wiki/PostgreSQL) 和 Oracle 支持[物化视图](https://en.wikipedia.org/wiki/Materialized_view)，可以处理冗余信息存储和保证冗余副本一致。
+非规范化试图以写入性能为代价来换取读取性能。在多个表中冗余数据副本，以避免高成本的联结操作。一些关系型数据库，比如[PostgreSQL](https://en.wikipedia.org/wiki/PostgreSQL)和Oracle支持[物化视图](https://en.wikipedia.org/wiki/Materialized_view)，可以处理冗余信息存储和保证冗余副本一致。
 
 当数据使用诸如[联合](https://github.com/ZhuangZhe/system-design-primer/blob/master/README-zh-Hans.md#%E8%81%94%E5%90%88)和[分片](https://github.com/ZhuangZhe/system-design-primer/blob/master/README-zh-Hans.md#%E5%88%86%E7%89%87)等技术被分割，进一步提高了处理跨数据中心的联结操作复杂度。非规范化可以规避这种复杂的联结操作。
 
@@ -167,7 +165,7 @@ SQL 调优是一个范围很广的话题，有很多相关的[书](https://www.a
 
 NoSQL是**键-值数据库**、**文档型数据库**、**列型数据库**或**图数据库**的统称。数据库是非规范化的，表联结大多在应用程序代码中完成。大多数 NoSQL 无法实现真正符合 ACID 的事务，支持[最终一致](https://github.com/ZhuangZhe/system-design-primer/blob/master/README-zh-Hans.md#%E6%9C%80%E7%BB%88%E4%B8%80%E8%87%B4%E6%80%A7)。
 
-**BASE**通常被用于描述 NoSQL 数据库的特性。相比 [CAP 理论](https://github.com/ZhuangZhe/system-design-primer/blob/master/README-zh-Hans.md#cap-%E7%90%86%E8%AE%BA)，BASE强调可用性超过一致性。
+**BASE**通常被用于描述 NoSQL 数据库的特性。相比[CAP理论](https://github.com/ZhuangZhe/system-design-primer/blob/master/README-zh-Hans.md#cap-%E7%90%86%E8%AE%BA)，BASE强调可用性超过一致性。
 
 * **基本可用** - 系统保证可用性。
 * **软状态** - 即使没有输入，系统状态也可能随着时间变化。
@@ -209,7 +207,7 @@ MongoDB和CouchDB等一些文档类型存储还提供了类似SQL语言的查询
 * [面向文档的数据库](https://en.wikipedia.org/wiki/Document-oriented_database)
 * [MongoDB 架构](https://www.mongodb.com/mongodb-architecture)
 * [CouchDB 架构](https://blog.couchdb.org/2016/08/01/couchdb-2-0-architecture/)
-* [Elasticsearch 架构](https://www.elastic.co/blog/found-elasticsearch-from-the-bottom-up)
+* [Elasticsearc](https://www.elastic.co/blog/found-elasticsearch-from-the-bottom-up)[架构](https://www.elastic.co/blog/found-elasticsearch-from-the-bottom-up)
 
 ### **列型存储**
 
@@ -225,7 +223,7 @@ Google发布了第一个列型存储数据库[Bigtable](http://www.read.seas.har
 
 **来源及延伸阅读：列型存储**
 
-* [SQL 与 NoSQL 简史](http://blog.grio.com/2015/11/sql-nosql-a-brief-history.html)
+* [SQL与NoSQL简史](http://blog.grio.com/2015/11/sql-nosql-a-brief-history.html)
 * [BigTable 架构](http://www.read.seas.harvard.edu/~kohler/class/cs239-w08/chang06bigtable.pdf)
 * [Hbase 架构](https://www.mapr.com/blog/in-depth-look-hbase-architecture)
 * [Cassandra 架构](http://docs.datastax.com/en/archived/cassandra/2.0/cassandra/architecture/architectureIntro_c.html)
@@ -275,13 +273,13 @@ Google发布了第一个列型存储数据库[Bigtable](http://www.read.seas.har
 * 动态或灵活的模式
 * 非关系型数据
 * 不需要复杂的联结操作
-* 存储 TB \(甚至PB\)级别的数据
+* 存储TB\(甚至PB\)级别的数据
 * 高数据密集的工作负载
 * IOPS 高吞吐量
 
 ### **适合NoSQL的示例数据：**
 
-* 埋点数据和日志数据
+* 热点数据和日志数据
 * 排行榜或者得分数据
 * 临时数据，如购物车
 * 频繁访问的\(“热”\)表
@@ -290,5 +288,5 @@ Google发布了第一个列型存储数据库[Bigtable](http://www.read.seas.har
 **来源及延伸阅读：SQL 或 NoSQL**
 
 * [扩展你的用户数到第一个千万](https://www.youtube.com/watch?v=w95murBkYmU)
-* [SQL 和 NoSQL 的不同](https://www.sitepoint.com/sql-vs-nosql-differences/)
+* [SQL和NoSQL的不同](https://www.sitepoint.com/sql-vs-nosql-differences/)
 
