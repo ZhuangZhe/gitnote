@@ -162,7 +162,8 @@
 | **`@Id`** | 标识类里所在变量为主键。 |
 | **`@GeneratedValue`** | 设置主键生成策略，此方式依赖于具体的数据库。 |
 | **`@Column`** | 表示属性所对应字段名进行个性化设置。**元数据属性：`name(列名)`、`unique(是否唯一)`、`nullable(是否允许为空)`、`insertable(是否允许插入)`、`updatable(是否允许更新)`、`columnDefinition(定义建表时创建此列的DDL)`、`secondaryTable(从表名，如果此列不建在主表上(默认建在主表)，该属性定义该列所在从表的名字)`** |
-| **`@OneToOne`** | 描**述一对一**的关联**。元数据属性：`fetch(表示抓取策略，默认为FetchType.LAZY)`、`cascade(表示级联操作策略)`** |
+| **`@OneToOne`** | 描述一对一的关联**。元数据属性：`fetch(表示抓取策略，默认为FetchType.LAZY)`、`cascade(表示级联操作策略)`** |
+| **`@ManyToOne`** | 表示一个多对一的映射,该注解标注的属性通常是数据库表的外键。**元数据属性：**`name(列名)`、`unique(是否唯一)`、`nullable(是否允许为空)`、`insertable(是否允许插入)`、`updatable(是否允许更新)`、`columnDefinition(定义建表时创建此列的DD)`、`secondaryTable(从表名。如果此列不建在主表上(默认建在主表)，该属性定义该列所在从表的名字)` |
 | **`@Transient`** | 表示属性并非数据库表字段的映射，ORM框架将忽略该属性。 |
 | **`@Temporal`** | 当我们使用到`java.util`包中的时间日期类型，则需要此注释来说明转化成`java.util`包中的类型。`TemporalType.DATE、TemporalType.TIME`**、**`TemporalType.TIMESTAMP。` |
 | **`@Enumerated`** | 使用此注解映射枚举字段，以String类型存入数据库。注入数据库的类型有两种：`EnumType.ORDINAL`、`EnumType.STRING`。 |
