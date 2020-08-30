@@ -5,6 +5,8 @@
 
 ## Java
 
+* [基础](java/basic/README.md)
+  * [Stream](java/basic/stream.md)
 * [JVM](java/untitled/README.md)
   * [JVM结构](java/untitled/jvm-structure.md)
   * [内存分配](java/untitled/memory-allocation.md)

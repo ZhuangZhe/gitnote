@@ -87,6 +87,8 @@
     <tr>
       <th style="text-align:left">&#x6CE8;&#x89E3;</th>
       <th style="text-align:left">&#x7B80;&#x4ECB;</th>
+      <th style="text-align:left"><b>&#x5143;&#x6570;&#x636E;&#x5C5E;&#x6027;</b>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -94,52 +96,79 @@
       <td style="text-align:left"><b><code>@Getter</code></b>
       </td>
       <td style="text-align:left">&#x53EF;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x6216;&#x5C5E;&#x6027;&#x4E0A;&#xFF0C;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#x8868;&#x793A;&#x6B64;&#x7C7B;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x5C5E;&#x6027;&#x751F;&#x6210;getter&#x65B9;&#x6CD5;&#xFF0C;&#x6807;&#x6CE8;&#x5230;&#x67D0;&#x4E2A;&#x5C5E;&#x6027;&#x4E0A;&#xFF0C;&#x8868;&#x793A;&#x6B64;&#x5C5E;&#x6027;&#x751F;&#x6210;getter&#x65B9;&#x6CD5;&#x3002;</td>
+      <td
+      style="text-align:left"></td>
     </tr>
     <tr>
       <td style="text-align:left"><b><code>@Setter</code></b>
       </td>
       <td style="text-align:left">&#x53EF;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x6216;&#x5C5E;&#x6027;&#x4E0A;&#xFF0C;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#x8868;&#x793A;&#x6B64;&#x7C7B;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x5C5E;&#x6027;&#x751F;&#x6210;setter&#x65B9;&#x6CD5;&#xFF0C;&#x6807;&#x6CE8;&#x5230;&#x67D0;&#x4E2A;&#x5C5E;&#x6027;&#x4E0A;&#xFF0C;&#x8868;&#x793A;&#x6B64;&#x5C5E;&#x6027;&#x751F;&#x6210;setter&#x65B9;&#x6CD5;&#x3002;</td>
+      <td
+      style="text-align:left"></td>
     </tr>
     <tr>
       <td style="text-align:left"><b><code>@ToString</code></b>
       </td>
       <td style="text-align:left">&#x53EA;&#x80FD;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x662F;&#x91CD;&#x5199;&#x6B64;&#x7C7B;&#x7684;toString&#x65B9;&#x6CD5;&#x3002;</td>
+      <td
+      style="text-align:left">
+        <p><b><code>callSuper(&#x662F;&#x5426;&#x8F93;&#x51FA;&#x7236;&#x7C7B;&#x7684;toString&#x65B9;&#x6CD5;,&#x9ED8;&#x8BA4;&#x4E3A;false)</code></b>
+        </p>
+        <p><b><code>includeFieldNames(&#x662F;&#x5426;&#x5305;&#x542B;&#x5B57;&#x6BB5;&#x540D;&#x79F0;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;true)</code></b>
+        </p>
+        <p><b><code>exclude(&#x6392;&#x9664;&#x751F;&#x6210;tostring&#x7684;&#x5B57;&#x6BB5;)</code></b>
+        </p>
+        </td>
     </tr>
     <tr>
       <td style="text-align:left"><b><code>@EqualsAndHashCode</code></b>
       </td>
       <td style="text-align:left">&#x53EA;&#x80FD;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x662F;&#x91CD;&#x5199;&#x6B64;&#x7C7B;&#x7684;hashCode&#x548C;equals&#x65B9;&#x6CD5;&#x3002;</td>
+      <td
+      style="text-align:left"></td>
     </tr>
     <tr>
       <td style="text-align:left"><b><code>@NoArgsConstructor</code></b>
       </td>
       <td style="text-align:left">&#x53EA;&#x80FD;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#xFF0C;&#x751F;&#x6210;&#x65E0;&#x53C2;&#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x3002;</td>
+      <td
+      style="text-align:left"></td>
     </tr>
     <tr>
       <td style="text-align:left"><b><code>@Data</code></b>
       </td>
       <td style="text-align:left">&#x53EA;&#x80FD;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#xFF0C;&#x7EFC;&#x5408;<code>@Getter</code>&#xFF0C;<code>@Setter</code>&#xFF0C;<code>@ToString</code>&#xFF0C;<code>@EqualsAndHashCode</code>&#xFF0C;<code>@NoArgsConstructor</code>&#x4E94;&#x4E2A;&#x6CE8;&#x89E3;&#x7684;&#x529F;&#x80FD;&#x3002;</td>
+      <td
+      style="text-align:left"></td>
     </tr>
     <tr>
       <td style="text-align:left"><b><code>@Value</code></b>
       </td>
       <td style="text-align:left">&#x53EA;&#x80FD;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#xFF0C;&#x7EFC;&#x5408;<code>@Getter</code>&#xFF0C;<code>@Setter</code>&#xFF0C;<code>@ToString</code>&#xFF0C;<code>@EqualsAndHashCode</code>&#xFF0C;<code>@NoArgsConstructor</code>&#x4E94;&#x4E2A;&#x6CE8;&#x89E3;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x548C;<code>@Data</code>&#x4E0D;&#x540C;&#x7684;&#x662F;&#xFF0C;&#x9ED8;&#x8BA4;&#x5C06;&#x6240;&#x6709;&#x5C5E;&#x6027;&#x5B9A;&#x4E49;&#x6210;final&#x7684;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x53EA;&#x4F1A;&#x751F;&#x6210;getter&#x65B9;&#x6CD5;&#xFF0C;&#x4E0D;&#x4F1A;&#x751F;&#x6210;setter&#x65B9;&#x6CD5;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x9700;&#x8981;final&#xFF0C;&#x5219;&#x7ED9;&#x5C5E;&#x6027;&#x52A0;&#x4E0A;<code>@NonFinal</code>&#x6CE8;&#x89E3;&#x5373;&#x53EF;&#x3002;</td>
+      <td
+      style="text-align:left"></td>
     </tr>
     <tr>
       <td style="text-align:left"><b><code>@AllArgsConstructor</code></b>
       </td>
       <td style="text-align:left">&#x53EA;&#x80FD;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#xFF0C;&#x751F;&#x6210;&#x5305;&#x542B;&#x6240;&#x6709;&#x5C5E;&#x6027;&#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#xFF0C;&#x4F7F;&#x7528;&#x6B64;&#x6CE8;&#x89E3;&#x65F6;&#x5EFA;&#x8BAE;&#x548C;<code>@NoArgsConstructor</code>&#x7ED3;&#x5408;&#x4F7F;&#x7528;&#xFF0C;&#x5426;&#x5219;&#x6B64;&#x7C7B;&#x5C06;&#x6CA1;&#x6709;&#x65E0;&#x53C2;&#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x3002;</td>
+      <td
+      style="text-align:left"></td>
     </tr>
     <tr>
       <td style="text-align:left"><b><code>@RequiredArgsConstructor</code></b>
       </td>
       <td style="text-align:left">&#x53EA;&#x80FD;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#xFF0C;&#x4F1A;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x5305;&#x542B;&#x5E38;&#x91CF;&#xFF0C;&#x548C;&#x6807;&#x8BC6;&#x4E86;<code>@NotNull</code>&#x7684;&#x53D8;&#x91CF;
         &#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x3002;&#x751F;&#x6210;&#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x662F;private&#xFF0C;&#x5982;&#x4F55;&#x60F3;&#x8981;&#x5BF9;&#x5916;&#x63D0;&#x4F9B;&#x4F7F;&#x7528;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;staticName&#x9009;&#x9879;&#x751F;&#x6210;&#x4E00;&#x4E2A;static&#x65B9;&#x6CD5;&#x3002;</td>
+      <td
+      style="text-align:left"></td>
     </tr>
     <tr>
       <td style="text-align:left"><b><code>@Builder</code></b>
       </td>
       <td style="text-align:left">&#x53EA;&#x80FD;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#xFF0C;&#x5C06;&#x751F;&#x6210;&#x7C7B;&#x7684;&#x4E00;&#x4E2A;&#x5F53;&#x524D;&#x6D41;&#x7A0B;&#x7684;&#x4E00;&#x79CD;&#x94FE;&#x5F0F;&#x6784;&#x9020;&#x5DE5;&#x5382;&#x3002;</td>
+      <td
+      style="text-align:left"></td>
     </tr>
     <tr>
       <td style="text-align:left"><b><code>@Accessors</code></b>
@@ -148,33 +177,247 @@
         <p>&#x53EF;&#x6807;&#x6CE8;&#x5728;&#x7C7B;&#x6216;&#x5C5E;&#x6027;&#x4E0A;&#xFF0C;&#x5F53;&#x7136;&#x6700;&#x5B9E;&#x7528;&#x7684;&#x529F;&#x80FD;&#x8FD8;&#x662F;&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;&#x3002;</p>
         <p><b>&#x6807;&#x6CE8;&#x5230;&#x7C7B;&#x4E0A;</b>&#xFF0C;chain&#x5C5E;&#x6027;&#x8BBE;&#x7F6E;&#x4E3A;true&#x65F6;&#xFF0C;&#x7C7B;&#x7684;&#x6240;&#x6709;&#x5C5E;&#x6027;&#x7684;setter&#x65B9;&#x6CD5;&#x8FD4;&#x56DE;&#x503C;&#x5C06;&#x4E3A;this&#xFF0C;&#x7528;&#x6765;&#x652F;&#x6301;setter&#x65B9;&#x6CD5;&#x7684;&#x94FE;&#x5F0F;&#x5199;&#x6CD5;&#x3002;<b>&#x6807;&#x6CE8;&#x5230;&#x5C5E;&#x6027;&#x4E0A;</b>&#xFF0C;&#x4F7F;&#x7528;prefix&#x8BBE;&#x7F6E;&#x9700;&#x8981;&#x7701;&#x7565;&#x7684;&#x5C5E;&#x6027;&#x751F;&#x6210;getter&#xFF0C;setter&#x65B9;&#x6CD5;&#x65F6;&#x7684;&#x524D;&#x7F00;&#xFF0C;&#x4E14;&#x5C5E;&#x6027;&#x5FC5;&#x987B;&#x4E3A;&#x9A7C;&#x5CF0;&#x5F0F;&#x547D;&#x540D;&#x3002;</p>
       </td>
+      <td style="text-align:left"></td>
     </tr>
   </tbody>
 </table>
 
 ## JPA
 
-| 注解 | 简介 |
-| :--- | :--- |
-| **`MappedSuperClass`** | 使用在父类上面，是用来标识父类的。标识的类表示其不能映射到数据库表，因为其不是一个完整的实体类，但是它所拥有的属性能够隐射在其子类对用的数据库表中。标识得类不能再有`@Entity`或`@Table`注解。 |
-| **`@Entity`** | 标识实体类是JPA实体，告诉JPA在程序运行时生成实体类对应表。**元数据属性：`name(表名)`**。 |
-| **`@Table`** | 用来定义entity主表的name，catalog，schema等属性。**元数据属性：`name(表名)`、`catalog(对应关系数据库中的catalog)`、`schema(对应关系数据库中的schema)`、`UniqueConstraints(定义一个UniqueConstraint数组，指定需要建唯一约束的列)`** |
-| **`@Id`** | 标识类里所在变量为主键。 |
-| **`@GeneratedValue`** | 设置主键生成策略，此方式依赖于具体的数据库。 |
-| **`@Column`** | 表示属性所对应字段名进行个性化设置。**元数据属性：`name(列名)`、`unique(是否唯一)`、`nullable(是否允许为空)`、`insertable(是否允许插入)`、`updatable(是否允许更新)`、`columnDefinition(定义建表时创建此列的DDL)`、`secondaryTable(从表名，如果此列不建在主表上(默认建在主表)，该属性定义该列所在从表的名字)`** |
-| **`@OneToOne`** | 描述一对一的关联**。元数据属性：`fetch(表示抓取策略，默认为FetchType.LAZY)`、`cascade(表示级联操作策略)`** |
-| **`@ManyToOne`** | 表示一个多对一的映射,该注解标注的属性通常是数据库表的外键。**元数据属性：**`name(列名)`、`unique(是否唯一)`、`nullable(是否允许为空)`、`insertable(是否允许插入)`、`updatable(是否允许更新)`、`columnDefinition(定义建表时创建此列的DD)`、`secondaryTable(从表名。如果此列不建在主表上(默认建在主表)，该属性定义该列所在从表的名字)` |
-| **`@Transient`** | 表示属性并非数据库表字段的映射，ORM框架将忽略该属性。 |
-| **`@Temporal`** | 当我们使用到`java.util`包中的时间日期类型，则需要此注释来说明转化成`java.util`包中的类型。`TemporalType.DATE、TemporalType.TIME`**、**`TemporalType.TIMESTAMP。` |
-| **`@Enumerated`** | 使用此注解映射枚举字段，以String类型存入数据库。注入数据库的类型有两种：`EnumType.ORDINAL`、`EnumType.STRING`。 |
-| **`@Embeddable`** | 当一个实体类要在多个不同的实体类中进行使用，而其不需要生成数据库表。注解在类上，表示此类是可以被其他类嵌套。 |
-| **`@Embedded`** | 当一个实体类要在多个不同的实体类中进行使用，而其不需要生成数据库表。注解在属性上，表示嵌套被`@Embeddable`注解的同类型类。 |
-| **`@ElementCollection`** | 集合映射。 |
-| **`@CreatedDate`** | 表示字段为创建时间字段。 |
-| **`@CreatedBy`** | 表示字段为创建用户字段。 |
-| **`@LastModifiedDate`** | 表示字段为最后修改时间字段。 |
-| **`@LastModifiedBy`** | 表示字段为最后修改用户字段。 |
-| **`@JsonIgnore`** | 此注解是类注解，最好是属性上，作用是json序列化时将java bean中的被注解的属性忽略掉，序列化和反序列化都受影响。 |
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left">&#x6CE8;&#x89E3;</th>
+      <th style="text-align:left">&#x7B80;&#x4ECB;</th>
+      <th style="text-align:left"><b>&#x5143;&#x6570;&#x636E;&#x5C5E;&#x6027;</b>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:left"><b><code>MappedSuperClass</code></b>
+      </td>
+      <td style="text-align:left">&#x4F7F;&#x7528;&#x5728;&#x7236;&#x7C7B;&#x4E0A;&#x9762;&#xFF0C;&#x662F;&#x7528;&#x6765;&#x6807;&#x8BC6;&#x7236;&#x7C7B;&#x7684;&#x3002;&#x6807;&#x8BC6;&#x7684;&#x7C7B;&#x8868;&#x793A;&#x5176;&#x4E0D;&#x80FD;&#x6620;&#x5C04;&#x5230;&#x6570;&#x636E;&#x5E93;&#x8868;&#xFF0C;&#x56E0;&#x4E3A;&#x5176;&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x5B8C;&#x6574;&#x7684;&#x5B9E;&#x4F53;&#x7C7B;&#xFF0C;&#x4F46;&#x662F;&#x5B83;&#x6240;&#x62E5;&#x6709;&#x7684;&#x5C5E;&#x6027;&#x80FD;&#x591F;&#x9690;&#x5C04;&#x5728;&#x5176;&#x5B50;&#x7C7B;&#x5BF9;&#x7528;&#x7684;&#x6570;&#x636E;&#x5E93;&#x8868;&#x4E2D;&#x3002;&#x6807;&#x8BC6;&#x5F97;&#x7C7B;&#x4E0D;&#x80FD;&#x518D;&#x6709;<code>@Entity</code>&#x6216;<code>@Table</code>&#x6CE8;&#x89E3;&#x3002;</td>
+      <td
+      style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@Entity</code></b>
+      </td>
+      <td style="text-align:left">&#x6807;&#x8BC6;&#x5B9E;&#x4F53;&#x7C7B;&#x662F;JPA&#x5B9E;&#x4F53;&#xFF0C;&#x544A;&#x8BC9;JPA&#x5728;&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x65F6;&#x751F;&#x6210;&#x5B9E;&#x4F53;&#x7C7B;&#x5BF9;&#x5E94;&#x8868;&#x3002;<b>&#x5143;&#x6570;&#x636E;&#x5C5E;&#x6027;&#xFF1A;<code>name(&#x8868;&#x540D;)</code></b>&#x3002;</td>
+      <td
+      style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@Table</code></b>
+      </td>
+      <td style="text-align:left">&#x7528;&#x6765;&#x5B9A;&#x4E49;entity&#x4E3B;&#x8868;&#x7684;name&#xFF0C;catalog&#xFF0C;schema&#x7B49;&#x5C5E;&#x6027;&#x3002;</td>
+      <td
+      style="text-align:left">
+        <p><b><code>name(&#x8868;&#x540D;)</code></b>
+        </p>
+        <p><b><code>catalog(&#x5BF9;&#x5E94;&#x5173;&#x7CFB;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x7684;catalog)</code></b>
+        </p>
+        <p><b><code>schema(&#x5BF9;&#x5E94;&#x5173;&#x7CFB;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x7684;schema)</code></b>
+        </p>
+        <p><b><code>UniqueConstraints(&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;UniqueConstraint&#x6570;&#x7EC4;&#xFF0C;&#x6307;&#x5B9A;&#x9700;&#x8981;&#x5EFA;&#x552F;&#x4E00;&#x7EA6;&#x675F;&#x7684;&#x5217;)</code></b>
+        </p>
+        </td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@Id</code></b>
+      </td>
+      <td style="text-align:left">&#x6807;&#x8BC6;&#x7C7B;&#x91CC;&#x6240;&#x5728;&#x53D8;&#x91CF;&#x4E3A;&#x4E3B;&#x952E;&#x3002;</td>
+      <td
+      style="text-align:left">
+        <p><b><code>generate(&#x4E3B;&#x952E;&#x503C;&#x7684;&#x83B7;&#x53D6;&#x7C7B;&#x578B;)</code></b>
+        </p>
+        <p><b><code>generator(TableGenerator&#x7684;&#x540D;&#x5B57;(&#x5F53;generate=GeneratorType.TABLE&#x624D;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x8BE5;&#x5C5E;&#x6027;))</code></b>
+        </p>
+        </td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@GeneratedValue</code></b>
+      </td>
+      <td style="text-align:left">&#x8BBE;&#x7F6E;&#x4E3B;&#x952E;&#x751F;&#x6210;&#x7B56;&#x7565;&#xFF0C;&#x6B64;&#x65B9;&#x5F0F;&#x4F9D;&#x8D56;&#x4E8E;&#x5177;&#x4F53;&#x7684;&#x6570;&#x636E;&#x5E93;&#x3002;</td>
+      <td
+      style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@Column</code></b>
+      </td>
+      <td style="text-align:left">&#x8868;&#x793A;&#x5C5E;&#x6027;&#x6240;&#x5BF9;&#x5E94;&#x5B57;&#x6BB5;&#x540D;&#x8FDB;&#x884C;&#x4E2A;&#x6027;&#x5316;&#x8BBE;&#x7F6E;&#x3002;</td>
+      <td
+      style="text-align:left">
+        <p><b><code>name(&#x5217;&#x540D;)</code></b>
+        </p>
+        <p><b><code>unique(&#x662F;&#x5426;&#x552F;&#x4E00;)</code></b>
+        </p>
+        <p><b><code>nullable(&#x662F;&#x5426;&#x5141;&#x8BB8;&#x4E3A;&#x7A7A;)</code></b>
+        </p>
+        <p><b><code>insertable(&#x662F;&#x5426;&#x5141;&#x8BB8;&#x63D2;&#x5165;)</code></b>
+        </p>
+        <p><b><code>updatable(&#x662F;&#x5426;&#x5141;&#x8BB8;&#x66F4;&#x65B0;)</code></b>
+        </p>
+        <p><b><code>columnDefinition(&#x5B9A;&#x4E49;&#x5EFA;&#x8868;&#x65F6;&#x521B;&#x5EFA;&#x6B64;&#x5217;&#x7684;DDL)</code></b>
+        </p>
+        <p><b><code>secondaryTable(&#x4ECE;&#x8868;&#x540D;&#xFF0C;&#x5982;&#x679C;&#x6B64;&#x5217;&#x4E0D;&#x5EFA;&#x5728;&#x4E3B;&#x8868;&#x4E0A;(&#x9ED8;&#x8BA4;&#x5EFA;&#x5728;&#x4E3B;&#x8868;)&#xFF0C;&#x8BE5;&#x5C5E;&#x6027;&#x5B9A;&#x4E49;&#x8BE5;&#x5217;&#x6240;&#x5728;&#x4ECE;&#x8868;&#x7684;&#x540D;&#x5B57;)</code></b>
+        </p>
+        </td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@OneToOne</code></b>
+      </td>
+      <td style="text-align:left">&#x63CF;&#x8FF0;&#x4E00;&#x5BF9;&#x4E00;&#x7684;&#x5173;&#x8054;<b>&#x3002;</b>
+      </td>
+      <td style="text-align:left">
+        <p><b><code>fetch(&#x8868;&#x793A;&#x6293;&#x53D6;&#x7B56;&#x7565;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;FetchType.LAZY)</code></b>
+        </p>
+        <p><b><code>cascade(&#x8868;&#x793A;&#x7EA7;&#x8054;&#x64CD;&#x4F5C;&#x7B56;&#x7565;)</code></b>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@ManyToOne</code></b>
+      </td>
+      <td style="text-align:left">&#x8868;&#x793A;&#x4E00;&#x4E2A;&#x591A;&#x5BF9;&#x4E00;&#x7684;&#x6620;&#x5C04;,&#x8BE5;&#x6CE8;&#x89E3;&#x6807;&#x6CE8;&#x7684;&#x5C5E;&#x6027;&#x901A;&#x5E38;&#x662F;&#x6570;&#x636E;&#x5E93;&#x8868;&#x7684;&#x5916;&#x952E;&#x3002;</td>
+      <td
+      style="text-align:left">
+        <p><b><code>name(&#x5217;&#x540D;)</code></b>
+        </p>
+        <p><b><code>unique(&#x662F;&#x5426;&#x552F;&#x4E00;)</code></b>
+        </p>
+        <p><b><code>nullable(&#x662F;&#x5426;&#x5141;&#x8BB8;&#x4E3A;&#x7A7A;)</code></b>
+        </p>
+        <p><b><code>insertable(&#x662F;&#x5426;&#x5141;&#x8BB8;&#x63D2;&#x5165;)</code></b>
+        </p>
+        <p><b><code>updatable(&#x662F;&#x5426;&#x5141;&#x8BB8;&#x66F4;&#x65B0;)</code></b>
+        </p>
+        <p><b><code>columnDefinition(&#x5B9A;&#x4E49;&#x5EFA;&#x8868;&#x65F6;&#x521B;&#x5EFA;&#x6B64;&#x5217;&#x7684;DD)</code></b>
+        </p>
+        <p><b><code>secondaryTable(&#x4ECE;&#x8868;&#x540D;&#x3002;&#x5982;&#x679C;&#x6B64;&#x5217;&#x4E0D;&#x5EFA;&#x5728;&#x4E3B;&#x8868;&#x4E0A;(&#x9ED8;&#x8BA4;&#x5EFA;&#x5728;&#x4E3B;&#x8868;)&#xFF0C;&#x8BE5;&#x5C5E;&#x6027;&#x5B9A;&#x4E49;&#x8BE5;&#x5217;&#x6240;&#x5728;&#x4ECE;&#x8868;&#x7684;&#x540D;&#x5B57;)</code></b>
+        </p>
+        </td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@ManyToMany</code></b>
+      </td>
+      <td style="text-align:left">&#x63CF;&#x8FF0;&#x4E00;&#x4E2A;&#x591A;&#x5BF9;&#x591A;&#x7684;&#x5173;&#x8054;&#x3002;&#x591A;&#x5BF9;&#x591A;&#x5173;&#x8054;&#x4E0A;&#x662F;&#x4E24;&#x4E2A;&#x4E00;&#x5BF9;&#x591A;&#x5173;&#x8054;&#xFF0C;&#x4F46;&#x662F;&#x5728;ManyToMany&#x63CF;&#x8FF0;&#x4E2D;&#xFF0C;&#x4E2D;&#x95F4;&#x8868;&#x662F;&#x7531;ORM&#x6846;&#x67B6;&#x81EA;&#x52A8;&#x5904;&#x7406;&#x3002;</td>
+      <td
+      style="text-align:left">
+        <p><b><code>targetEntity(&#x8868;&#x793A;&#x591A;&#x5BF9;&#x591A;&#x5173;&#x8054;&#x7684;&#x53E6;&#x4E00;&#x4E2A;&#x5B9E;&#x4F53;&#x7C7B;&#x7684;&#x5168;&#x540D;,&#x4F8B;&#x5982;&#xFF1A;package.Book.class)</code></b>
+        </p>
+        <p><b><code>mappedBy:&#x8868;&#x793A;&#x591A;&#x5BF9;&#x591A;&#x5173;&#x8054;&#x7684;&#x53E6;&#x4E00;&#x4E2A;&#x5B9E;&#x4F53;&#x7C7B;&#x7684;&#x5BF9;&#x5E94;&#x96C6;&#x5408;&#x5C5E;&#x6027;&#x540D;&#x79F0;</code></b>
+        </p>
+        </td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@Transient</code></b>
+      </td>
+      <td style="text-align:left">&#x8868;&#x793A;&#x5C5E;&#x6027;&#x5E76;&#x975E;&#x6570;&#x636E;&#x5E93;&#x8868;&#x5B57;&#x6BB5;&#x7684;&#x6620;&#x5C04;&#xFF0C;ORM&#x6846;&#x67B6;&#x5C06;&#x5FFD;&#x7565;&#x8BE5;&#x5C5E;&#x6027;&#x3002;</td>
+      <td
+      style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@Lob</code></b>
+      </td>
+      <td style="text-align:left">&#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x5C5E;&#x6027;&#x4F5C;&#x4E3A;&#x6570;&#x636E;&#x5E93;&#x652F;&#x6301;&#x7684;&#x5927;&#x5BF9;&#x8C61;&#x7C7B;&#x578B;&#x5728;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x5B58;&#x50A8;&#x3002;&#x4F7F;&#x7528;LobType&#x8FD9;&#x4E2A;&#x679A;&#x4E3E;&#x6765;&#x5B9A;&#x4E49;Lob&#x662F;&#x4E8C;&#x8FDB;&#x5236;&#x7C7B;&#x578B;&#x8FD8;&#x662F;&#x5B57;&#x7B26;&#x7C7B;&#x578B;&#x3002;CLOB
+        &#x5B57;&#x7B26;&#x578B;&#x5927;&#x5BF9;&#x8C61;&#xFF0C;char[]&#x3001;Character[]&#x6216;String&#x7C7B;&#x578B;&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x4E3A;CLOB&#x3002;CLOB
+        &#x5B57;&#x7B26;&#x578B;&#x5927;&#x5BF9;&#x8C61;&#xFF0C;char[]&#x3001;Character[]&#x6216;String&#x7C7B;&#x578B;&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x4E3A;CLOB&#x3002;</td>
+      <td
+      style="text-align:left">
+        <p><b><code>fetch(&#x5B9A;&#x4E49;&#x8FD9;&#x4E2A;&#x5B57;&#x6BB5;&#x662F;lazy loaded&#x8FD8;&#x662F;eagerly fetched&#x3002;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x662F;FetchType&#x679A;&#x4E3E;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;LAZY,&#x5373;lazy loaded)</code></b>
+        </p>
+        <p><b><code>type(&#x5B9A;&#x4E49;&#x8FD9;&#x4E2A;&#x5B57;&#x6BB5;&#x5728;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x7684;JDBC&#x6570;&#x636E;&#x7C7B;&#x578B;&#x3002;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x662F;LobType&#x679A;&#x4E3E;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;BLOB)</code></b>
+        </p>
+        </td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@Temporal</code></b>
+      </td>
+      <td style="text-align:left">&#x5F53;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x5230;<code>java.util</code>&#x5305;&#x4E2D;&#x7684;&#x65F6;&#x95F4;&#x65E5;&#x671F;&#x7C7B;&#x578B;&#xFF0C;&#x5219;&#x9700;&#x8981;&#x6B64;&#x6CE8;&#x91CA;&#x6765;&#x8BF4;&#x660E;&#x8F6C;&#x5316;&#x6210;<code>java.util</code>&#x5305;&#x4E2D;&#x7684;&#x7C7B;&#x578B;&#x3002;<code>TemporalType.DATE&#x3001;TemporalType.TIME</code><b>&#x3001;</b><code>TemporalType.TIMESTAMP&#x3002;</code>
+      </td>
+      <td style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@Enumerated</code></b>
+      </td>
+      <td style="text-align:left">&#x4F7F;&#x7528;&#x6B64;&#x6CE8;&#x89E3;&#x6620;&#x5C04;&#x679A;&#x4E3E;&#x5B57;&#x6BB5;&#xFF0C;&#x4EE5;String&#x7C7B;&#x578B;&#x5B58;&#x5165;&#x6570;&#x636E;&#x5E93;&#x3002;&#x6CE8;&#x5165;&#x6570;&#x636E;&#x5E93;&#x7684;&#x7C7B;&#x578B;&#x6709;&#x4E24;&#x79CD;&#xFF1A;<code>EnumType.ORDINAL</code>&#x3001;<code>EnumType.STRING</code>&#x3002;</td>
+      <td
+      style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@Embeddable</code></b>
+      </td>
+      <td style="text-align:left">&#x5F53;&#x4E00;&#x4E2A;&#x5B9E;&#x4F53;&#x7C7B;&#x8981;&#x5728;&#x591A;&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x5B9E;&#x4F53;&#x7C7B;&#x4E2D;&#x8FDB;&#x884C;&#x4F7F;&#x7528;&#xFF0C;&#x800C;&#x5176;&#x4E0D;&#x9700;&#x8981;&#x751F;&#x6210;&#x6570;&#x636E;&#x5E93;&#x8868;&#x3002;&#x6CE8;&#x89E3;&#x5728;&#x7C7B;&#x4E0A;&#xFF0C;&#x8868;&#x793A;&#x6B64;&#x7C7B;&#x662F;&#x53EF;&#x4EE5;&#x88AB;&#x5176;&#x4ED6;&#x7C7B;&#x5D4C;&#x5957;&#x3002;</td>
+      <td
+      style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@Embedded</code></b>
+      </td>
+      <td style="text-align:left">&#x5F53;&#x4E00;&#x4E2A;&#x5B9E;&#x4F53;&#x7C7B;&#x8981;&#x5728;&#x591A;&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x5B9E;&#x4F53;&#x7C7B;&#x4E2D;&#x8FDB;&#x884C;&#x4F7F;&#x7528;&#xFF0C;&#x800C;&#x5176;&#x4E0D;&#x9700;&#x8981;&#x751F;&#x6210;&#x6570;&#x636E;&#x5E93;&#x8868;&#x3002;&#x6CE8;&#x89E3;&#x5728;&#x5C5E;&#x6027;&#x4E0A;&#xFF0C;&#x8868;&#x793A;&#x5D4C;&#x5957;&#x88AB;<code>@Embeddable</code>&#x6CE8;&#x89E3;&#x7684;&#x540C;&#x7C7B;&#x578B;&#x7C7B;&#x3002;</td>
+      <td
+      style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@ElementCollection</code></b>
+      </td>
+      <td style="text-align:left">&#x96C6;&#x5408;&#x6620;&#x5C04;&#x3002;</td>
+      <td style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@CreatedDate</code></b>
+      </td>
+      <td style="text-align:left">&#x8868;&#x793A;&#x5B57;&#x6BB5;&#x4E3A;&#x521B;&#x5EFA;&#x65F6;&#x95F4;&#x5B57;&#x6BB5;&#x3002;</td>
+      <td
+      style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@CreatedBy</code></b>
+      </td>
+      <td style="text-align:left">&#x8868;&#x793A;&#x5B57;&#x6BB5;&#x4E3A;&#x521B;&#x5EFA;&#x7528;&#x6237;&#x5B57;&#x6BB5;&#x3002;</td>
+      <td
+      style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@LastModifiedDate</code></b>
+      </td>
+      <td style="text-align:left">&#x8868;&#x793A;&#x5B57;&#x6BB5;&#x4E3A;&#x6700;&#x540E;&#x4FEE;&#x6539;&#x65F6;&#x95F4;&#x5B57;&#x6BB5;&#x3002;</td>
+      <td
+      style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@LastModifiedBy</code></b>
+      </td>
+      <td style="text-align:left">&#x8868;&#x793A;&#x5B57;&#x6BB5;&#x4E3A;&#x6700;&#x540E;&#x4FEE;&#x6539;&#x7528;&#x6237;&#x5B57;&#x6BB5;&#x3002;</td>
+      <td
+      style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@JsonIgnore</code></b>
+      </td>
+      <td style="text-align:left">&#x6B64;&#x6CE8;&#x89E3;&#x662F;&#x7C7B;&#x6CE8;&#x89E3;&#xFF0C;&#x6700;&#x597D;&#x662F;&#x5C5E;&#x6027;&#x4E0A;&#xFF0C;&#x4F5C;&#x7528;&#x662F;json&#x5E8F;&#x5217;&#x5316;&#x65F6;&#x5C06;java
+        bean&#x4E2D;&#x7684;&#x88AB;&#x6CE8;&#x89E3;&#x7684;&#x5C5E;&#x6027;&#x5FFD;&#x7565;&#x6389;&#xFF0C;&#x5E8F;&#x5217;&#x5316;&#x548C;&#x53CD;&#x5E8F;&#x5217;&#x5316;&#x90FD;&#x53D7;&#x5F71;&#x54CD;&#x3002;</td>
+      <td
+      style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><b><code>@DiscriminatorColumn</code></b>
+      </td>
+      <td style="text-align:left">&#x5B9A;&#x4E49;&#x5728;&#x4F7F;&#x7528;SINGLE_TABLE&#x6216;JOINED&#x7EE7;&#x627F;&#x7B56;&#x7565;&#x7684;&#x8868;&#x4E2D;&#x533A;&#x522B;&#x4E0D;&#x7EE7;&#x627F;&#x5C42;&#x6B21;&#x7684;&#x5217;&#x3002;</td>
+      <td
+      style="text-align:left">
+        <p><code>name(column&#x7684;&#x540D;&#x5B57;</code>,<code>&#x9ED8;&#x8BA4;&#x503C;&#x4E3A;TYPE)</code>
+        </p>
+        <p><code>name(column&#x7684;&#x540D;&#x5B57;&#xFF0C;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A;TYPE)</code>
+        </p>
+        <p><code>length(String&#x7C7B;&#x578B;&#x7684;column&#x7684;&#x957F;&#x5EA6;&#xFF0C;&#x5176;&#x4ED6;&#x7C7B;&#x578B;&#x4F7F;&#x7528;&#x9ED8;&#x8BA4;&#x503C;10)</code>
+        </p>
+        </td>
+    </tr>
+  </tbody>
+</table>
 
 
 
@@ -183,5 +426,6 @@
 * \*\*\*\*[**Spring Boot 最核心的 25 个注解，都是干货！**](https://zhuanlan.zhihu.com/p/57689422)\*\*\*\*
 * \*\*\*\*[**Spring 注解大全与详解**](https://juejin.im/post/6844903907173335047)\*\*\*\*
 * \*\*\*\*[**Lombok常用注解**](https://www.jianshu.com/p/f165ae6d2e42)\*\*\*\*
+* \*\*\*\*[**Lombok 注解详解**](https://juejin.im/post/6844904062962368525#heading-9)
 * \*\*\*\*[**JPA注解大全详解参考手册**](https://blog.csdn.net/yswKnight/article/details/79257372)\*\*\*\*
 
