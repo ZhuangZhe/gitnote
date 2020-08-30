@@ -157,10 +157,12 @@
 | 注解 | 简介 |
 | :--- | :--- |
 | **`MappedSuperClass`** | 使用在父类上面，是用来标识父类的。标识的类表示其不能映射到数据库表，因为其不是一个完整的实体类，但是它所拥有的属性能够隐射在其子类对用的数据库表中。标识得类不能再有`@Entity`或`@Table`注解。 |
-| **`@Entity`** | 标识实体类是JPA实体，告诉JPA在程序运行时生成实体类对应表。 |
+| **`@Entity`** | 标识实体类是JPA实体，告诉JPA在程序运行时生成实体类对应表。**元数据属性：`name(表名)`**。 |
+| **`@Table`** | 用来定义entity主表的name，catalog，schema等属性。**元数据属性：`name(表名)`、`catalog(对应关系数据库中的catalog)`、`schema(对应关系数据库中的schema)`、`UniqueConstraints(定义一个UniqueConstraint数组，指定需要建唯一约束的列)`** |
 | **`@Id`** | 标识类里所在变量为主键。 |
 | **`@GeneratedValue`** | 设置主键生成策略，此方式依赖于具体的数据库。 |
-| **`@Column`** | 表示属性所对应字段名进行个性化设置。 |
+| **`@Column`** | 表示属性所对应字段名进行个性化设置。**元数据属性：`name(列名)`、`unique(是否唯一)`、`nullable(是否允许为空)`、`insertable(是否允许插入)`、`updatable(是否允许更新)`、`columnDefinition(定义建表时创建此列的DDL)`、`secondaryTable(从表名，如果此列不建在主表上(默认建在主表)，该属性定义该列所在从表的名字)`** |
+| **`@OneToOne`** | 描**述一对一**的关联**。元数据属性：`fetch(表示抓取策略，默认为FetchType.LAZY)`、`cascade(表示级联操作策略)`** |
 | **`@Transient`** | 表示属性并非数据库表字段的映射，ORM框架将忽略该属性。 |
 | **`@Temporal`** | 当我们使用到`java.util`包中的时间日期类型，则需要此注释来说明转化成`java.util`包中的类型。`TemporalType.DATE、TemporalType.TIME`**、**`TemporalType.TIMESTAMP。` |
 | **`@Enumerated`** | 使用此注解映射枚举字段，以String类型存入数据库。注入数据库的类型有两种：`EnumType.ORDINAL`、`EnumType.STRING`。 |
@@ -180,4 +182,5 @@
 * \*\*\*\*[**Spring Boot 最核心的 25 个注解，都是干货！**](https://zhuanlan.zhihu.com/p/57689422)\*\*\*\*
 * \*\*\*\*[**Spring 注解大全与详解**](https://juejin.im/post/6844903907173335047)\*\*\*\*
 * \*\*\*\*[**Lombok常用注解**](https://www.jianshu.com/p/f165ae6d2e42)\*\*\*\*
+* \*\*\*\*[**JPA注解大全详解参考手册**](https://blog.csdn.net/yswKnight/article/details/79257372)\*\*\*\*
 
