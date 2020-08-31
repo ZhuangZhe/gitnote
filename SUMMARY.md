@@ -186,7 +186,8 @@
 * [缓存](system-design/cache.md)
 * [异步](system-design/asynchronous.md)
 * [网络](system-design/network.md)
-* [真实框架](system-design/real-world-architecture.md)
+* [真实框架](system-design/real-world-architecture/README.md)
+  * [MapReduce](system-design/real-world-architecture/mapreduce.md)
 * [设计练习](system-design/practice.md)
 
 ## 算法和数据结构 <a id="algorithm-and-data-structure"></a>
