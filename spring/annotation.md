@@ -208,7 +208,7 @@
 | **`@LastModifiedBy`** | 表示字段为最后修改用户字段。 |
 | **`@JsonIgnore`** | 此注解是类注解，最好是属性上，作用是json序列化时将java bean中的被注解的属性忽略掉，序列化和反序列化都受影响。 |
 | **`@DiscriminatorColumn`** | 定义在使用SINGLE\_TABLE或JOINED继承策略的表中区别不继承层次的列。 |
-| **`@EnableJpaRepositories`** | \*\*\*\* |
+| **`@EnableJpaRepositories`** | 注解用于Srping JPA的代码配置，用于取代xml形式的配置文件，@EnableJpaRepositories支持的配置形式丰富多用。 |
 |  |  |
 
 
