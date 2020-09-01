@@ -216,6 +216,9 @@
     * [Number of Connected Components in an Undirected Graph](algorithm-and-data-structure/graph/algorithm-problem/number-of-connected-components-in-an-undirected-graph.md)
     * [Evaluate Division](algorithm-and-data-structure/graph/algorithm-problem/evaluate-division.md)
     * [Path With Maximum Minimum Value](algorithm-and-data-structure/graph/algorithm-problem/path-with-maximum-minimum-value.md)
+    * [Find Eventual Safe States](algorithm-and-data-structure/graph/algorithm-problem/find-eventual-safe-states.md)
+    * [Validate Binary Tree Nodes](algorithm-and-data-structure/graph/algorithm-problem/validate-binary-tree-nodes.md)
+    * [Is Graph Bipartite](algorithm-and-data-structure/graph/algorithm-problem/is-graph-bipartite.md)
 
 ## 设计模式
 
