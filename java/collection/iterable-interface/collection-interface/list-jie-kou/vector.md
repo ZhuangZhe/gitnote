@@ -1,7 +1,5 @@
 # Vector
 
-
-
 ## 源码
 
 ### 数据结构
@@ -11,11 +9,11 @@ public class Vector<E>
     extends AbstractList<E>
     implements List<E>, RandomAccess, Cloneable, java.io.Serializable {
     
-    protected Object[] elementData;
+    protected Object[] elementData; // 数据存储
     
-    protected int elementCount;
+    protected int elementCount; // 元素个数计算
     
-    protected int capacityIncrement;
+    protected int capacityIncrement; // 每次容量增加的幅度
     
     private static final long serialVersionUID = -2767605614048989439L;
     
@@ -32,7 +30,7 @@ public class Vector<E>
     }
     
     public Vector() {
-        this(10);
+        this(10); // 初始容量为10
     }
     
     public Vector(Collection<? extends E> c) {
@@ -49,25 +47,25 @@ public class Vector<E>
 
 ```java
 public synchronized void addElement(E obj) {
-    modCount++;
+    modCount++; // 增加操作次数
     add(obj, elementData, elementCount);
 }
 
 public synchronized boolean add(E e) {
-    modCount++;
+    modCount++; // 增加操作次数
     add(e, elementData, elementCount);
     return true;
 }
 
 private void add(E e, Object[] elementData, int s) {
-    if (s == elementData.length)
-        elementData = grow();
-    elementData[s] = e;
-    elementCount = s + 1;
+    if (s == elementData.length) // 判断元素个数是否已经达到容量
+        elementData = grow(); // 元素个数达到容量后进行扩容
+    elementData[s] = e; // 当前元素的个数就是下一个元素的存放位置
+    elementCount = s + 1; 
 }
 
 private Object[] grow() {
-    return grow(elementCount + 1);
+    return grow(elementCount + 1); // 要多加一个新插入的
 }
 
 private Object[] grow(int minCapacity) {
