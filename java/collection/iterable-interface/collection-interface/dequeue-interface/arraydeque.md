@@ -1,7 +1,5 @@
 # ArrayDeque
 
-
-
 ## 源码
 
 ```java
@@ -16,11 +14,11 @@ import jdk.internal.misc.SharedSecrets;
 public class ArrayDeque<E> extends AbstractCollection<E>
                            implements Deque<E>, Cloneable, Serializable {
                            
-    transient Object[] elements;
+    transient Object[] elements; // 数据
     
-    transient int head;
+    transient int head; // 数据头
     
-    transient int tail;
+    transient int tail; // 数据尾
     
     private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
     
@@ -46,7 +44,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
 public void addFirst(E e) {
         if (e == null)
             throw new NullPointerException();
-        final Object[] es = elements;
+        final Object[] es = elements; // 获得数据指针
         es[head = dec(head, es.length)] = e;
         if (head == tail)
             grow(1);

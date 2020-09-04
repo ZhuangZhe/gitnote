@@ -1,7 +1,5 @@
 # PriorityQueue
 
-
-
 ## 源码
 
 ```java
@@ -18,9 +16,9 @@ public class PriorityQueue<E> extends AbstractQueue<E>
 
     private static final int DEFAULT_INITIAL_CAPACITY = 11;
     
-    transient Object[] queue;
+    transient Object[] queue; // 数据
     
-    private final Comparator<? super E> comparator;
+    private final Comparator<? super E> comparator; // 比较器、用于排序
     
     transient int modCount; 
     
@@ -123,19 +121,24 @@ private void siftUp(int k, E x) {
         siftUpComparable(k, x, queue);
 }
 
-private static <T> void siftUpUsingComparator(int k, T x, Object[] es, Comparator<? super T> cmp) {
+private static <T> void siftUpUsingComparator(int k, // 纯数据的起始位置，一般是最后面
+                                              T x, // 要存的值
+                                              Object[] es, 
+                                              Comparator<? super T> cmp) {
     while (k > 0) {
-        int parent = (k - 1) >>> 1;
-        Object e = es[parent];
-        if (cmp.compare(x, (T) e) >= 0)
+        int parent = (k - 1) >>> 1; // 找到heap中的父节点
+        Object e = es[parent]; // 父节点值
+        if (cmp.compare(x, (T) e) >= 0) // 值新的值已经到位
             break;
-        es[k] = e;
-        k = parent;
+        es[k] = e; // 将父节点的值存到本来新值的位置
+        k = parent; // 继续向上冒泡
     }
     es[k] = x;
 }
 
-private static <T> void siftUpComparable(int k, T x, Object[] es) {
+private static <T> void siftUpComparable(int k, 
+                                         T x, 
+                                         Object[] es) {
     Comparable<? super T> key = (Comparable<? super T>) x;
     while (k > 0) {
         int parent = (k - 1) >>> 1;
@@ -164,7 +167,7 @@ public boolean remove(Object o) {
 
 E removeAt(int i) {
     // assert i >= 0 && i < size;
-    final Object[] es = queue;
+    final Object[] es = queue; // 指向原数据的引用
     modCount++;
     int s = --size;
     if (s == i) // removed last element
@@ -202,7 +205,10 @@ public E poll() {
     return result;
 }
 
-private static <T> void siftDownComparable(int k, T x, Object[] es, int n) {
+private static <T> void siftDownComparable(int k, 
+                                           T x, 
+                                           Object[] es, 
+                                           int n) {
     // assert n > 0;
     Comparable<? super T> key = (Comparable<? super T>)x;
     int half = n >>> 1;           // loop while a non-leaf
@@ -221,8 +227,11 @@ private static <T> void siftDownComparable(int k, T x, Object[] es, int n) {
     es[k] = key;
 }
 
-private static <T> void siftDownUsingComparator(
-    int k, T x, Object[] es, int n, Comparator<? super T> cmp) {
+private static <T> void siftDownUsingComparator(int k, 
+                                                T x, 
+                                                Object[] es, 
+                                                int n, 
+                                                Comparator<? super T> cmp) {
     // assert n > 0;
     int half = n >>> 1;
     while (k < half) {

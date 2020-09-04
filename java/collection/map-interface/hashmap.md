@@ -1,7 +1,5 @@
 # HashMap
 
-
-
 ## 源码
 
 ### 数据结构
@@ -29,19 +27,19 @@ public class HashMap<K,V> extends AbstractMap<K,V>
     
     static final int MAXIMUM_CAPACITY = 1 << 30;
     
-    static final float DEFAULT_LOAD_FACTOR = 0.75f;
+    static final float DEFAULT_LOAD_FACTOR = 0.75f; // 默认扩容阀值
     
-    static final int TREEIFY_THRESHOLD = 8;
+    static final int TREEIFY_THRESHOLD = 8; // 使用红黑树的阀值
     
     static final int UNTREEIFY_THRESHOLD = 6;
     
-    static final int MIN_TREEIFY_CAPACITY = 64;
+    static final int MIN_TREEIFY_CAPACITY = 64; // 
     
     // Node class
     
-    transient Node<K,V>[] table;
+    transient Node<K,V>[] table; // 数据
     
-    transient Set<Map.Entry<K,V>> entrySet;
+    transient Set<Map.Entry<K,V>> entrySet; // 所有键值对
     
     transient int size;
     
@@ -49,7 +47,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
     
     int threshold;
     
-    final float loadFactor;
+    final float loadFactor; // 扩容阀值
     
     public HashMap(int initialCapacity, float loadFactor) {
         if (initialCapacity < 0)
@@ -123,7 +121,7 @@ static class Node<K,V> implements Map.Entry<K,V> {
 }
 ```
 
-TreeNode
+### TreeNode
 
 ```java
 static final class TreeNode<K,V> extends LinkedHashMap.Entry<K,V> {
@@ -664,7 +662,7 @@ static final class TreeNode<K,V> extends LinkedHashMap.Entry<K,V> {
 }
 ```
 
-添加元素
+### 添加元素
 
 ```java
 public V put(K key, V value) {
@@ -829,7 +827,7 @@ void afterNodeInsertion(boolean evict) { }
 void afterNodeRemoval(Node<K,V> p) { }
 ```
 
-删除元素
+### 删除元素
 
 ```java
 public V remove(Object key) {
@@ -884,7 +882,7 @@ public V remove(Object key) {
 }   
 ```
 
-读元素
+### 读元素
 
 ```java
 public V get(Object key) {

@@ -1,7 +1,5 @@
 # HashSet
 
-
-
 ## 源码
 
 ### 数据结构
@@ -13,9 +11,9 @@ public class HashSet<E>
     
     static final long serialVersionUID = -5024744406713321676L;
 
-    private transient HashMap<E,Object> map;
+    private transient HashMap<E,Object> map; // 用一个map存数据，数据为map的key
     
-    private static final Object PRESENT = new Object();
+    private static final Object PRESENT = new Object(); // 数据公用的value
     
     public HashSet() {
         map = new HashMap<>();

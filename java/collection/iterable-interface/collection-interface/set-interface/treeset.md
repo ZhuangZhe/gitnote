@@ -1,7 +1,5 @@
 # TreeSet
 
-
-
 ## 源码
 
 ### 数据结构
@@ -12,9 +10,9 @@ package java.util;
 public class TreeSet<E> extends AbstractSet<E>
     implements NavigableSet<E>, Cloneable, java.io.Serializable {
     
-    private transient NavigableMap<E,Object> m;
+    private transient NavigableMap<E,Object> m; // 存数据用的map，map中的key值则为数据
     
-    private static final Object PRESENT = new Object();
+    private static final Object PRESENT = new Object(); // 公用的value值
     
     TreeSet(NavigableMap<E,Object> m) {
         this.m = m;
