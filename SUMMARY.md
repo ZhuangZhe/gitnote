@@ -108,7 +108,8 @@
   * [Page和Pageable](spring/spring-data/page-and-pageable.md)
 * [Spring AOP](spring/spring-aop.md)
 * [Spring Test](spring/spring-test.md)
-* [Spring Cloud](spring/spring-cloud.md)
+* [Spring Cloud](spring/spring-cloud/README.md)
+  * [Eureka](spring/spring-cloud/eureka.md)
 * [Spring Security](spring/spring-security.md)
 * [Swagger](spring/swagger.md)
 * [常用注解](spring/annotation.md)
@@ -189,7 +190,12 @@
 * [异步](system-design/asynchronous.md)
 * [网络](system-design/network.md)
 * [真实框架](system-design/real-world-architecture/README.md)
-  * [MapReduce](system-design/real-world-architecture/mapreduce.md)
+  * [数据处理](system-design/real-world-architecture/data-processing/README.md)
+    * [Spark](system-design/real-world-architecture/data-processing/spark.md)
+    * [MapReduce](system-design/real-world-architecture/data-processing/mapreduce.md)
+  * [数据存储](system-design/real-world-architecture/data-store/README.md)
+    * [Cassandra](system-design/real-world-architecture/data-store/cassandra.md)
+    * [MongoDB](system-design/real-world-architecture/data-store/mongodb.md)
 * [设计练习](system-design/practice.md)
 
 ## 算法和数据结构 <a id="algorithm-and-data-structure"></a>
