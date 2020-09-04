@@ -64,7 +64,7 @@ GenericArrayType --> T[][] getGenericComponentType --> T[]
 * `String[] strings`：数组是`Class`类型。
 * `List<String> ls`：列表是`ParameterizedType`类型。
 * `List<String>[] lsa`：数组是`GenericArrayType`类型，调用`getGenericComponentType`后返回的类型是`java.util.List<java.lang.String>`，也就是数组元素是`ParameterizedType`类型。
-* `T[] ts`：s数组是`GenericArrayType`类型，调用`getGenericComponentType`后返回的类型是T，也就是数组元素是`TypeVariable`类型。
-* `List<T>[] tla`：数组是GenericArrayType类型，调用`getGenericComponentType`后返回的类型是`java.util.List<T>`，也就是数组元素是`ParameterizedType`类型。
+* `T[] ts`：数组是`GenericArrayType`类型，调用`getGenericComponentType`后返回的类型是T，也就是数组元素是`TypeVariable`类型。
+* `List<T>[] tla`：数组是`GenericArrayType`类型，调用`getGenericComponentType`后返回的类型是`java.util.List<T>`，也就是数组元素是`ParameterizedType`类型。
 * `T[][] tts`：数组是`GenericArrayType`类型，调用`getGenericComponentType`后返回的类型`T[]`，也就是数组元素是`GenericArrayType`类型。
 

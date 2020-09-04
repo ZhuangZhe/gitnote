@@ -124,7 +124,7 @@ Signature: #22
 
 
 * `ParameterizedType`、`TypeVariable`、`WildcardType`、`GenericArrayType`都是接口，它们位于`java.lang.reflect`包中。
-* ParameterizedTypeImpl、TypeVariableImpl、WildcardTypeImpl、GenericArrayTypeImpl是四种泛型类型的实现，位于`sun.reflect.generics.reflectiveObjects`包中。
+* `ParameterizedTypeImpl`、`TypeVariableImpl`、`WildcardTypeImpl`、`GenericArrayTypeImpl`是四种泛型类型的实现，位于`sun.reflect.generics.reflectiveObjects`包中。
 
 Type体系虽然看似很美好解决了泛型相关的类型和原始存在的`java.lang.Class`描述的类型的统一问题，但是引入了新的问题：如果一个方法返回值为`java.lang.reflect.Type`类型，或者一个方法的入参类型为`java.lang.reflect.Type`类型，这两种情况下，可能需要对`java.lang.reflect.Type`类型的对象做子类型判断，因为它的子类型有可能是上面提到的五种类型中的其中一种，这一点提高了编码的复杂性。
 

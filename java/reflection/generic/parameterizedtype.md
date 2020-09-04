@@ -1,8 +1,8 @@
 # ParameterizedType
 
-`ParameterizedType`，也就是参数化类型，注释里面说到`ParameterizedType`表示一个参数化类型，例如`Collection<String>`，实际上只要带有参数化\(泛型\)标签`<ClassName>`的参数或者属性，都属于ParameterizedType。
+`ParameterizedType`，也就是参数化类型，注释里面说到`ParameterizedType`表示一个参数化类型，例如`Collection<String>`，实际上只要带有参数化\(泛型\)标签`<ClassName>`的参数或者属性，都属于`ParameterizedType`。
 
-例如下面的类型都是ParameterizedType：
+例如下面的类型都是`ParameterizedType`：
 
 ```java
 Set<String> set;
@@ -15,7 +15,7 @@ class MyClass<V>{
 }
 ```
 
-而像下面的忽略泛型参数或者基本数据类型和基本数据类型的包装类都不是ParameterizedType：
+而像下面的忽略泛型参数或者基本数据类型和基本数据类型的包装类都不是`ParameterizedType`：
 
 ```java
 String name = "throwbale";

@@ -6,12 +6,16 @@
 
 ```java
 public interface TypeVariable<D extends GenericDeclaration> extends Type {
+
    //获得泛型的上限，若未明确声明上边界则默认为Object
     Type[] getBounds();
+    
     //获取声明该类型变量实体(即获得类、方法或构造器名)
     D getGenericDeclaration();
+    
     //获得名称，即K、V、E之类名称
     String getName();
+    
     //获得注解类型的上限，若未明确声明上边界则默认为长度为0的数组
     AnnotatedType[] getAnnotatedBounds()
 }

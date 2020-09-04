@@ -14,7 +14,7 @@ Java动态代理机制的出现，使得Java开发人员不用手工编写代理
 
 * `Subject`抽象主题角色：一般定义为抽象类或者接口，是作为功能的定义，提供一系列抽象的功能方法。
 * `RealSubject`具体\(真实\)主题角色：一般称为被委托角色或者被代理角色，它是`Subject`的一个具体实现。
-* `ProxySubject`代理主题角色：一般称为委托角色或者代理角色，一般ProxySubject也实现\(或者继承\)Subject，接收一个具体的Subject实例RealSubject，在RealSubject处理前后做预定义或者后置操作，甚至可以直接忽略RealSubject原来的方法。
+* `ProxySubject`代理主题角色：一般称为委托角色或者代理角色，一般`ProxySubject`也实现\(或者继承\)`Subject`，接收一个具体的`Subject`实例`RealSubject`，在`RealSubject`处理前后做预定义或者后置操作，甚至可以直接忽略`RealSubject`原来的方法。
 
 ### 代码实现
 
@@ -191,10 +191,12 @@ JDK动态代理的使用流程如下：
 InvocationHandler handler = new InvocationHandlerImpl(..); 
  
 // 通过Proxy为包括Interface接口在内的一组接口动态创建代理类的类对象
-Class clazz = Proxy.getProxyClass(classLoader, new Class[] { Interface.class, ... }); 
+Class clazz = Proxy.getProxyClass(classLoader, 
+                                  new Class[] { Interface.class, ... }); 
  
 // 通过反射从生成的类对象获得构造函数对象
-Constructor constructor = clazz.getConstructor(new Class[] { InvocationHandler.class }); 
+Constructor constructor = clazz.getConstructor(new Class[] { 
+    InvocationHandler.class }); 
  
 // 通过构造函数对象创建动态代理类实例
 Interface Proxy = (Interface)constructor.newInstance(new Object[] { handler });

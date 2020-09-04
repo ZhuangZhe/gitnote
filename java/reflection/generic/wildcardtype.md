@@ -64,5 +64,5 @@ WildcardType --> ? extends java.lang.Number getUpperBounds--> [class java.lang.N
 WildcardType --> ? super org.throwable.inherited.Main16$Person getUpperBounds--> [class java.lang.Object] getLowerBounds--> [interface org.throwable.inherited.Main16$Person]
 ```
 
-这里注意的是`List<? extends Number> list`这个参数整体来看是ParameterizedType类型，剥掉第一次List之后的`? extends Number`是WildcardType类型。
+这里注意的是`List<? extends Number> list`这个参数整体来看是`ParameterizedType`类型，剥掉第一次List之后的`? extends Number`是`WildcardType`类型。
 

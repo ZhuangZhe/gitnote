@@ -1,7 +1,5 @@
 # Collection接口
 
-
-
 ## 源码
 
 ```java
