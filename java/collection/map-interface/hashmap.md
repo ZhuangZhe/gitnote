@@ -261,8 +261,11 @@ static final class TreeNode<K,V> extends LinkedHashMap.Entry<K,V> {
         return hd;
     }
 
-    final TreeNode<K,V> putTreeVal(HashMap<K,V> map, Node<K,V>[] tab,
-                                   int h, K k, V v) {
+    final TreeNode<K,V> putTreeVal(HashMap<K,V> map, 
+                                   Node<K,V>[] tab,
+                                   int h, 
+                                   K k, 
+                                   V v) {
         Class<?> kc = null;
         boolean searched = false;
         TreeNode<K,V> root = (parent != null) ? root() : this;
@@ -307,7 +310,8 @@ static final class TreeNode<K,V> extends LinkedHashMap.Entry<K,V> {
         }
     }
 
-    final void removeTreeNode(HashMap<K,V> map, Node<K,V>[] tab,
+    final void removeTreeNode(HashMap<K,V> map, 
+                              Node<K,V>[] tab,
                               boolean movable) {
         int n;
         if (tab == null || (n = tab.length) == 0)
@@ -405,7 +409,10 @@ static final class TreeNode<K,V> extends LinkedHashMap.Entry<K,V> {
             moveRootToFront(tab, r);
     }
 
-    final void split(HashMap<K,V> map, Node<K,V>[] tab, int index, int bit) {
+    final void split(HashMap<K,V> map, 
+                     Node<K,V>[] tab, 
+                     int index, 
+                     int bit) {
         TreeNode<K,V> b = this;
         // Relink into lo and hi lists, preserving order
         TreeNode<K,V> loHead = null, loTail = null;
@@ -671,10 +678,14 @@ public V put(K key, V value) {
 
 static final int hash(Object key) {
     int h;
-    return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+    return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16); // 算出存数据的下标
 }
 
-final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict) {
+final V putVal(int hash, 
+               K key, 
+               V value, 
+               boolean onlyIfAbsent, 
+               boolean evict) {
     Node<K,V>[] tab; 
     Node<K,V> p; 
     int n, i;
@@ -683,7 +694,8 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict) {
     if ((p = tab[i = (n - 1) & hash]) == null)
         tab[i] = newNode(hash, key, value, null);
     else {
-        Node<K,V> e; K k;
+        Node<K,V> e; 
+        K k;
         if (p.hash == hash &&
             ((k = p.key) == key || (key != null && key.equals(k))))
             e = p;
