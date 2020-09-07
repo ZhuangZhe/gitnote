@@ -15,10 +15,10 @@
 
 ## 序列化和反序列化
 
-Java 通过对象输入输出流来实现序列化和反序列化：
+Java通过对象输入输出流来实现序列化和反序列化：
 
-* `java.io.ObjectOutputStream` 类的 `writeObject()` 方法可以实现序列化；
-* `java.io.ObjectInputStream` 类的 `readObject()` 方法用于实现反序列化。
+* `java.io.ObjectOutputStream`类的`writeObject()`方法可以实现序列化；
+* `java.io.ObjectInputStream`类的`readObject()`方法用于实现反序列化。
 
 序列化和反序列化示例：
 
@@ -85,11 +85,11 @@ public class SerializeDemo01 {
 // Person{name='Jack', age=30, sex=MALE}
 ```
 
-## Serializable 接口
+## Serializable接口
 
-**被序列化的类必须属于 Enum、Array 和 Serializable 类型其中的任何一种，否则将抛出`NotSerializableException`异常**。这是因为：在序列化操作过程中会对类型进行检查，如果不满足序列化类型要求，就会抛出异常。
+**被序列化的类必须属于Enum、Array和Serializable类型其中的任何一种，否则将抛出`NotSerializableException`异常**。这是因为：在序列化操作过程中会对类型进行检查，如果不满足序列化类型要求，就会抛出异常。
 
-示例：`NotSerializableException` 错误
+示例：`NotSerializableException`错误
 
 ```java
 public class UnSerializeDemo {
@@ -412,7 +412,7 @@ public class SerializeDemo05 {
 
 ## 序列化问题
 
-Java 的序列化能保证对象状态的持久保存，但是遇到一些对象结构复杂的情况还是难以处理，这里归纳一下：
+Java的序列化能保证对象状态的持久保存，但是遇到一些对象结构复杂的情况还是难以处理，这里归纳一下：
 
 * 父类是`Serializable`，所有子类都可以被序列化。
 * 子类是`Serializable` ，父类不是，则子类可以正确序列化，但父类的属性不会被序列化\(不报错，数据丢失\)。

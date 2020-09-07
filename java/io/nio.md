@@ -2,11 +2,11 @@
 
 NIO是一种同步非阻塞的I/O模型，在 Java 1.4 中引入了 NIO 框架，对应`java.nio`包，提供了 `Channel` 、`Selector`、`Buffer` 等抽象。
 
-NIO中的N可以理解为Non-blocking。它支持面向缓冲的，基于通道的 I/O 操作方法。 NIO 提供了与传统 BIO 模型中的 `Socket` 和 `ServerSocket` 相对应的 `SocketChannel` 和 `ServerSocketChannel` 两种不同的套接字通道实现，两种通道都支持阻塞和非阻塞两种模式。阻塞模式使用就像传统中的支持一样，比较简单，但是性能和可靠性都不好；非阻塞模式正好与之相反。对于低负载、低并发的应用程序，可以使用同步阻塞 I/O 来提升开发速率和更好的维护性；对于高负载、高并发的（网络）应用，应使用 NIO 的非阻塞模式来开发。
+NIO中的N可以理解为Non-blocking。它支持面向缓冲的，基于通道的I/O操作方法。 NIO提供了与传统BIO模型中的`Socket`和`ServerSocket`相对应的`SocketChannel`和`ServerSocketChannel`两种不同的套接字通道实现，两种通道都支持阻塞和非阻塞两种模式。阻塞模式使用就像传统中的支持一样，比较简单，但是性能和可靠性都不好；非阻塞模式正好与之相反。对于低负载、低并发的应用程序，可以使用同步阻塞I/O来提升开发速率和更好的维护性；对于高负载、高并发的\(网络\)应用，应使用NIO的非阻塞模式来开发。
 
-### NIO 的基本流程
+### NIO的基本流程
 
-通常来说 NIO 中的所有 IO 都是从 Channel（通道） 开始的。
+通常来说NIO中的所有IO都是从Channel\(通道\)开始的。
 
 * 从通道进行数据读取 ：创建一个缓冲区，然后请求通道读取数据。
 * 从通道进行数据写入 ：创建一个缓冲区，填充数据，并要求通道写入数据。
@@ -63,12 +63,12 @@ BIO和NIO已经很好地集成了，`java.io.*`已经以NIO为基础重新实现
 1. 新建一个大小为8个字节的缓冲区，此时`position`为0，而`limit = capacity = 8`。`capacity`变量不会改变，下面的讨论会忽略它。
 2. 从输入通道中读取5个字节数据写入缓冲区中，此时`position`移动设置为5，limit保持不变。
 3. 在将缓冲区的数据写到输出通道之前，需要先调用`flip()`方法，这个方法将limit设置为当前`position`，并将`position`设置为 0。
-4. 从缓冲区中取4个字节到输出管道中，此时`position`设为 4。
+4. 从缓冲区中取4个字节到输出管道中，此时`position`设为4。
 5. 最后需要调用`clear()`方法来清空缓冲区，此时`position`和`limit`都被设置为最初位置。
 
 ### 文件NIO示例
 
-以下展示了使用 NIO 快速复制文件的实例：
+以下展示了使用NIO快速复制文件的实例：
 
 ```java
 public static void fastCopy(String src, String dist) throws IOException {
@@ -145,7 +145,7 @@ ssChannel.register(selector, SelectionKey.OP_ACCEPT);
 * `SelectionKey.OP_READ`
 * `SelectionKey.OP_WRITE`
 
-它们在 SelectionKey 的定义如下：
+它们在SelectionKey的定义如下：
 
 ```java
 public static final int OP_READ = 1 << 0;
@@ -166,7 +166,7 @@ int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
 int num = selector.select();
 ```
 
-使用 `select()` 来监听到达的事件，它会一直阻塞直到有至少一个事件到达。
+使用`select()`来监听到达的事件，它会一直阻塞直到有至少一个事件到达。
 
 ### 获取到达的事件
 
@@ -186,7 +186,7 @@ while (keyIterator.hasNext()) {
 
 ### 事件循环
 
-因为一次 select\(\) 调用不能处理完所有的事件，并且服务器端有可能需要一直监听事件，因此服务器端处理事件的代码一般会放在一个死循环内。
+因为一次`select()`调用不能处理完所有的事件，并且服务器端有可能需要一直监听事件，因此服务器端处理事件的代码一般会放在一个死循环内。
 
 ```java
 while (true) {
@@ -205,7 +205,7 @@ while (true) {
 }
 ```
 
-### 套接字 NIO 示例
+### 套接字NIO示例
 
 ```java
 public class NIOServer {
@@ -300,7 +300,7 @@ public class NIOClient {
 
 向内存映射文件写入可能是危险的，只是改变数组的单个元素这样的简单操作，就可能会直接修改磁盘上的文件。修改数据与将数据保存到磁盘是没有分开的。
 
-下面代码行将文件的前 1024 个字节映射到内存中，map\(\) 方法返回一个 MappedByteBuffer，它是 ByteBuffer 的子类。因此，可以像使用其他任何 ByteBuffer 一样使用新映射的缓冲区，操作系统会在需要时负责执行映射。
+下面代码行将文件的前 1024 个字节映射到内存中，`map()`方法返回一个`MappedByteBuffer`，它是`ByteBuffer`的子类。因此，可以像使用其他任何`ByteBuffer`一样使用新映射的缓冲区，操作系统会在需要时负责执行映射。
 
 ```java
 MappedByteBuffer mbb = fc.map(FileChannel.MapMode.READ_WRITE, 0, 1024);
@@ -308,18 +308,18 @@ MappedByteBuffer mbb = fc.map(FileChannel.MapMode.READ_WRITE, 0, 1024);
 
 ## NIO vs. BIO
 
-BIO 与 NIO 最重要的区别是数据打包和传输的方式：**BIO 以流的方式处理数据，而 NIO 以块的方式处理数据**。
+BIO与NIO最重要的区别是数据打包和传输的方式：**BIO以流的方式处理数据，而NIO以块的方式处理数据**。
 
-* **面向流的 BIO 一次处理一个字节数据**：一个输入流产生一个字节数据，一个输出流消费一个字节数据。为流式数据创建过滤器非常容易，链接几个过滤器，以便每个过滤器只负责复杂处理机制的一部分。不利的一面是，面向流的 I/O 通常相当慢。
-* **面向块的 NIO 一次处理一个数据块**，按块处理数据比按流处理数据要快得多。但是面向块的 NIO 缺少一些面向流的 BIO 所具有的优雅性和简单性。
+* **面向流的BIO一次处理一个字节数据**：一个输入流产生一个字节数据，一个输出流消费一个字节数据。为流式数据创建过滤器非常容易，链接几个过滤器，以便每个过滤器只负责复杂处理机制的一部分。不利的一面是，面向流的 I/O 通常相当慢。
+* **面向块的NIO一次处理一个数据块**，按块处理数据比按流处理数据要快得多。但是面向块的NIO缺少一些面向流的 BIO 所具有的优雅性和简单性。
 
-BIO 模式：
+BIO模式：
 
-![img](http://dunwu.test.upcdn.net/snap/20200630212345.png)
+![](http://dunwu.test.upcdn.net/snap/20200630212345.png)
 
 NIO 模式：
 
-![img](http://dunwu.test.upcdn.net/snap/20200630212248.png)
+![](http://dunwu.test.upcdn.net/snap/20200630212248.png)
 
 \*\*\*\*
 
