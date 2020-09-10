@@ -202,7 +202,9 @@
 
 ## 算法和数据结构 <a id="algorithm-and-data-structure"></a>
 
-* [树](algorithm-and-data-structure/tree.md)
+* [树](algorithm-and-data-structure/tree/README.md)
+  * [Range Sum of BST](algorithm-and-data-structure/tree/range-sum-of-bst.md)
+  * [Find All The Lonely Nodes](algorithm-and-data-structure/tree/find-all-the-lonely-nodes.md)
 * [图](algorithm-and-data-structure/graph/README.md)
   * [相关算法](algorithm-and-data-structure/graph/algorithm/README.md)
     * [Prim算法](algorithm-and-data-structure/graph/algorithm/prim.md)
