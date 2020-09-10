@@ -74,7 +74,7 @@ Spring IoC 容器的设计主要是基于以下两个接口：
 
 #### **BeanFactory和ApplicationContext 的区别：**
 
-* **BeanFactory：**是Spring中最底层的接口，只提供了最简单的IoC功能,负责配置，创建和管理bean。 在应用中，一般不使用 BeanFactory，而推荐使用ApplicationContext（应用上下文），原因如下。
+* **BeanFactory：**是Spring中最底层的接口，只提供了最简单的IoC功能，负责配置、创建和管理bean。 在应用中，一般不使用 BeanFactory，而推荐使用ApplicationContext（应用上下文），原因如下。
 * **ApplicationContext：** 1.继承了 BeanFactory，拥有了基本的 IoC 功能； 2.除此之外，ApplicationContext 还提供了以下功能：
   * 支持国际化
   * 支持消息机制

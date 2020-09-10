@@ -167,7 +167,9 @@
 
 ## 部署 <a id="deploy"></a>
 
-* [Docker](deploy/docker.md)
+* [Docker](deploy/docker/README.md)
+  * [Dockerfire](deploy/docker/dockerfire.md)
+  * [常用命令](deploy/docker/common-commands.md)
 * [kubernetes](deploy/kubernetes.md)
 
 ## 系统设计 <a id="system-design"></a>
