@@ -32,13 +32,20 @@ Docker的流线型开发生命周期使得开发者可以在不同环境中用�
 
 例子场景：
 
-* 开发者在本地写的代码可以通过Docker分享给同时。
-* Your developers write code locally and share their work with their colleagues using Docker containers.
-* They use Docker to push their applications into a test environment and execute automated and manual tests.
-* When developers find bugs, they can fix them in the development environment and redeploy them to the test environment for testing and validation.
-* When testing is complete, getting the fix to the customer is as simple as pushing the updated image to the production environment.
+* 开发者在本地写的代码可以通过Docker容器分享给同事。
+* 开发者可以使用docker将程序放到测试环境进行手动或自动测试。
+* 开发者可以很方便的在自己换环境调试bug，完成后在测试环境中验证。
+* 当测试通过后，可以很方便的通过容器将程序推送到生产环境。
 
 ### 响应式部署和扩展
+
+Docker’s container-based platform allows for highly portable workloads. Docker containers can run on a developer’s local laptop, on physical or virtual machines in a data center, on cloud providers, or in a mixture of environments.
+
+Docker’s portability and lightweight nature also make it easy to dynamically manage workloads, scaling up or tearing down applications and services as business needs dictate, in near real time.
+
+**可以**
+
+Docker is lightweight and fast. It provides a viable, cost-effective alternative to hypervisor-based virtual machines, so you can use more of your compute capacity to achieve your business goals. Docker is perfect for high density environments and for small and medium deployments where you need to do more with fewer resources.
 
 
 
