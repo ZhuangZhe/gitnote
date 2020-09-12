@@ -47,7 +47,11 @@ Docker的可移植性以及轻量化特性使得可以很容易的动态管理�
 
 Docker是轻量级以及快速的，它提供一个可行和低成本的方法替换基于超管理器的虚拟机，所以开发者可以获得更多算力去实现他们的业务。Docker非常适合高密度环境以及中型或小型的的部署，它可以使用有限的资源来实现更多的事情。
 
+## Docker的架构
 
+Docker uses a client-server architecture. The Docker _client_ talks to the Docker _daemon_, which does the heavy lifting of building, running, and distributing your Docker containers. The Docker client and daemon _can_ run on the same system, or you can connect a Docker client to a remote Docker daemon. The Docker client and daemon communicate using a REST API, over UNIX sockets or a network interface.
+
+![](../../.gitbook/assets/jie-ping-20200912-shang-wu-9.48.05.png)
 
 
 
