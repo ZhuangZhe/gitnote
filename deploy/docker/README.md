@@ -33,19 +33,21 @@ Docker的流线型开发生命周期使得开发者可以在不同环境中用�
 例子场景：
 
 * 开发者在本地写的代码可以通过Docker容器分享给同事。
-* 开发者可以使用docker将程序放到测试环境进行手动或自动测试。
+* 开发者可以使用Docker将程序放到测试环境进行手动或自动测试。
 * 开发者可以很方便的在自己换环境调试bug，完成后在测试环境中验证。
 * 当测试通过后，可以很方便的通过容器将程序推送到生产环境。
 
 ### 响应式部署和扩展
 
-Docker’s container-based platform allows for highly portable workloads. Docker containers can run on a developer’s local laptop, on physical or virtual machines in a data center, on cloud providers, or in a mixture of environments.
+Docker基于容器的平台实现了高度可移植的负载。Docker容器可以在开发者的电脑、数据中心的物理或虚拟设备、云服务提供者、复合环境等环境上运行。
 
-Docker’s portability and lightweight nature also make it easy to dynamically manage workloads, scaling up or tearing down applications and services as business needs dictate, in near real time.
+Docker的可移植性以及轻量化特性使得可以很容易的动态管理负载，以及以近乎实时根据业务的需要扩大或缩小程序与服务的规模。
 
-**可以**
+### **可以在同一个硬件上跑更多的负载**
 
-Docker is lightweight and fast. It provides a viable, cost-effective alternative to hypervisor-based virtual machines, so you can use more of your compute capacity to achieve your business goals. Docker is perfect for high density environments and for small and medium deployments where you need to do more with fewer resources.
+Docker是轻量级以及快速的，它提供一个可行和低成本的方法替换基于超管理器的虚拟机，所以开发者可以获得更多算力去实现他们的业务。Docker非常适合高密度环境以及中型或小型的的部署，它可以使用有限的资源来实现更多的事情。
+
+
 
 
 
