@@ -119,6 +119,37 @@ Union file systems, or UnionFS, are file systems that operate by creating layers
 
 Docker Engine combines the namespaces, control groups, and UnionFS into a wrapper called a container format. The default container format is `libcontainer`. In the future, Docker may support other container formats by integrating with technologies such as BSD Jails or Solaris Zones.
 
+## Docker的一些概念
+
+Docker is a platform for developers and sysadmins to **build, run, and share** applications with containers. The use of containers to deploy applications is called _containerization_. Containers are not new, but their use for easily deploying applications is.
+
+Containerization is increasingly popular because containers are:
+
+* **Flexible**: Even the most complex applications can be containerized.
+* **Lightweight**: Containers leverage and share the host kernel, making them much more efficient in terms of system resources than virtual machines.
+* **Portable**: You can build locally, deploy to the cloud, and run anywhere.
+* **Loosely coupled**: Containers are highly self-sufficient and encapsulated, allowing you to replace or upgrade one without disrupting others.
+* **Scalable**: You can increase and automatically distribute container replicas across a datacenter.
+* **Secure**: Containers apply aggressive constraints and isolations to processes without any configuration required on the part of the user.
+
+### Images and containers
+
+Fundamentally, a container is nothing but a running process, with some added encapsulation features applied to it in order to keep it isolated from the host and from other containers. One of the most important aspects of container isolation is that each container interacts with its own private filesystem; this filesystem is provided by a Docker **image**. An image includes everything needed to run an application - the code or binary, runtimes, dependencies, and any other filesystem objects required.
+
+### Containers and virtual machines
+
+A container runs _natively_ on Linux and shares the kernel of the host machine with other containers. It runs a discrete process, taking no more memory than any other executable, making it lightweight.
+
+By contrast, a **virtual machine** \(VM\) runs a full-blown “guest” operating system with _virtual_ access to host resources through a hypervisor. In general, VMs incur a lot of overhead beyond what is being consumed by your application logic.
+
+![](../../.gitbook/assets/jie-ping-20200913-shang-wu-10.40.12.png)
+
+
+
+
+
+
+
 
 
 

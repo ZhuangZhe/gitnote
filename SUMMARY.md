@@ -168,13 +168,12 @@
 ## 部署 <a id="deploy"></a>
 
 * [Docker](deploy/docker/README.md)
-  * [Untitled](deploy/docker/untitled.md)
+  * [构造镜像](deploy/docker/build-images.md)
   * [基本概念](deploy/docker/concepts/README.md)
     * [镜像](deploy/docker/concepts/image.md)
     * [镜像与容器](deploy/docker/concepts/image-and-container.md)
     * [网络](deploy/docker/concepts/network/README.md)
       * [DNS Round Robin](deploy/docker/concepts/network/dns-round-robin.md)
-  * [Dockerfire](deploy/docker/dockerfire.md)
   * [常用命令](deploy/docker/common-commands.md)
 * [kubernetes](deploy/kubernetes.md)
 
