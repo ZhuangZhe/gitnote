@@ -28,11 +28,11 @@ The image defined by your `Dockerfile` should generate containers that are as ep
 
 Refer to [Processes](https://12factor.net/processes) under _The Twelve-factor App_ methodology to get a feel for the motivations of running containers in such a stateless fashion.
 
-### 了解
+### 了解构建环境
 
 When you issue a `docker build` command, the current working directory is called the _build context_. By default, the Dockerfile is assumed to be located here, but you can specify a different location with the file flag \(`-f`\). Regardless of where the `Dockerfile` actually lives, all recursive contents of files and directories in the current directory are sent to the Docker daemon as the build context.
 
-> #### Build context example
+> #### 构建环境例子
 >
 > Create a directory for the build context and `cd` into it. Write “hello” into a text file named `hello` and create a Dockerfile that runs `cat` on it. Build the image from within the build context \(`.`\):
 >
@@ -170,11 +170,11 @@ EOF
 >
 > When building an image using a remote Git repository as build context, Docker performs a `git clone` of the repository on the local machine, and sends those files as build context to the daemon. This feature requires `git` to be installed on the host where you run the `docker build` command.
 
-### Exclude with .dockerignore
+### 使用`.dockerignore`排除镜像中不需要的文件
 
 To exclude files not relevant to the build \(without restructuring your source repository\) use a `.dockerignore` file. This file supports exclusion patterns similar to `.gitignore` files. For information on creating one, see the[.dockerignore file](https://docs.docker.com/engine/reference/builder/#dockerignore-file).
 
-### Use multi-stage builds
+### 使用多阶段构建
 
 [Multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/) allow you to drastically reduce the size of your final image, without struggling to reduce the number of intermediate layers and files.
 
@@ -215,11 +215,11 @@ ENTRYPOINT ["/bin/project"]
 CMD ["--help"]
 ```
 
-### Don’t install unnecessary packages
+### 不安装不必要的包
 
 To reduce complexity, dependencies, file sizes, and build times, avoid installing extra or unnecessary packages just because they might be “nice to have.” For example, you don’t need to include a text editor in a database image.
 
-### Decouple applications
+### 解耦应用
 
 Each container should have only one concern. Decoupling applications into multiple containers makes it easier to scale horizontally and reuse containers. For instance, a web application stack might consist of three separate containers, each with its own unique image, to manage the web application, database, and an in-memory cache in a decoupled manner.
 
@@ -227,14 +227,14 @@ Limiting each container to one process is a good rule of thumb, but it is not a 
 
 Use your best judgment to keep containers as clean and modular as possible. If containers depend on each other, you can use [Docker container networks](https://docs.docker.com/network/) to ensure that these containers can communicate.
 
-### Minimize the number of layers
+### 最小化layer的数量
 
 In older versions of Docker, it was important that you minimized the number of layers in your images to ensure they were performant. The following features were added to reduce this limitation:
 
 * Only the instructions `RUN`, `COPY`, `ADD` create layers. Other instructions create temporary intermediate images, and do not increase the size of the build.
 * Where possible, use [multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/), and only copy the artifacts you need into the final image. This allows you to include tools and debug information in your intermediate build stages without increasing the size of the final image.
 
-### Sort multi-line arguments
+### 排序多行参数
 
 Whenever possible, ease later changes by sorting multi-line arguments alphanumerically. This helps to avoid duplication of packages and make the list much easier to update. This also makes PRs a lot easier to read and review. Adding a space before a backslash \(`\`\) helps as well.
 
