@@ -249,7 +249,7 @@ RUN apt-get update && apt-get install -y \
   subversion
 ```
 
-### Leverage build cache
+### 利用构建镜像的缓存
 
 When building an image, Docker steps through the instructions in your `Dockerfile`, executing each in the order specified. As each instruction is examined, Docker looks for an existing image in its cache that it can reuse, rather than creating a new \(duplicate\) image.
 
@@ -263,6 +263,94 @@ If you do not want to use the cache at all, you can use the `--no-cache=true` op
 Once the cache is invalidated, all subsequent `Dockerfile` commands generate new images and the cache is not used.
 
 ## Docker命令
+
+### FROM
+
+```text
+FROM [--platform=<platform>] <image> [AS <name>]
+```
+
+Or
+
+```text
+FROM [--platform=<platform>] <image>[:<tag>] [AS <name>]
+```
+
+Or
+
+```text
+FROM [--platform=<platform>] <image>[@<digest>] [AS <name>]
+```
+
+The `FROM` instruction initializes a new build stage and sets the [_Base Image_](https://docs.docker.com/glossary/#base_image) for subsequent instructions. As such, a valid `Dockerfile` must start with a `FROM` instruction. The image can be any valid image – it is especially easy to start by **pulling an image** from the [_Public Repositories_](https://docs.docker.com/engine/tutorials/dockerrepos/).
+
+* `ARG` is the only instruction that may precede `FROM` in the `Dockerfile`. See [Understand how ARG and FROM interact](https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact).
+* `FROM` can appear multiple times within a single `Dockerfile` to create multiple images or use one build stage as a dependency for another. Simply make a note of the last image ID output by the commit before each new `FROM` instruction. Each `FROM` instruction clears any state created by previous instructions.
+* Optionally a name can be given to a new build stage by adding `AS name` to the `FROM` instruction. The name can be used in subsequent `FROM` and `COPY --from=<name|index>` instructions to refer to the image built in this stage.
+* The `tag` or `digest` values are optional. If you omit either of them, the builder assumes a `latest` tag by default. The builder returns an error if it cannot find the `tag` value.
+
+The optional `--platform` flag can be used to specify the platform of the image in case `FROM` references a multi-platform image. For example, `linux/amd64`, `linux/arm64`, or `windows/amd64`. By default, the target platform of the build request is used. Global build arguments can be used in the value of this flag, for example, [automatic platform ARGs](https://docs.docker.com/engine/reference/builder/#automatic-platform-args-in-the-global-scope) allow you to force a stage to native build platform \(`--platform=$BUILDPLATFORM`\), and use it to cross-compile to the target platform inside the stage.
+
+#### Understand how ARG and FROM interact
+
+`FROM` instructions support variables that are declared by any `ARG` instructions that occur before the first `FROM`.
+
+```text
+ARG  CODE_VERSION=latest
+FROM base:${CODE_VERSION}
+CMD  /code/run-app
+
+FROM extras:${CODE_VERSION}
+CMD  /code/run-extras
+```
+
+An `ARG` declared before a `FROM` is outside of a build stage, so it can’t be used in any instruction after a `FROM`. To use the default value of an `ARG` declared before the first `FROM` use an `ARG` instruction without a value inside of a build stage:
+
+```text
+ARG VERSION=latest
+FROM busybox:$VERSION
+ARG VERSION
+RUN echo $VERSION > image_version
+```
+
+### LABEL
+
+You can add labels to your image to help organize images by project, record licensing information, to aid in automation, or for other reasons. For each label, add a line beginning with `LABEL` and with one or more key-value pairs. The following examples show the different acceptable formats. Explanatory comments are included inline.
+
+> Strings with spaces must be quoted **or** the spaces must be escaped. Inner quote characters \(`"`\), must also be escaped.
+
+```text
+# Set one or more individual labels
+LABEL com.example.version="0.0.1-beta"
+LABEL vendor1="ACME Incorporated"
+LABEL vendor2=ZENITH\ Incorporated
+LABEL com.example.release-date="2015-02-12"
+LABEL com.example.version.is-production=""
+```
+
+An image can have more than one label. Prior to Docker 1.10, it was recommended to combine all labels into a single `LABEL`instruction, to prevent extra layers from being created. This is no longer necessary, but combining labels is still supported.
+
+```text
+# Set multiple labels on one line
+LABEL com.example.version="0.0.1-beta" com.example.release-date="2015-02-12"
+```
+
+The above can also be written as:
+
+```text
+# Set multiple labels at once, using line-continuation characters to break long lines
+LABEL vendor=ACME\ Incorporated \
+      com.example.is-beta= \
+      com.example.is-production="" \
+      com.example.version="0.0.1-beta" \
+      com.example.release-date="2015-02-12"
+```
+
+See [Understanding object labels](https://docs.docker.com/config/labels-custom-metadata/) for guidelines about acceptable label keys and values. For information about querying labels, refer to the items related to filtering in [Managing labels on objects](https://docs.docker.com/config/labels-custom-metadata/#manage-labels-on-objects). See also [LABEL](https://docs.docker.com/engine/reference/builder/#label) in the Dockerfile reference.
+
+### RUN
+
+
 
 
 
