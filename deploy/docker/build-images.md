@@ -350,7 +350,156 @@ See [Understanding object labels](https://docs.docker.com/config/labels-custom-m
 
 ### RUN
 
+RUN has 2 forms:
 
+* `RUN <command>` \(_shell_ form, the command is run in a shell, which by default is `/bin/sh -c` on Linux or `cmd /S /C` on Windows\)
+* `RUN ["executable", "param1", "param2"]` \(_exec_ form\)
+
+The `RUN` instruction will execute any commands in a new layer on top of the current image and commit the results. The resulting committed image will be used for the next step in the `Dockerfile`.
+
+Layering `RUN` instructions and generating commits conforms to the core concepts of Docker where commits are cheap and containers can be created from any point in an image’s history, much like source control.
+
+The _exec_ form makes it possible to avoid shell string munging, and to `RUN` commands using a base image that does not contain the specified shell executable.
+
+The default shell for the _shell_ form can be changed using the `SHELL` command.
+
+In the _shell_ form you can use a `\` \(backslash\) to continue a single RUN instruction onto the next line. For example, consider these two lines:
+
+```text
+RUN /bin/bash -c 'source $HOME/.bashrc; \
+echo $HOME'
+```
+
+Together they are equivalent to this single line:
+
+```text
+RUN /bin/bash -c 'source $HOME/.bashrc; echo $HOME'
+```
+
+To use a different shell, other than ‘/bin/sh’, use the _exec_ form passing in the desired shell. For example:
+
+```text
+RUN ["/bin/bash", "-c", "echo hello"]
+```
+
+> **Note**
+>
+> The _exec_ form is parsed as a JSON array, which means that you must use double-quotes \(“\) around words not single-quotes \(‘\).
+
+Unlike the _shell_ form, the _exec_ form does not invoke a command shell. This means that normal shell processing does not happen. For example, `RUN [ "echo", "$HOME" ]` will not do variable substitution on `$HOME`. If you want shell processing then either use the _shell_ form or execute a shell directly, for example: `RUN [ "sh", "-c", "echo $HOME" ]`. When using the exec form and executing a shell directly, as in the case for the shell form, it is the shell that is doing the environment variable expansion, not docker.
+
+> **Note**
+>
+> In the _JSON_ form, it is necessary to escape backslashes. This is particularly relevant on Windows where the backslash is the path separator. The following line would otherwise be treated as _shell_ form due to not being valid JSON, and fail in an unexpected way:
+>
+> ```text
+> RUN ["c:\windows\system32\tasklist.exe"]
+> ```
+>
+> The correct syntax for this example is:
+>
+> ```text
+> RUN ["c:\\windows\\system32\\tasklist.exe"]
+> ```
+
+The cache for `RUN` instructions isn’t invalidated automatically during the next build. The cache for an instruction like`RUN apt-get dist-upgrade -y` will be reused during the next build. The cache for `RUN` instructions can be invalidated by using the `--no-cache` flag, for example `docker build --no-cache`.
+
+The cache for `RUN` instructions can be invalidated by [`ADD`](https://docs.docker.com/engine/reference/builder/#add) and [`COPY`](https://docs.docker.com/engine/reference/builder/#copy) instructions.
+
+Split long or complex `RUN` statements on multiple lines separated with backslashes to make your `Dockerfile`more readable, understandable, and maintainable.
+
+#### **APT-GET**
+
+Probably the most common use-case for `RUN` is an application of `apt-get`. Because it installs packages, the `RUN apt-get` command has several gotchas to look out for.
+
+Avoid `RUN apt-get upgrade` and `dist-upgrade`, as many of the “essential” packages from the parent images cannot upgrade inside an [unprivileged container](https://docs.docker.com/engine/reference/run/#security-configuration). If a package contained in the parent image is out-of-date, contact its maintainers. If you know there is a particular package, `foo`, that needs to be updated, use`apt-get install -y foo` to update automatically.
+
+Always combine `RUN apt-get update` with `apt-get install` in the same `RUN` statement. For example:
+
+```text
+RUN apt-get update && apt-get install -y \
+    package-bar \
+    package-baz \
+    package-foo
+```
+
+Using `apt-get update` alone in a `RUN` statement causes caching issues and subsequent `apt-get install`instructions fail. For example, say you have a Dockerfile:
+
+```text
+FROM ubuntu:18.04
+RUN apt-get update
+RUN apt-get install -y curl
+```
+
+After building the image, all layers are in the Docker cache. Suppose you later modify `apt-get install` by adding extra package:
+
+```text
+FROM ubuntu:18.04
+RUN apt-get update
+RUN apt-get install -y curl nginx
+```
+
+Docker sees the initial and modified instructions as identical and reuses the cache from previous steps. As a result the `apt-get update` is _not_ executed because the build uses the cached version. Because the `apt-get update` is not run, your build can potentially get an outdated version of the `curl` and `nginx` packages.
+
+Using `RUN apt-get update && apt-get install -y` ensures your Dockerfile installs the latest package versions with no further coding or manual intervention. This technique is known as “cache busting”. You can also achieve cache-busting by specifying a package version. This is known as version pinning, for example:
+
+```text
+RUN apt-get update && apt-get install -y \
+    package-bar \
+    package-baz \
+    package-foo=1.3.*
+```
+
+Version pinning forces the build to retrieve a particular version regardless of what’s in the cache. This technique can also reduce failures due to unanticipated changes in required packages.
+
+Below is a well-formed `RUN` instruction that demonstrates all the `apt-get` recommendations.
+
+```text
+RUN apt-get update && apt-get install -y \
+    aufs-tools \
+    automake \
+    build-essential \
+    curl \
+    dpkg-sig \
+    libcap-dev \
+    libsqlite3-dev \
+    mercurial \
+    reprepro \
+    ruby1.9.1 \
+    ruby1.9.1-dev \
+    s3cmd=1.1.* \
+ && rm -rf /var/lib/apt/lists/*
+```
+
+The `s3cmd` argument specifies a version `1.1.*`. If the image previously used an older version, specifying the new one causes a cache bust of `apt-get update` and ensures the installation of the new version. Listing packages on each line can also prevent mistakes in package duplication.
+
+In addition, when you clean up the apt cache by removing `/var/lib/apt/lists` it reduces the image size, since the apt cache is not stored in a layer. Since the `RUN` statement starts with `apt-get update`, the package cache is always refreshed prior to `apt-get install`.
+
+> Official Debian and Ubuntu images [automatically run `apt-get clean`](https://github.com/moby/moby/blob/03e2923e42446dbb830c654d0eec323a0b4ef02a/contrib/mkimage/debootstrap#L82-L105), so explicit invocation is not required.
+
+#### **USING PIPES**
+
+Some `RUN` commands depend on the ability to pipe the output of one command into another, using the pipe character \(`|`\), as in the following example:
+
+```text
+RUN wget -O - https://some.site | wc -l > /number
+```
+
+Docker executes these commands using the `/bin/sh -c` interpreter, which only evaluates the exit code of the last operation in the pipe to determine success. In the example above this build step succeeds and produces a new image so long as the `wc -l` command succeeds, even if the `wget` command fails.
+
+If you want the command to fail due to an error at any stage in the pipe, prepend `set -o pipefail &&` to ensure that an unexpected error prevents the build from inadvertently succeeding. For example:
+
+```text
+RUN set -o pipefail && wget -O - https://some.site | wc -l > /number
+```
+
+> Not all shells support the `-o pipefail` option.
+>
+> In cases such as the `dash` shell on Debian-based images, consider using the _exec_ form of `RUN` to explicitly choose a shell that does support the `pipefail` option. For example:
+>
+> ```text
+> RUN ["/bin/bash", "-c", "set -o pipefail && wget -O - https://some.site | wc -l > /number"]
+> ```
 
 
 
