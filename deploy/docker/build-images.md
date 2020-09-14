@@ -352,18 +352,18 @@ See [Understanding object labels](https://docs.docker.com/config/labels-custom-m
 
 RUN has 2 forms:
 
-* `RUN <command>` \(_shell_ form, the command is run in a shell, which by default is `/bin/sh -c` on Linux or `cmd /S /C` on Windows\)
-* `RUN ["executable", "param1", "param2"]` \(_exec_ form\)
+* `RUN <command>` \(shell form, the command is run in a shell, which by default is `/bin/sh -c` on Linux or `cmd /S /C` on Windows\)
+* `RUN ["executable", "param1", "param2"]` \(exec form\)
 
 The `RUN` instruction will execute any commands in a new layer on top of the current image and commit the results. The resulting committed image will be used for the next step in the `Dockerfile`.
 
 Layering `RUN` instructions and generating commits conforms to the core concepts of Docker where commits are cheap and containers can be created from any point in an image’s history, much like source control.
 
-The _exec_ form makes it possible to avoid shell string munging, and to `RUN` commands using a base image that does not contain the specified shell executable.
+The exec form makes it possible to avoid shell string munging, and to `RUN` commands using a base image that does not contain the specified shell executable.
 
-The default shell for the _shell_ form can be changed using the `SHELL` command.
+The default shell for the shell form can be changed using the `SHELL` command.
 
-In the _shell_ form you can use a `\` \(backslash\) to continue a single RUN instruction onto the next line. For example, consider these two lines:
+In the shell form you can use a `\` \(backslash\) to continue a single RUN instruction onto the next line. For example, consider these two lines:
 
 ```text
 RUN /bin/bash -c 'source $HOME/.bashrc; \
@@ -376,7 +376,7 @@ Together they are equivalent to this single line:
 RUN /bin/bash -c 'source $HOME/.bashrc; echo $HOME'
 ```
 
-To use a different shell, other than ‘/bin/sh’, use the _exec_ form passing in the desired shell. For example:
+To use a different shell, other than `/bin/sh`, use _**the exec form pa**_ssing in the desired shell. For example:
 
 ```text
 RUN ["/bin/bash", "-c", "echo hello"]
