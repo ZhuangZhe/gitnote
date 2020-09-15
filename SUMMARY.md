@@ -168,7 +168,8 @@
 ## 部署 <a id="deploy"></a>
 
 * [Docker](deploy/docker/README.md)
-  * [构造镜像](deploy/docker/build-images.md)
+  * [构造镜像](deploy/docker/build-images/README.md)
+    * [Dockerfile指令](deploy/docker/build-images/dockerfile-instructions.md)
   * [基本概念](deploy/docker/concepts/README.md)
     * [镜像](deploy/docker/concepts/image.md)
     * [镜像与容器](deploy/docker/concepts/image-and-container.md)
