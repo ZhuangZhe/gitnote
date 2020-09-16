@@ -29,9 +29,30 @@ FROM extras:${CODE_VERSION}
 CMD  /code/run-extras
 ```
 
-如`ARG`定义在`FROM`指令之前，所以它不属于构造阶段，所以它不能被`FROM`之后的任何指令使用。
+如`ARG`定义在`FROM`指令之前，所以它不属于构造阶段，所以它不能被`FROM`之后的任何指令使用。要使用在第一个`FROM`之前声明的`ARG`的默认值，请使用`ARG`指令，该指令在构建阶段内部不带值。
+
+```go
+ARG VERSION=latest
+FROM busybox:$VERSION
+ARG VERSION
+RUN echo $VERSION > image_version
+```
 
 ## LABEL
+
+`LABEL`是一种将Docker对象当成是元数据的机制。
+
+* Images
+* Containers
+* Local daemons
+* Volumes
+* Networks
+* Swarm nodes
+* Swarm services
+
+LABLE用于组织
+
+
 
 ## RUN
 
